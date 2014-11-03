@@ -17,6 +17,8 @@ git svn clone http://172.16.0.28/repos/solutions/taas -T trunk -b branches -t ta
 * System dependencies
 
 * Configuration
+	cp config/database.example.yml config/database.yml
+	Update your db settings in database.yml
 
 * Database creation
 
