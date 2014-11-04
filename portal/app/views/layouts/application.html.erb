@@ -1,14 +1,109 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Portal</title>
+  <link href="/assets/style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="/assets/MenuMatic.css" type="text/css" media="screen" charset="utf-8" />
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="main-wapper">
+  <div class="main-wapper2">
+    <div class="header-wrapper">
+      <div class="header-top">
+        <div class="header-top-nav">
+          <ul id="nav">
+            <li><a href="#"><span><img src="/assets/user-icon.png" width="14" height="14" alt="user" /></span>yourname.y@techrains.com</a></li>
+            <li><a href="#"><span><img src="/assets/setting-icon.png" width="14" height="14" alt="settings" /></span>Account Settings</a>
+              <ul>
+                <li><a href="#">Change Password</a></li>
+                <li><a href="#">User Administration</a></li>
+                <li><a href="#">Other Links Here</a></li>
+              </ul>
+            </li>
+            <li><a href="#"><span><img src="/assets/logout-icon.png" width="14" height="14" alt="logout" /></span>Logout</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="header-bottom">
+        <div class="logo-main"> <img src="/assets/taaspro.png" width="176" height="51" alt="taaspro" /> </div>
+        <div class="header-bottom-nav">
+          <ul>
+            <li>
+              <label><a href="#"><img src="/assets/home-icon.png" width="21" height="20" alt="home" /></a></label>
+            </li>
+            <li>
+              <label class="active"><a href="<%= applications_path %>" class="active">My Apps</a></label>
+            </li>
+            <li>
+              <label><a href="#">Link Here</a></label>
+            </li>
+            <li>
+              <label><a href="#">Other Link</a></label>
+            </li>
+            <li>
+              <label><a href="#">Large Text Goes Here</a></label>
+            </li>
+            <li>
+              <label><a href="#">Account Settings</a></label>
+            </li>
+            <li>
+              <label><a href="#">Links</a></label>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <%= yield %>
+  </div>
+</div>
+<div class="footer"> Copyright 2014 · All rights reserved </div>
+<!-- Load the Mootools Framework -->
+<script src="http://www.google.com/jsapi"></script>
+<script>google.load("mootools", "1.2.1");</script>
+<!-- Load the MenuMatic Class -->
 
-<%= yield %>
-
+<!-- Create a MenuMatic Instance -->
+<script type="text/javascript" >
+		window.addEvent('domready', function() {			
+			var myMenu = new MenuMatic();
+		});		
+	</script>
+<!-- begin google tracking code -->
+<script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+<script type="text/javascript">
+        var pageTracker = _gat._getTracker("UA-2180518-1");
+        pageTracker._initData();
+        pageTracker._trackPageview();
+    </script>
+<!-- end google tracking code -->
 </body>
 </html>
+
+
+<script type="text/javascript">
+function altRows(id){
+	if(document.getElementsByTagName){  
+		
+		var table = document.getElementById(id);  
+		var rows = table.getElementsByTagName("tr"); 
+		 
+		for(i = 0; i < rows.length; i++){          
+			if(i % 2 == 0){
+				rows[i].className = "evenrowcolor";
+			}else{
+				rows[i].className = "oddrowcolor";
+			}      
+		}
+	}
+}
+window.onload=function(){
+	altRows('alternatecolor');
+}
+</script>

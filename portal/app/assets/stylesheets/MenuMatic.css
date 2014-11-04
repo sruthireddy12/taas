@@ -1,0 +1,133 @@
+#nav a, #subMenusContainer a {
+	display:block;
+	padding:7px 25px;
+	color:#FFF;
+	font-size:12px;
+}
+
+#nav a {
+	margin:0;
+	float:left;
+}
+#nav a span{display:block;
+float:left;
+margin-right:5px;
+}
+#subMenusContainer a, #nav li li a {
+	text-align:left;
+}
+#nav a:hover, #nav a:focus, #subMenusContainer a:hover, #subMenusContainer a:focus, #nav a.mainMenuParentBtnFocused, #subMenusContainer a.subMenuParentBtnFocused {
+	background-color:#050505;
+	color:#FFF;
+}
+#subMenusContainer a:hover, #subMenusContainer a:focus, #nav a.mainMenuParentBtnFocused, #subMenusContainer a.subMenuParentBtnFocused, #nav li a:hover, #nav li a:focus {
+	background-color:#050505;
+	color:#FFF;
+}
+.subMenuParentBtn {
+	background: url(arrow_right.gif) right center no-repeat;
+}
+.subMenuParentBtnFocused {
+	background: url(arrow_right_over.gif) right center no-repeat;
+}
+.mainMenuParentBtn {
+	background: url(arrow_down.gif) right center no-repeat;
+}
+.mainMenuParentBtnFocused {
+	background: url(arrow_down_over.gif) right center no-repeat;
+}
+.smOW {
+	display:none;
+	position: absolute;
+	overflow:hidden;
+	padding:0 2px;
+	margin:0 0 0 -2px;
+}
+#nav, #nav ul, #nav ol, #subMenusContainer ul, #subMenusContainer ol {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	line-height: 1em;
+}
+#nav ol, #nav ul, #subMenusContainer ul, #subMenusContainer ol {
+	background:#313131;
+	left:0;
+}
+#nav li {
+	display:block;
+	list-style:none;
+	position:relative;
+	float:left;
+}
+#subMenusContainer li {
+	list-style: none;
+}
+#nav {
+}
+#subMenusContainer {
+	display:block;
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:0;
+	overflow:visible;
+	z-index:1000000000;
+}
+/* --------------------------[ The below is just for non-javscript users ]--------------------------*/
+#nav li li {
+	float:none;
+}
+#nav li li a { /* Just submenu links*/
+	position:relative;
+	float:none;
+}
+#nav li ul { /* second-level lists */
+	position: absolute;
+	width: 10em;
+	margin-left: -1000em; /* using left instead of display to hide menus because display: none isn't read by screen readers */
+	margin-top:2.2em;
+}
+/* third-and-above-level lists */
+#nav li ul ul {
+	margin: -1em 0 0 -1000em;
+}
+#nav li:hover ul ul {
+	margin-left: -1000em;
+}
+/* lists nested under hovered list items */
+#nav li:hover ul {
+	margin-left: 0;
+}
+#nav li li:hover ul {
+	margin-left: 10em;
+	margin-top:-2.5em;
+}
+/* extra positioning rules for limited noscript keyboard accessibility */
+#nav li a:focus + ul {
+	margin-left: 0;
+	margin-top:2.2em;
+}
+#nav li li a:focus + ul {
+	left:0;
+	margin-left: 1010em;
+	margin-top:-2.2em;
+}
+#nav li li a:focus {
+	left:0;
+	margin-left:1000em;
+	width:10em;
+	margin-top:0;
+}
+#nav li li li a:focus {
+	left:0;
+	margin-left: 2010em;
+	width: 10em;
+	margin-top:-1em;
+}
+#nav li:hover a:focus {
+	margin-left: 0;
+}
+#nav li li:hover a:focus + ul {
+	margin-left: 10em;
+}
