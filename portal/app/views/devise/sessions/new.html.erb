@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+body{ 
+    background:url(/assets/blue-bg.jpg) no-repeat right top #0096ce;
+}
+</style>
+</head>
+
+<body>
+<div id="dialog-form" title="Sign up">
+    <%= render partial: "devise/registrations/register",locals: { resource: User.new }%>
+</div>
+<div class="login-main">
+  <div class="login-logo">
+      <img src="/assets/taaspro-logo.png" width="170" height="114" alt="taaspro" />
+  </div>
+  <div class="login-box">
+    <div class="login-box-inr1">
+      <h1>Log In</h1>
+      <div class="login-box-inr1-cnt">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+         <%= devise_error_messages! %>
+
+           <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:5px;">
+            <tr>
+              <td>Email</td>
+              <td><%= f.email_field :email, autofocus: true, class: "login-form-styl" %></td>
+              <td>Password</td>
+              <td><%= f.password_field :password, autocomplete: "off", class: "login-form-styl" %></td>
+            </tr>
+          </table>
+          <table width="480" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:8px;">
+            <tr>
+             <% if devise_mapping.rememberable? -%>
+              <td valign="middle" width="100"><label class="login-lbl"><%= f.check_box :remember_me %> Remember me</label></td>
+              <%end%>
+             <td><%= link_to "Forgot your password?", new_password_path(resource_name) %></td>
+              <%#= f.simple_captcha :label => "Enter numbers..", :placeholder => 'Enter the text shown in the image' %>
+
+              <td align="right"><%= f.submit "Log in",class: "login-btn" %></td>
+          </tr>
+          </table>
+       <%end%>
+      </div>
+    </div>
+    <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <div class="login-box-inr2">
+      <table width="85%" border="0" cellspacing="0" cellpadding="0" style="margin:33px 0px 0px 12px;">
+        <tr>
+            <td align="center">
+                <h5>You are not a member?</h5>
+                <h6>Please join us now for more...</h6>
+            </td>
+        </tr>
+        <tr>
+          <td align="center" height="65" valign="middle"><input type="button" class="login-btn2" id= "create-user" value="Register"/></td>
+        </tr>
+      </table>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+<script>
+  $(function() {
+    var dialog,form;
+    function submitForm() {
+      dialog.find("form").submit()
+    }
+
+    function clearForm(){
+      $("#dialog-form").html("<%= escape_javascript(render :partial => 'devise/registrations/register', locals: { resource: User.new })%>");
+    }
+  
+    dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 300,
+      width: 450,
+      modal: true,
+      buttons: {
+          "Create an account": submitForm,
+          Cancel: function() {
+            dialog.dialog( "close" );
+          }
+      },
+      close: clearForm
+    });
+
+    $(document).on( "click", '#create-user', function() {
+      dialog.dialog( "open" );
+    });
+  });
+  </script>
+  </body>
+
+  </html>
