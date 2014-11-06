@@ -25,6 +25,40 @@
       <%= of.text_field :name, autocomplete: "off" %>
     </div>
   <%-end %>
+
+   <%= f.fields_for :profile,@user.build_profile do |profile|%>
+
+    <div class="field">
+      <%= profile.label :first_name %><br />
+      <%= profile.text_field :first_name, autocomplete: "off" %>
+    </div>
+
+    <div class="field">
+      <%= profile.label :last_name %><br />
+      <%= profile.text_field :last_name, autocomplete: "off" %>
+    </div>
+
+    <div class="field">
+      <%= profile.label "how do you hear about us?" %><br />
+      <%= profile.text_field :referred_by, autocomplete: "off" %>
+    </div>
+
+    <div class="field">
+      <%= profile.label :mobile_number %><br />
+      <%= profile.text_field :mobile_number, autocomplete: "off" %>
+    </div>
+
+    <div class="field">
+      <%= profile.label :telephone_number %><br />
+      <%= profile.text_field :telephone_number, autocomplete: "off" %>
+    </div>
+
+    <div class="field">
+      <%= profile.label :gender %><br />
+      <%= profile.select :gender, options_for_select(['Male','Female']), autocomplete: "off" %>
+    </div>
+
+  <%-end %>
   <%= f.simple_captcha%>
 
 <% end %>

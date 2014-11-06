@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141105164328) do
+ActiveRecord::Schema.define(version: 20141105164329) do
 
   create_table "applications", force: true do |t|
     t.string   "name"
@@ -31,6 +31,18 @@ ActiveRecord::Schema.define(version: 20141105164328) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "domain"
+  end
+
+  create_table "profiles", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "referred_by"
+    t.integer  "mobile_number"
+    t.integer  "telephone_number"
+    t.string   "gender"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "simple_captcha_data", force: true do |t|
