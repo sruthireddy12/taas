@@ -2,11 +2,10 @@
   <div class="cnt-head">
     <h1>Applications</h1>
     <button id="new-application">New Application</button>
-    <div id="dialog-form">
+    <div id="dialog-form" style="display:none;">
       <%= render partial: 'form' ,locals: {application: Application.new}%>
     </div>
     <label><span><a href="/applications/new" ><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>Add Application</a></label>
-    <%= link_to "aaaaaaa",new_application_path%>
   </div>
   <table class="tbl-1" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>

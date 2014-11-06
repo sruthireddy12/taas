@@ -15,6 +15,8 @@ class ApplicationsController < ApplicationController
   # GET /applications/new
   def new
     @application = Application.new
+    application_login_details = @application.application_login_details.build
+    file_uploads = application_login_details.file_uploads.build
   end
 
   # GET /applications/1/edit
@@ -69,6 +71,6 @@ class ApplicationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def application_params
-      params.require(:application).permit(:name, :description, :user_id, :url)
+      params.require(:application).permit(:name, :description, :user_id, :url, application_login_details: [:id,:username,:password,:role,:_destroy,file_uploads: [:id,:file,:_destroy]])
     end
 end

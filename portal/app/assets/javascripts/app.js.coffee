@@ -13,3 +13,6 @@ jQuery ($) ->
   	$("#new-application").on "click", (e) ->
   		dialog.dialog("open");
   		return
+
+  	$("#load_file").on "click",(e) ->
+  		alert("aaaaaaa")

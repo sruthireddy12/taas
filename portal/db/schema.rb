@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103105836) do
+ActiveRecord::Schema.define(version: 20141104133517) do
 
   create_table "application_login_details", force: true do |t|
     t.integer  "application_id"
     t.string   "username"
     t.string   "password"
+    t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -25,7 +26,18 @@ ActiveRecord::Schema.define(version: 20141103105836) do
     t.string   "name"
     t.text     "description"
     t.integer  "creator"
-    t.string   "url",         limit: 2047
+    t.string   "url",                   limit: 2047
+    t.string   "email"
+    t.integer  "phone"
+    t.time     "prefered_contact_time"
+    t.string   "point_of_contact"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "file_uploads", force: true do |t|
+    t.string   "file"
+    t.integer  "application_login_detail_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

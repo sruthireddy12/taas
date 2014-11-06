@@ -4,6 +4,7 @@ class CreateApplicationLoginDetails < ActiveRecord::Migration
 			t.integer :application_id
 			t.string :username
 			t.string :password
+			t.string :role
 
 			t.timestamps
 		end
