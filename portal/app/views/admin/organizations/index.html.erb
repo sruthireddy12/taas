@@ -1,0 +1,25 @@
+<h1>Listing Organizations</h1>
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Actions</th>
+  </tr>
+  <% @organizations.each do |organization| %>
+    <tr>
+      <td>
+        <%= organization.name %>
+      </td>
+      <td>
+        <%= organization.description || "--" %>
+      </td>
+      <td>
+        <%= link_to 'Show', admin_organization_path(organization), :class => "btn btn-primary btn-xs" %>
+        <%= link_to 'Edit', edit_admin_organization_path(organization), :class => "btn btn-primary btn-xs" %>
+        <%= link_to 'Delete', admin_organization_path(organization), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => "btn btn-primary btn-xs" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<br/>
+<%= link_to 'New Organization', new_admin_organization_path %>

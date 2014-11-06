@@ -1,0 +1,5 @@
+<%= form_for [:admin, user], :url => admin_users_path, :remote => true do |f| -%>
+  <%= render :partial => "form", :locals => {:f => f} %>
+<% end -%>
+
+

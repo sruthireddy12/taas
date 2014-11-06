@@ -2,6 +2,11 @@ Rails.application.routes.draw do
   resources :applications
 
   devise_for :users, controllers: {registrations: 'registrations'}
+  namespace :admin do
+    get '/' => 'users#index'
+    resources :users
+    resources :organizations
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

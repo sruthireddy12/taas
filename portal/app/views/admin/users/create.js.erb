@@ -1,0 +1,7 @@
+<% if @user.errors.any? -%>
+  $("#new_user_form").html("<%= escape_javascript(render :partial => 'new', :locals => {:user => @user})%>");
+<% else -%>
+  $('#myModal1').modal('hide');
+  $("#new_user_form").html("<%= escape_javascript(render :partial => 'new', :locals => {:user => User.new})%>");
+  $('#users_list tr:last').after("<%= escape_javascript(render :partial => 'user', :locals => {:user => @user})%>");
+<% end -%>

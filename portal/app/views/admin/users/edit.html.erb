@@ -1,0 +1,5 @@
+<%= form_for [:admin, @user], :url => admin_user_path(@user), :id => "edit_user"  do |f| -%>
+  <h5> Edit User Information</h5>
+  <input name="_method" type="hidden" value="put" />
+  <%= render :partial => "form", :locals => {:f => f} %>
+<% end -%>

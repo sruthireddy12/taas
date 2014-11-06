@@ -1,8 +1,15 @@
 class ApplicationsController < ApplicationController
   before_action :set_application, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   def index
-    @applications = Application.all
+    if current_user.is_admin?
+      @applications = Application.all
+    elsif current_user.is_admin_of? current_user.organization
+      @applications = current_user.organization.applications
+    else
+      @applications = Application.with_roles([:admin, :user], current_user)
+    end
     respond_with(@applications)
   end
 
@@ -20,6 +27,7 @@ class ApplicationsController < ApplicationController
 
   def create
     @application = Application.new(application_params)
+    @application.creator = current_user.id
     @application.save
     respond_with(@application)
   end
