@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141106040933) do
+ActiveRecord::Schema.define(version: 20141106114907) do
 
   create_table "applications", force: true do |t|
     t.string   "name"
@@ -21,6 +21,9 @@ ActiveRecord::Schema.define(version: 20141106040933) do
     t.integer  "organization_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "point_of_contact"
+    t.string   "email"
+    t.time     "prefered_contact_time"
   end
 
   add_index "applications", ["organization_id"], name: "index_applications_on_organization_id", using: :btree
