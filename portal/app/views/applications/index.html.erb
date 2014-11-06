@@ -1,31 +1,62 @@
-<h1>Listing applications</h1>
-
-<table>
-  <thead>
+<div id="dialog-form" title="Add Application">
+  <%= render partial: 'form' ,locals: {application: Application.new}%>
+</div>
+<div class="content-wrapper">
+  <div class="cnt-head">
+    <h1>Applications</h1>
+    <label id="new-application"><span><a href="#"><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" />Add Application</a></span></label>
+  </div>
+  <table class="tbl-1" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Url</th>
-      <th>Creator</th>
-      <th colspan="3"></th>
+      <th align="left" valign="middle">Sl No.</th>
+      <th align="left" valign="middle">Name</th>
+      <th align="left" valign="middle">URL</th>
+      <th align="left" valign="middle">Creator</th>
     </tr>
-  </thead>
-
-  <tbody>
+    <% count = 0 %>
     <% @applications.each do |application| %>
       <tr>
+        <td><%= count += 1 %></td>
         <td><%= application.name %></td>
-        <td><%= application.description %></td>
         <td><%= application.url %></td>
         <td><%= application.creator %></td>
-        <td><%= link_to 'Show', application %></td>
-        <td><%= link_to 'Edit', edit_application_path(application) %></td>
-        <td><%= link_to 'Destroy', application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    <%end%>
+  </table>
+</div>
+  <script type="text/javascript">
+    var dialog,form;
+    function submitForm() {
+      dialog.find("form").submit()
+    }
 
-<br>
+    function clearForm(){
+      $("#dialog-form").html("<%= escape_javascript(render partial: 'form' ,locals: {application: Application.new})%>");
+    }
 
-<%= link_to 'New Application', new_application_path %>
+    dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 800,
+      width: 1200,
+      modal: true,
+      buttons: [
+        {
+            text: "Cancel",
+            "class": 'btn-style-2',
+            click: function() {
+                dialog.dialog( "close" );
+            }
+        },
+        {
+            text: "Save Application",
+            "class": 'btn-style',
+            click: submitForm
+        }
+      ],
+      close: clearForm
+    });
+    $("#new-application").on("click", function() {
+      dialog.dialog( "open" );
+    });
+  </script>
+

@@ -1,16 +1,81 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Portal</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+  <%= render partial: 'layouts/head' %>
 </head>
 <body>
-<%- if user_signed_in? %>
-<%= link_to("Logout", destroy_user_session_path, :method=>'delete') %> 
-<%- end %>
-<%= yield %>
+<div class="main-wapper">
+  <div class="main-wapper2">
+    <div class="header-wrapper">
+      <div class="header-top">
+        <div class="header-top-nav">
+          <ul id="nav">
+            <li><a href="#"><span><img src="/assets/user-icon.png" width="14" height="14" alt="user" /></span>yourname.y@techrains.com</a></li>
+            <li><a href="#"><span><img src="/assets/setting-icon.png" width="14" height="14" alt="settings" /></span>Account Settings</a>
+              <ul>
+                <li><a href="#">Change Password</a></li>
+                <li><a href="#">User Administration</a></li>
+                <li><a href="#">Other Links Here</a></li>
+              </ul>
+            </li>
+            <%- if user_signed_in? %>
+              <li><a href="<%= destroy_user_session_path %>" data-method='delete'><span><img src="/assets/logout-icon.png" width="14" height="14" alt="logout" /></span>Logout</a></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <div class="header-bottom">
+        <div class="logo-main"> <img src="/assets/taaspro.png" width="176" height="51" alt="taaspro" /> </div>
+        <div class="header-bottom-nav">
+          <ul>
+            <li>
+              <label><a href="#"><img src="/assets/home-icon.png" width="21" height="20" alt="home" /></a></label>
+            </li>
+            <li>
+              <label class="active"><a href="<%= applications_path %>" class="active">My Apps</a></label>
+            </li>
+            <li>
+              <label><a href="#">Link Here</a></label>
+            </li>
+            <li>
+              <label><a href="#">Other Link</a></label>
+            </li>
+            <li>
+              <label><a href="#">Large Text Goes Here</a></label>
+            </li>
+            <li>
+              <label><a href="#">Account Settings</a></label>
+            </li>
+            <li>
+              <label><a href="#">Links</a></label>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <%= yield %>
+  </div>
+</div>
+<div class="footer"> Copyright 2014 · All rights reserved </div>
 
+<script type="text/javascript">
+function altRows(id){
+	if(document.getElementsByTagName){
+		var table = document.getElementById(id);
+		var rows = table.getElementsByTagName("tr");
+		for(i = 0; i < rows.length; i++){
+			if(i % 2 == 0){
+				rows[i].className = "evenrowcolor";
+			}else{
+				rows[i].className = "oddrowcolor";
+			}
+		}
+	}
+}
+
+window.onload=function(){
+	altRows('alternatecolor');
+}
+</script>
 </body>
 </html>
