@@ -12,7 +12,7 @@ body{
 </head>
 
 <body>
-<div id="dialog-form" title="Sign up">
+<div id="dialog-form" title="Sign up" style="display:none;">
     <%= render partial: "devise/registrations/register",locals: { resource: User.new }%>
 </div>
 <div class="login-main">
@@ -78,11 +78,11 @@ body{
     function clearForm(){
       $("#dialog-form").html("<%= escape_javascript(render :partial => 'devise/registrations/register', locals: { resource: User.new })%>");
     }
-  
+
     dialog = $( "#dialog-form" ).dialog({
       autoOpen: false,
-      height: 300,
-      width: 450,
+      height: 600,
+      width: 550,
       modal: true,
       buttons: {
           "Create an account": submitForm,
