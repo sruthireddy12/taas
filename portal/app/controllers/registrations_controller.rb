@@ -1,6 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
 
   def create
+    #creating organization from email domain
   	domain = params["user"]["email"].split("@").last
   	params["user"]["organization"]["domain"] = domain
   	if organization = Organization.find_by(domain: domain)
@@ -19,6 +20,8 @@ class RegistrationsController < Devise::RegistrationsController
 	    resource_saved = resource.save if resource.valid_with_captcha?
 	    yield resource if block_given?
 	    if resource_saved
+	      #Making the first registered user as admin for that organization
+	      resource.add_role :admin, organization
 	      if resource.active_for_authentication?
 	        set_flash_message :notice, :signed_up if is_flashing_format?
 	        sign_up(resource_name, resource)
