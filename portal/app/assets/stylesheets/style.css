@@ -507,3 +507,10 @@ img, a img {
 	font-size:11px;
 	color:#666;
 }
+
+.inpt-1{width:200px;
+    height: 28px;
+    border: #cdcdcd 1px solid;
+    padding: 0px 8px;
+    background: #FFF;
+}
