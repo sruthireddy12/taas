@@ -11,7 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110062816) do
+
+ActiveRecord::Schema.define(version: 20141110063531) do
+
 
   create_table "applications", force: true do |t|
     t.string   "name"
@@ -27,6 +29,26 @@ ActiveRecord::Schema.define(version: 20141110062816) do
   end
 
   add_index "applications", ["organization_id"], name: "index_applications_on_organization_id", using: :btree
+
+  create_table "attachments", force: true do |t|
+    t.string   "file_path"
+    t.string   "file_type"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "credentials", force: true do |t|
+    t.string   "role"
+    t.string   "username"
+    t.string   "password"
+    t.integer  "application_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "credentials", ["application_id"], name: "index_credentials_on_application_id", using: :btree
 
   create_table "organizations", force: true do |t|
     t.string   "name"

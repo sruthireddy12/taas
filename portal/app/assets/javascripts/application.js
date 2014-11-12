@@ -11,6 +11,10 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery-ui
 //= require jquery_ujs
+//= require jquery-ui/core
+//= require jquery-ui/widget
+//= require jquery-ui/dialog
+//= require jquery-ui/mouse
+//= require jquery-ui/position
 //= require_tree .

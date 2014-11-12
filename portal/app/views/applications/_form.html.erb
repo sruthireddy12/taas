@@ -1,87 +1,147 @@
 <div class="content-wrapper">
   <div class="reg-main">
-  <%= form_for application ,remote: true do |f| %>
-    <table class="tbl-2" width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <th colspan="4">Application Information</th>
-      </tr>
-      <tr>
-        <td width="9%" align="right">Application Name</td>
-        <td width="18%"><%= f.text_field :name , class: "form-style1", placeholder: "Enter Here" %></td>
-        <td width="16%" align="right">Point of Contact</td>
-        <td width="57%"><%= f.text_field :point_of_contact , class: "form-style1", placeholder: "Enter Here" %></td>
-      </tr>
-      <tr>
-        <td align="right">URL</td>
-        <td><%= f.text_field :url , class: "form-style1", placeholder: "Enter Here"%></td>
-        <td align="right">Email </td>
-        <td><%= f.text_field :email , class: "form-style1", placeholder: "Enter Here" %></td>
-      </tr>
-      <tr>
-        <td align="right">Description </td>
-        <td rowspan="2" valign="top"><%= f.text_area :description, class: "form-style2", placeholder: "Enter Here" %></td>
-        <td align="right">Time </td>
-        <td><%= f.time_select :prefered_contact_time ,ampm: true %></td>
-      </tr>
-      <tr>
-        <th colspan="4">Login Information</th>
-      </tr>
-      <tr>
-        <td colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;"><table width="80%" border="0" cellpadding="0" cellspacing="0">
-            <tr>
-              <td width="14%" align="right">Role</td>
-              <td width="16%"><input name="textfield7" type="text" class="form-style1" id="textfield6" placeholder="Enter Here" /></td>
-              <td width="7%" align="right">Username</td>
-              <td width="19%"><input name="textfield7" type="text" class="form-style1" id="textfield6" placeholder="Enter Here" /></td>
-              <td width="6%" align="right">Password</td>
-              <td width="38%"><input name="textfield7" type="text" class="form-style1" id="textfield6" placeholder="Enter Here" /></td>
-            </tr>
+    <%= form_for @application, remote: true, html: {multipart: true } do |f| %>
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <table class="tbl-2" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <th colspan="4">Application Information</th>
+        </tr>
+        <tr>
+          <td width="9%" align="right">Application Name</td>
+          <td width="18%"><%= f.text_field :name , class: "form-style1", placeholder: "Enter Here" %></td>
+          <td width="16%" align="right">Point of Contact</td>
+          <td width="57%"><%= f.text_field :point_of_contact , class: "form-style1", placeholder: "Enter Here" %></td>
+        </tr>
+        <tr>
+          <td align="right">URL</td>
+          <td><%= f.text_field :url , class: "form-style1", placeholder: "Enter Here"%></td>
+          <td align="right">Email </td>
+          <td><%= f.text_field :email , class: "form-style1", placeholder: "Enter Here" %></td>
+        </tr>
+        <tr>
+          <td align="right">Description </td>
+          <td rowspan="2" valign="top"><%= f.text_area :description, class: "form-style2", placeholder: "Enter Here" %></td>
+          <td align="right">Time </td>
+          <td><%= f.time_select :prefered_contact_time ,ampm: true %></td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <table>
+            <td width="34%" align="right" style="padding-top:0px;">Upload Application Files</td>
+            <td width="66%" style="padding-top:0px;">
+              <input name="application_file_paths[]" type="file" multiple='multiple' class="form-style3 upload-field"/>
+            </td>
           </table>
-          <div class="uplod-box">
-            <table width="90%" border="0" align="left" cellpadding="0" cellspacing="0">
+        </tr>
+        <tr>
+          <th colspan="4">Login Information</th>
+        </tr>
+        <tr>
+          <td colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;">
+            <div id='role-section'>
+              <table width="80%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="14%" align="right">Role</td>
+                  <td width="16%"><input name="[role]" type="text" class="form-style1" id="role" placeholder="Enter Here" /></td>
+                  <td width="7%" align="right">Username</td>
+                  <td width="19%"><input name="[username]" type="text" class="form-style1" id="username" placeholder="Enter Here" /></td>
+                  <td width="6%" align="right">Password</td>
+                  <td width="38%"><input name="[password]" type="password" class="form-style1" id="password" placeholder="Enter Here" /></td>
+                </tr>
+              </table>
+              <div class="uplod-box">
+                <table width="90%" border="0" align="left" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="34%" align="right" style="padding-top:0px;">Upload File</td>
+                    <td width="66%" style="padding-top:0px;">
+                      <input name="file_paths[]" type="file" multiple='multiple' class="form-style3 upload-field"/>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td width="34%" align="right" style="padding-top:0px;">Upload File</td>
-                <td width="66%" style="padding-top:0px;"><input name="textfield8" type="file" class="form-style3" id="textfield7" />
-                  <input name="button" type="submit" class="btn-style-3" id="load_file" value="Upload" /></td>
+                <td id='add_roles' align="center" style="padding:10px;"><input name="" type="button" class="btn-style-4" value="Add Role &amp; Attachments" />
+                </td>
               </tr>
             </table>
-            <div class="uplod-list-box">
-              <h1>Attachemnts</h1>
-              <label>Browsefile.WEF<span><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span></label>
-              <label>file.WEF<span><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span></label>
-              <label>Other file.WEF<span><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span></label>
-              <label>Browsefile Browsefile.WEF<span><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span></label>
-              <label>Browse.WEF<span><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span></label>
-            </div>
-          </div>
-
-          <table id='app_role' width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td align="center" style="padding:10px;"><input name="" type="button" class="btn-style-4" value="Add Role &amp; Attechments" /></td>
-              <%= f.fields_for :application_login_details do |ald| %>
-                <td width="14%" align="right">Role</td>
-                <td width="16%"><input name="textfield7" type="text" class="form-style1" id="textfield6" placeholder="Enter Here" /></td>
-                <td width="7%" align="right">Username</td>
-                <td width="19%"><input name="textfield7" type="text" class="form-style1" id="textfield6" placeholder="Enter Here" /></td>
-                <td width="6%" align="right">Password</td>
-                <td width="38%"><input name="textfield7" type="text" class="form-style1" id="textfield6" placeholder="Enter Here" /></td>
-              <%end%>
-            </tr>
-          </table>
-          <div class="uploded-box">
-            <h1>Role : <span> Name Here </span></h1>
-            <input name="" type="button" class="btn-style-5" value="" />
-          </div>
-          <div class="uploded-box">
-            <h1>Role : <span> Name Here </span></h1>
-            <input name="" type="button" class="btn-style-5" value="" />
-          </div>
           </td>
-      </tr>
-       <tr>
-</tr>
-    </table>
+        </tr>
+        <tr>
+        </tr>
+      </table>
     <%end%>
   </div>
 </div>
 
+
+
+
+<script type="text/javascript">
+  nestedForm = $('#role-section').clone();
+
+  $("#add_roles").on("click", function() {
+    lastNestedForm = $('.uploded-box').last();
+    newNestedForm = $('#role-section').clone();
+    uploadedBox = $('<div class=\"uploded-box\"></div>');
+
+    var role = $('#role-section').find('input#role')[0].value;
+    $(uploadedBox).append("<div><h1>Role : <span>"+ role + "</span><span class=\"remove-role\"><img src=\"assets/close-icon.png\" width=\"14\" height=\"14\" alt=\"delete\" /></span></h1><input name=\"\" type=\"button\" class=\"btn-style-5 show-role\" value=\"\"/><div>")
+
+    newNestedForm.attr('id', '');
+    newNestedForm.attr('class', 'added-role-section');
+    newNestedForm.attr('style', 'display:none;');
+
+    parentTd = $(this).closest('table').parent();
+    formsOnPage = parentTd.children().length - 2;
+    nestedName = 'application[credentials_attributes][0]';
+
+    $(newNestedForm).find('select, input').each(function(){
+      oldName = $(this).attr('name');
+      oldName = nestedName + oldName;
+      newName = oldName.replace(new RegExp(/\[[0-9]+\]/), "[" + formsOnPage + "]");
+      $(this).attr('name', newName);
+    });
+    $(uploadedBox).append(newNestedForm)
+    $(uploadedBox).appendTo(parentTd);
+
+    $('#role-section').find('input:text').val('');
+    $('#role-section').find('input:file')[0].value = '';
+    $('#role-section').find('.uplod-list-box').remove();
+  });
+
+    $(document).on("change", '.upload-field', function(e) {
+        var file_list = e.currentTarget.files;
+        var attachmentsBox = $('<div class=\"uplod-list-box\" id=\"uplod-list-box\" type=\"file\"><h1>Attachments</h1></div>')
+        var parentDiv = $(this).closest('table').parent()
+        parentDiv.find('div.uplod-list-box').remove();
+        $.each(file_list, function(index, element){
+          // var img = '<span class=\"remove-file\"><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span>'
+          var img = '<span></span>'
+          var label = '<label>'+ element.name + img + '</label>'
+          attachmentsBox.append(label);
+        });
+        attachmentsBox.insertAfter($(this).closest('table'));
+    });
+
+     $(document).on("click", '.show-role', function(e) {
+         $(this).parent('div').parent().find('.added-role-section').toggle();
+     });
+
+     $(document).on("click", '.remove-role', function(e) {
+         $(this).parent().parent().parent().remove();
+     });
+
+    // $(document).on("click", '.remove-file', function(e) {
+    //     var input = $(this).closest('div').parent().find('input[type=file]')[0];
+        // $(this).parent().remove();
+        // var file_name = $(this).parent().text();
+        // $.each(input.files, function(index, element){
+        //     if(element.name === file_name) {
+        //       file_name.remove();
+              // input.files.splice(index, 1);
+        //     }
+        // });
+    // });
+</script>

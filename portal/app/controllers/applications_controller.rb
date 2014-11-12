@@ -3,6 +3,8 @@ class ApplicationsController < ApplicationController
   load_and_authorize_resource
 
   def index
+    @application = Application.new
+    @application.credentials.build if @application.credentials.empty?
     if current_user.is_admin?
       @applications = Application.all
     elsif current_user.is_admin_of? current_user.organization
@@ -19,6 +21,7 @@ class ApplicationsController < ApplicationController
 
   def new
     @application = Application.new
+    @application.credentials.build if @application.credentials.empty?
     respond_with(@application)
   end
 
@@ -28,7 +31,12 @@ class ApplicationsController < ApplicationController
   def create
     @application = Application.new(application_params)
     @application.creator = current_user.id
+    @application.organization = current_user.organization
     @application.save
+    ## Add file attacments for a application
+    params[:application_file_paths].each do |file|
+      @application.attachments.create(file_path: file)
+    end
     respond_with(@application)
   end
 
@@ -48,6 +56,6 @@ class ApplicationsController < ApplicationController
     end
 
     def application_params
-      params.require(:application).permit(:name, :description, :url, :creator, :organization_id)
+      params.require(:application).permit(:name, :description, :url, :creator, :point_of_contact,:email,:prefered_contact_time,credentials_attributes: [:id,:role,:username,:password,file_paths: []])
     end
 end
