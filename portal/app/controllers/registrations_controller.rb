@@ -50,7 +50,8 @@ class RegistrationsController < Devise::RegistrationsController
     end
 
     def sign_up_params
-      allow = [:email, :password, :password_confirmation, :organization_id, :captcha, :captcha_key]
+      allow = [:email, :password, :password_confirmation, :organization_id, :captcha, :captcha_key,
+              profile_attributes: [:first_name, :last_name, :referred_by, :mobile_number, :telephone_number, :gender]]
       params.require(resource_name).permit(allow)
     end
 
