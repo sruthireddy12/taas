@@ -16,7 +16,7 @@ class Ability
             user.is_admin_of? app && app.organization_id == user.organization_id
         end
         can :read, Application do |app|
-            user.has_any_role? :admin, { :name => :admin, :resource => app }, { :name => :user, :resource => app } && app.organization_id == user.organization_id
+            user.has_any_role?(:admin, { :name => :admin, :resource => app }, { :name => :user, :resource => app }) && app.organization_id == user.organization_id
         end
       end
     end

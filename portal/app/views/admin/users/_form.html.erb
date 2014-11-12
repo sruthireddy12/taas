@@ -1,8 +1,20 @@
-<%= f.label :email %>:
-<%= f.text_field :email %>
-<%= f.label :password %>:
-<%= f.password_field :password  %>
-<%= f.label :password_confirmation %>:
-<%= f.password_field :password_confirmation %>
-<%= f.submit "Save"%>
-<%= link_to "Cancel", admin_users_path %>
+ <tr>
+  <td><%= f.label :email %></td>
+  <td><%= f.text_field :email %></td>
+</tr>
+<%- f.object.build_profile %>
+<%= f.fields_for :profile do |profile|%>
+ <tr>
+  <td><%= profile.label :first_name %></td>
+  <td><%= profile.text_field :first_name %></td>
+</tr>
+
+ <tr>
+  <td><%= profile.label :last_name %></td>
+  <td><%= profile.text_field :last_name %></td>
+</tr>
+<% end %>
+
+
+<%#= f.submit "Save"%>
+<%#= link_to "Cancel", admin_users_path %>

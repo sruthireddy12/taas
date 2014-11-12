@@ -1,20 +1,11 @@
-<div class='users'>
-  <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">New User</h4>
-      </div>
-      <div class="modal-body" id = "new_user_form">
-         <%= render :partial => "new", :locals => {:user => User.new}%>
-      </div>
-      </div>
-    </div>
-  </div>
+<html>
+<body>
+<div id="user_form" title="Users" style="display:none;">
+   <%= render :partial => "new", :locals => {:user => User.new}%>
+</div>
 <div>
-<div class="pull-right">
-  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal1">
+<div class="pull-right" id ="new_user">
+  <button class="btn btn-primary btn-sm">
     New User
   </button>
 </div>
@@ -22,11 +13,12 @@
 <table class="table table-striped" id='users_list'>
  <thead>
   <tr>
-    <th>User Name</th>
+    <th>First Name</th>
+    <th>Last Name</th>
         <th>
       <%= t("activerecord.attributes.user.email", :default => t("activerecord.labels.email", :default => "Email")) %>
     </th>
-        <th>Created at</th>
+        <th>Mobile Number</th>
     <th>Actions</th>
   </tr>
   </thead>
@@ -38,3 +30,36 @@
 </table>
 </div>
 
+<script>
+  $(function() {
+    var dialog,form;
+    function submitForm() {
+      dialog.find("form").submit()
+    }
+
+    function clearForm(){
+      $("#user_form").html("<%= escape_javascript(render :partial => 'new', :locals => {:user => User.new})%>");
+    }
+
+    dialog = $( "#user_form" ).dialog({
+      autoOpen: false,
+      height: 450,
+      width: 450,
+      modal: true,
+      buttons: {
+          "Create an account": submitForm,
+          Cancel: function() {
+            dialog.dialog( "close" );
+          }
+      },
+      close: clearForm
+    });
+
+    $(document).on( "click", '#new_user', function() {
+      dialog.dialog( "open" );
+    });
+  });
+  </script>
+
+  </body>
+  </html>

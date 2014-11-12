@@ -21,8 +21,11 @@ class Admin::UsersController < Admin::AdminController
   def create
     @user = User.new(user_params)
     @user.organization_id = current_user.organization_id
+    generated_password = Devise.friendly_token.first(8)+"#"
+    @user.password =  generated_password
     respond_to do |format|
       if @user.save
+        UserMailer.welcome_email(@user, generated_password).deliver
         #flash[:notice] = flash[:notice].to_a.concat @user.errors.full_messages
         format.html { redirect_to admin_users_path, :notice => 'User was successfully created.' }
         format.json { render :json => @user, :status => :created, :location => @user }
@@ -70,6 +73,6 @@ class Admin::UsersController < Admin::AdminController
     end
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
+      params.require(:user).permit(:email, :password, :password_confirmation, profile_attributes: [:first_name, :last_name] )
     end
 end
