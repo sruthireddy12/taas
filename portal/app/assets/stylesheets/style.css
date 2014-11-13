@@ -514,3 +514,8 @@ img, a img {
     padding: 0px 8px;
     background: #FFF;
 }
+
+span.required {
+	color: #F00;
+	font-weight: bold;
+}

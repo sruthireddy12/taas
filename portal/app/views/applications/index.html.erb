@@ -12,6 +12,9 @@
       <th align="left" valign="middle">Name</th>
       <th align="left" valign="middle">URL</th>
       <th align="left" valign="middle">Creator</th>
+      <%if current_user.is_admin? %>
+        <th align="left" valign="middle">Action</th>
+      <%end%>
     </tr>
     <% count = 0 %>
     <% @applications.each do |application| %>
@@ -19,7 +22,10 @@
         <td><%= count += 1 %></td>
         <td><%= link_to application.name,application_path(application.id) %></td>
         <td><%= application.url %></td>
-        <td><%= application.creator.email  %></td>
+        <td><%= application.creator.full_name || application.creator.email %></td>
+        <%if current_user.is_admin? %>
+          <td><%= link_to 'Delete', @application, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+        <%end%>
       </tr>
     <%end%>
   </table>

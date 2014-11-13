@@ -1,29 +1,60 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @application.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @application.description %>
-</p>
-
-<p>
-  <strong>Url:</strong>
-  <%= @application.url %>
-</p>
-
-<p>
-  <strong>Creator:</strong>
-  <%= @application.creator %>
-</p>
-
-<p>
-  <strong>Organization:</strong>
-  <%= @application.organization %>
-</p>
-
+<table class="tbl-2" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th colspan="4">Application Information</th>
+  </tr>
+  <tr>
+    <td ><label><b>Application Name : </b> </label><%= @application.name %></td>
+  </tr>
+  <tr>
+    <td ><label><b>Point of Contact : </label></b> <%= @application.point_of_contact %></td>
+  </tr>
+  <tr>
+    <td ><label ><b>URL : </b> </label><%= @application.url %></td>
+  </tr>
+  <tr>
+    <td ><b>Email : </b> <%= @application.email %></td>
+  </tr>
+  <tr>
+    <td ><b>Description : </b> <%= @application.description %></td>
+  </tr>
+  <tr>
+    <td ><b>Preferred Time : </b> <%= @application.prefered_contact_time.strftime("%H:%M %p") %></td>
+  </tr>
+  <% unless @application.attachments.blank? %>
+    <tr>
+      <th colspan="4">Application Attachments</th>
+    </tr>
+    <tr>
+      <%@application.attachments.each do |attachment|%>
+        <td><%#=link_to attachment.file_path.file.filename, attachment.file_path_url%>
+        <a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a>
+      <%end%>
+    </tr>
+  <%end%>
+  <% unless @application.attachments.blank? %>
+    <tr>
+      <th colspan="4">Login Information</th>
+    </tr>
+    <%@application.credentials.each do |credential|%>
+      <tr>
+        <td ><label><b>Role : </b> </label><%= credential.role %></td>
+        <td ><label><b>UserName : </b> </label><%= credential.username %></td>
+        <td ><label><b>Password : </b> </label><%= credential.password %></td>
+      </tr>
+      <%unless credential.attachments.empty?%>
+        <tr>
+          <%credential.attachments.each do |attachment|%>
+            <td ><%#= link_to attachment.file_path.file.filename, attachment.file_path_url, target: "_blank" %>
+            <a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a>
+          <%end%>
+        </tr>
+      <%end%>
+      <tr>
+        <th colspan="4"></th>
+      </tr>
+    <%end%>
+  <%end%>
+</table>
 <%= link_to 'Edit', edit_application_path(@application) %> |
 <%= link_to 'Back', applications_path %>
