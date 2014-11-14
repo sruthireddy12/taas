@@ -7,21 +7,21 @@
           <th colspan="4">Application Information</th>
         </tr>
         <tr>
-          <td width="9%" align="right">Application Name</td>
+          <td width="9%" align="right">Application Name<span class='required'>*</span></td>
           <td width="18%"><%= f.text_field :name , class: "form-style1", placeholder: "Enter Here" %></td>
           <td width="16%" align="right">Point of Contact</td>
           <td width="57%"><%= f.text_field :point_of_contact , class: "form-style1", placeholder: "Enter Here" %></td>
         </tr>
         <tr>
           <td align="right">URL</td>
-          <td><%= f.text_field :url , class: "form-style1", placeholder: "Enter Here"%></td>
+          <td><%= f.text_field :url , class: "form-style1", id: "url_field", placeholder: "Enter Here"%></td>
           <td align="right">Email </td>
           <td><%= f.text_field :email , class: "form-style1", placeholder: "Enter Here" %></td>
         </tr>
         <tr>
           <td align="right">Description </td>
           <td rowspan="2" valign="top"><%= f.text_area :description, class: "form-style2", placeholder: "Enter Here" %></td>
-          <td align="right">Time </td>
+          <td align="right">Preferred Time </td>
           <td><%= f.time_select :prefered_contact_time ,ampm: true %></td>
         </tr>
         <tr></tr>
@@ -37,6 +37,7 @@
           <th colspan="4">Login Information</th>
         </tr>
         <tr>
+          <div id='login-section' style="display:none;">
           <td colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;">
             <div id='role-section'>
               <table width="80%" border="0" cellpadding="0" cellspacing="0">
@@ -67,6 +68,7 @@
               </tr>
             </table>
           </td>
+          </div>
         </tr>
         <tr>
         </tr>
@@ -111,27 +113,37 @@
     $('#role-section').find('.uplod-list-box').remove();
   });
 
-    $(document).on("change", '.upload-field', function(e) {
-        var file_list = e.currentTarget.files;
-        var attachmentsBox = $('<div class=\"uplod-list-box\" id=\"uplod-list-box\" type=\"file\"><h1>Attachments</h1></div>')
-        var parentDiv = $(this).closest('table').parent()
-        parentDiv.find('div.uplod-list-box').remove();
-        $.each(file_list, function(index, element){
-          // var img = '<span class=\"remove-file\"><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span>'
-          var img = '<span></span>'
-          var label = '<label>'+ element.name + img + '</label>'
-          attachmentsBox.append(label);
-        });
-        attachmentsBox.insertAfter($(this).closest('table'));
-    });
+  $("input#url_field").keyup(function() {
+    if($(this).val() === ''){
+      $("#login-section").hide();
+    }
+    else {
+      $("#login-section").show();
+    }
 
-     $(document).on("click", '.show-role', function(e) {
-         $(this).parent('div').parent().find('.added-role-section').toggle();
-     });
+  });
 
-     $(document).on("click", '.remove-role', function(e) {
-         $(this).parent().parent().parent().remove();
-     });
+  $(document).on("change", '.upload-field', function(e) {
+      var file_list = e.currentTarget.files;
+      var attachmentsBox = $('<div class=\"uplod-list-box\" id=\"uplod-list-box\" type=\"file\"><h1>Attachments</h1></div>')
+      var parentDiv = $(this).closest('table').parent()
+      parentDiv.find('div.uplod-list-box').remove();
+      $.each(file_list, function(index, element){
+        // var img = '<span class=\"remove-file\"><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span>'
+        var img = '<span></span>'
+        var label = '<label>'+ element.name + img + '</label>'
+        attachmentsBox.append(label);
+      });
+      attachmentsBox.insertAfter($(this).closest('table'));
+  });
+
+   $(document).on("click", '.show-role', function(e) {
+       $(this).parent('div').parent().find('.added-role-section').toggle();
+   });
+
+   $(document).on("click", '.remove-role', function(e) {
+       $(this).parent().parent().parent().remove();
+   });
 
     // $(document).on("click", '.remove-file', function(e) {
     //     var input = $(this).closest('div').parent().find('input[type=file]')[0];

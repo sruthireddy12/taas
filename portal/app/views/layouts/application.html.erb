@@ -10,12 +10,11 @@
       <div class="header-top">
         <div class="header-top-nav">
           <ul id="nav">
-            <li><a href="#"><span><img src="/assets/user-icon.png" width="14" height="14" alt="user" /></span>yourname.y@techrains.com</a></li>
+            <li><a href="#"><span><img src="/assets/user-icon.png" width="14" height="14" alt="user" /></span><%= current_user.email%></a></li>
             <li><a href="#"><span><img src="/assets/setting-icon.png" width="14" height="14" alt="settings" /></span>Account Settings</a>
               <ul>
-                <li><a href="#">Change Password</a></li>
-                <li><a href="#">User Administration</a></li>
-                <li><a href="#">Other Links Here</a></li>
+                <li><a href="<%= edit_user_registration_path(current_user)%>">Change Password</a></li>
+                <li><a href="<%= admin_users_path%>">User Administration</a></li>
               </ul>
             </li>
             <%- if user_signed_in? %>

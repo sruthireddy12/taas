@@ -1,7 +1,7 @@
 class Application < ActiveRecord::Base
   belongs_to :organization
-  has_many :credentials
-  has_many :attachments, as: :attachable
+  has_many :credentials, dependent: :destroy
+  has_many :attachments, as: :attachable, dependent: :destroy
   belongs_to :creator, :class_name => 'User', :foreign_key => 'creator'
   resourcify
 

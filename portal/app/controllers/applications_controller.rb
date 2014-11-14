@@ -30,7 +30,7 @@ class ApplicationsController < ApplicationController
 
   def create
     @application = Application.new(application_params)
-    @application.creator = current_user.id
+    @application.creator = current_user
     @application.organization = current_user.organization
     @application.save
     ## Add file attacments for a application
