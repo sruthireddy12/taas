@@ -1,5 +1,5 @@
 <div id="dialog-form" title="Add Application">
-  <%= render partial: 'form' ,locals: {application: Application.new}%>
+  <%= render partial: 'form' ,locals: {application: @application}%>
 </div>
 <div class="content-wrapper">
   <div class="cnt-head">
@@ -17,9 +17,9 @@
     <% @applications.each do |application| %>
       <tr>
         <td><%= count += 1 %></td>
-        <td><%= application.name %></td>
+        <td><%= link_to application.name,application_path(application.id) %></td>
         <td><%= application.url %></td>
-        <td><%= application.creator %></td>
+        <td><%= application.creator.email  %></td>
       </tr>
     <%end%>
   </table>
@@ -27,11 +27,12 @@
   <script type="text/javascript">
     var dialog,form;
     function submitForm() {
-      dialog.find("form").submit()
+      dialog.find("form").submit();
+      dialog.dialog( "close" );
     }
 
     function clearForm(){
-      $("#dialog-form").html("<%= escape_javascript(render partial: 'form' ,locals: {application: Application.new})%>");
+      $("#dialog-form").html("<%= escape_javascript(render partial: 'form' ,locals: {application: @application})%>");
     }
 
     dialog = $( "#dialog-form" ).dialog({
