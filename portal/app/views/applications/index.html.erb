@@ -4,7 +4,7 @@
 <div class="content-wrapper">
   <div class="cnt-head">
     <h1>Applications</h1>
-    <label id="new-application"><span><a href="#"><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" />Add Application</a></span></label>
+    <label id="new-application"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>Add Application</label>
   </div>
   <table class="tbl-1" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
@@ -13,7 +13,7 @@
       <th align="left" valign="middle">URL</th>
       <th align="left" valign="middle">Creator</th>
       <%if current_user.is_admin? %>
-        <th align="left" valign="middle">Action</th>
+      <th align="left" valign="middle">Action</th>
       <%end%>
     </tr>
     <% count = 0 %>
