@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div class="content-wrapper" style="margin-top:0%;">
   <div class="reg-main">
     <%= form_for @application, remote: true, html: {multipart: true } do |f| %>
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
@@ -26,49 +26,58 @@
         </tr>
         <tr></tr>
         <tr>
-          <table>
-            <td width="34%" align="right" style="padding-top:0px;">Upload Application Files</td>
-            <td width="66%" style="padding-top:0px;">
-              <input name="application_file_paths[]" type="file" multiple='multiple' class="form-style3 upload-field"/>
-            </td>
-          </table>
+          <th colspan="4">Application Attachments</th>
+        </tr>
+        <tr>
+          <td colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;">
+            <div class="uplod-box" style="margin:0px 0% 10px 2%">
+              <table width="90%" border="0" align="left" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="34%" align="right" style="padding-top:0px;">Upload Application Files</td>
+                  <td width="66%" style="padding-top:0px;">
+                    <input name="application_file_paths[]" type="file" multiple='multiple' class="form-style3 upload-field"/>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
         </tr>
         <tr>
           <th colspan="4">Login Information</th>
         </tr>
         <tr>
-          <div id='login-section' style="display:none;">
           <td colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;">
-            <div id='role-section'>
-              <table width="80%" border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td width="14%" align="right">Role</td>
-                  <td width="16%"><input name="[role]" type="text" class="form-style1" id="role" placeholder="Enter Here" /></td>
-                  <td width="7%" align="right">Username</td>
-                  <td width="19%"><input name="[username]" type="text" class="form-style1" id="username" placeholder="Enter Here" /></td>
-                  <td width="6%" align="right">Password</td>
-                  <td width="38%"><input name="[password]" type="password" class="form-style1" id="password" placeholder="Enter Here" /></td>
-                </tr>
-              </table>
-              <div class="uplod-box">
-                <table width="90%" border="0" align="left" cellpadding="0" cellspacing="0">
+            <div id='login-section' style="display:none;">
+              <div id='role-section'>
+                <table width="80%" border="0" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td width="34%" align="right" style="padding-top:0px;">Upload File</td>
-                    <td width="66%" style="padding-top:0px;">
-                      <input name="file_paths[]" type="file" multiple='multiple' class="form-style3 upload-field"/>
-                    </td>
+                    <td width="14%" align="right">Role</td>
+                    <td width="16%"><input name="[role]" type="text" class="form-style1" id="role" placeholder="Enter Here" /></td>
+                    <td width="7%" align="right">Username</td>
+                    <td width="19%"><input name="[username]" type="text" class="form-style1" id="username" placeholder="Enter Here" /></td>
+                    <td width="6%" align="right">Password</td>
+                    <td width="38%"><input name="[password]" type="password" class="form-style1" id="password" placeholder="Enter Here" /></td>
                   </tr>
                 </table>
+                <div class="uplod-box">
+                  <table width="90%" border="0" align="left" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="34%" align="right" style="padding-top:0px;">Upload File</td>
+                      <td width="66%" style="padding-top:0px;">
+                        <input name="file_paths[]" type="file" multiple='multiple' class="form-style3 upload-field"/>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </div>
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td id='add_roles' align="center" style="padding:10px;"><input name="" type="button" class="btn-style-4" value="Add Role &amp; Attachments" />
+                  </td>
+                </tr>
+              </table>
             </div>
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td id='add_roles' align="center" style="padding:10px;"><input name="" type="button" class="btn-style-4" value="Add Role &amp; Attachments" />
-                </td>
-              </tr>
-            </table>
           </td>
-          </div>
         </tr>
         <tr>
         </tr>
@@ -76,9 +85,6 @@
     <%end%>
   </div>
 </div>
-
-
-
 
 <script type="text/javascript">
   nestedForm = $('#role-section').clone();
@@ -109,6 +115,7 @@
     $(uploadedBox).appendTo(parentTd);
 
     $('#role-section').find('input:text').val('');
+    $('#role-section').find('input:password').val('');
     $('#role-section').find('input:file')[0].value = '';
     $('#role-section').find('.uplod-list-box').remove();
   });
@@ -129,8 +136,8 @@
       var parentDiv = $(this).closest('table').parent()
       parentDiv.find('div.uplod-list-box').remove();
       $.each(file_list, function(index, element){
-        // var img = '<span class=\"remove-file\"><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span>'
-        var img = '<span></span>'
+        var img = '<span class=\"remove-file\"><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span>'
+        // var img = '<span></span>'
         var label = '<label>'+ element.name + img + '</label>'
         attachmentsBox.append(label);
       });
