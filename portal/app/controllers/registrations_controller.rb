@@ -22,6 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
 	    if resource_saved
 	      #Making the first registered user as admin for that organization
 	      resource.add_role :admin, organization
+	      UserMailer.welcome_email(resource, params["user"]["password"]).deliver
 	      if resource.active_for_authentication?
 	        set_flash_message :notice, :signed_up if is_flashing_format?
 	        sign_up(resource_name, resource)
@@ -51,7 +52,7 @@ class RegistrationsController < Devise::RegistrationsController
 
     def sign_up_params
       allow = [:email, :password, :password_confirmation, :organization_id, :captcha, :captcha_key,
-              profile_attributes: [:first_name, :last_name, :referred_by, :mobile_number, :telephone_number, :gender]]
+              profile_attributes: [:first_name, :last_name, :referred_by, :mobile_number, :telephone_number, :gender, :inquiry]]
       params.require(resource_name).permit(allow)
     end
 

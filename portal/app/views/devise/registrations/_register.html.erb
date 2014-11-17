@@ -1,5 +1,11 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), remote: true) do |f| %>
-  <%= devise_error_messages! %>
+  <%- unless f.object.errors.empty? %>
+    <div class='ui-state-highlight'>
+       <%-f.object.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+       <% end %>
+    </div>
+  <% end %>
     <table border="0" cellspacing="7" cellpadding="0" align="center" width="400px">
       <tr>
         <td width="230px" align="right">Email<span class='required'>*</span></td>
@@ -22,7 +28,7 @@
           <td ><%= of.text_field :name, autocomplete: "off", class:'inpt-1' %></td>
         <%-end %>
       </tr>
-      <%= f.fields_for :profile,@user.build_profile do |profile|%>
+      <%= f.fields_for :profile, (resource.profile || resource.build_profile) do |profile|%>
         <tr>
           <td  align="right">First Name</td>
           <td ><%= profile.text_field :first_name, autocomplete: "off", class:'inpt-1'%></td>

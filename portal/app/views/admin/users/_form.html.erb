@@ -1,8 +1,15 @@
- <tr>
+<%- unless f.object.errors.empty? %>
+  <div class='ui-state-highlight'>
+     <%-f.object.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+     <% end %>
+  </div>
+<% end %>
+<tr>
   <td><%= f.label :email %></td>
   <td><%= f.text_field :email %></td>
 </tr>
-<%- f.object.build_profile %>
+<%- f.object.profile || f.object.build_profile %>
 <%= f.fields_for :profile do |profile|%>
  <tr>
   <td><%= profile.label :first_name %></td>
@@ -14,7 +21,3 @@
   <td><%= profile.text_field :last_name %></td>
 </tr>
 <% end %>
-
-
-<%#= f.submit "Save"%>
-<%#= link_to "Cancel", admin_users_path %>

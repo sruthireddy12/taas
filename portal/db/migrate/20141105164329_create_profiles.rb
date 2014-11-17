@@ -4,8 +4,8 @@ class CreateProfiles < ActiveRecord::Migration
       t.string  :first_name
       t.string  :last_name
       t.string  :referred_by
-      t.integer :mobile_number
-      t.integer :telephone_number
+      t.string :mobile_number
+      t.string :telephone_number
       t.string  :gender
       t.references :user
 
