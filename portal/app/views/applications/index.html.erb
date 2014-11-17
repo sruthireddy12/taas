@@ -25,13 +25,14 @@
         <td><%= application.creator.full_name || application.creator.email %></td>
         <%if current_user.is_admin? %>
           <td><%= link_to 'Delete', @application, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+          <td><%= link_to 'Edit','#',locals: {application: application} ,onclick: "editapp('#{application.id}')" %></td>
         <%end%>
       </tr>
     <%end%>
   </table>
 </div>
   <script type="text/javascript">
-    var dialog,form;
+    var dialog,form,edit_app;
     function submitForm() {
       dialog.find("form").submit();
       dialog.dialog( "close" );
@@ -65,5 +66,42 @@
     $("#new-application").on("click", function() {
       dialog.dialog( "open" );
     });
+
+    function editapp(app_id){
+      // edit_app.data('app_id',app_id).dialog( "open" );
+      // var data = app_id
+
+    return $.ajax('/applications/' + app_id + '/edit', {
+      type: 'GET',
+      datatype: 'json',
+      success: function(data, textStatus, jqHXR) {
+        alert(app_id)
+        $("#dialog-form").dialog({modal:true}).dialog('open');
+      }
+    });
+    }
+
+    // edit_app = $( "#dialog-edit" ).dialog({
+    //   autoOpen: false,
+    //   height: 800,
+    //   width: 1200,
+    //   modal: true,
+    //   buttons: [
+    //     {
+    //         text: "Cancel",
+    //         "class": 'btn-style-2',
+    //         click: function() {
+    //           // alert($(this).data('app_id'))
+    //             dialog.dialog( "close" );
+    //         }
+    //     },
+    //     {
+    //         text: "Save Application",
+    //         "class": 'btn-style',
+    //         click: submitForm
+    //     }
+    //   ],
+    //   close: clearForm
+    // });
   </script>
 

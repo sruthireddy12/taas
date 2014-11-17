@@ -19,7 +19,7 @@
     <td ><b>Description : </b> <%= @application.description %></td>
   </tr>
   <tr>
-    <td ><b>Preferred Time : </b> <%= @application.prefered_contact_time.strftime("%H:%M %p") %></td>
+    <td ><b>Preferred Time : </b> <%= @application.prefered_contact_time.blank? ? "" : @application.prefered_contact_time.strftime("%H:%M %p") %></td>
   </tr>
   <% unless @application.attachments.blank? %>
     <tr>

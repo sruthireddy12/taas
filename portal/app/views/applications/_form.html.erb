@@ -1,11 +1,13 @@
 <div class="content-wrapper" style="margin-top:0%;">
   <div class="reg-main">
+
     <%= form_for @application, remote: true, html: {multipart: true } do |f| %>
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
       <table class="tbl-2" width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <th colspan="4">Application Information</th>
+          <th colspan="4">Application Information<%= @application.id if !@application.blank? %></th>
         </tr>
+        <%= binding.pry%>
         <tr>
           <td width="9%" align="right">Application Name<span class='required'>*</span></td>
           <td width="18%"><%= f.text_field :name , class: "form-style1", placeholder: "Enter Here" %></td>
@@ -29,11 +31,17 @@
           <th colspan="4">Application Attachments</th>
         </tr>
         <tr>
+            <%@application.attachments.each do |attachment|%>
+            <td>
+              <a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a></td>
+            <%end%>
+        </tr>
+        <tr>
           <td colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;">
             <div class="uplod-box" style="margin:0px 0% 10px 2%">
               <table width="90%" border="0" align="left" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td width="34%" align="right" style="padding-top:0px;">Upload Application Files</td>
+                  <td width="34%" align="right" style="padding-top:0px;">Upload Application Attachments </td>
                   <td width="66%" style="padding-top:0px;">
                     <input name="application_file_paths[]" type="file" multiple='multiple' class="form-style3 upload-field"/>
                   </td>
