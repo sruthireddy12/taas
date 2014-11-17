@@ -516,3 +516,154 @@ span.required {
 	color: #F00;
 	font-weight: bold;
 }
+
+/* **********************  User role asign  ********************** */
+
+.ura-main {
+	width:980px;
+	height:auto;
+	float:left;
+	padding:10px;
+}
+
+.ura-left {
+	width:708px;
+  height:auto;
+  float:left;
+  border:#d1d1d1 1px solid;
+}
+
+.ura-left-head {
+	width:708px;
+	height:27px;
+	float:left;
+	background:url(/assets/th-bg.png) repeat-x;
+}
+
+.ura-left-head-box1 {
+  width:25px;
+  height:auto;
+  float:left;
+  padding:7px 0px 0px 10px;
+}
+
+.ura-left-head-box2 {
+	width:170px;
+	height:auto;
+	float:left;
+	padding:5px 0px 0px 0px;
+	font-size:13px;
+	color:#3e3e3e;
+}
+
+.ura-left-head-box3 {
+  width:493px;
+  height:auto;
+  float:left;
+  padding:5px 0px 0px 10px;
+  font-size:13px;
+  color:#3e3e3e;
+}
+
+.ura-left-cnt {
+  width:708px;
+  height:400px;
+  float:left;
+  overflow:auto;
+  overflow-x:hidden;
+}
+
+.ura-left-cnt-tbl {
+  width:auto;
+  height:auto;
+}
+
+.ura-left-cnt-tbl td {
+  color:#2689d6;
+  font-size:13px;
+  border-bottom:1px solid #e4e4e4;
+}
+
+.ura-left-cnt-tbl td.role {
+  border-left:1px solid #e4e4e4;
+  padding-bottom:5px;
+}
+
+.ura-left-cnt-tbl td label {
+	display:block;
+	float:left;
+	background:#FFF;
+	border:#cbcbcb 1px solid;
+	padding:5px 4px 5px 10px;
+	margin:5px 0px 0px 5px;
+	font-size:11px;
+	color:#494949;
+	width:auto;
+	height:auto;
+}
+
+.ura-left-cnt-tbl td label span {
+	display:block;
+	float:right;
+	cursor:pointer;
+	margin-left:5px;
+}
+
+.ura-left-cnt-tbl td label span:hover {
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}
+
+.ura-right {
+	width:254px;
+	height:auto;
+	float:left;
+	border:#2689d6 1px solid;
+	margin-left:10px;
+}
+
+.ura-right-disable {
+	opacity: 0.3;
+	filter: alpha(opacity=30);
+}
+
+.ura-right-head {
+  width:244px;
+  height:27px;
+  line-height:27px;
+  color:#FFF;
+  font-size:13px;
+  float:left;
+  background:#2689d6;
+  padding-left:10px;
+  font-weight:bold;
+}
+
+.ura-right-cnt {
+	width:254px;
+	height:400px;
+	float:left;
+	overflow:auto;
+	overflow-x:hidden;
+}
+
+.ura-right-cnt label {
+	width:254px;
+	height:35px;
+	background:url(/assets/ura-right-btn-bg.png) repeat-x;
+	line-height:35px;
+	color:#395266;
+	display:block;
+	font-size:14px;
+	cursor:pointer;
+}
+
+.ura-right-cnt label span {
+	display:block;
+	float:left;
+	margin:11px 5px 0px 10px;
+}
+
+.ura-right-cnt label:hover {
+	background:url(/assets/ura-right-btn-bg-hover.png) repeat-x;
+}
