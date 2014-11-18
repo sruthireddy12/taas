@@ -7,17 +7,17 @@
 <% end %>
 <tr>
   <td><%= f.label :email %></td>
-  <td><%= f.text_field :email %></td>
+  <td><%= f.text_field :email, class:'inpt-1' %></td>
 </tr>
 <%- f.object.profile || f.object.build_profile %>
 <%= f.fields_for :profile do |profile|%>
  <tr>
   <td><%= profile.label :first_name %></td>
-  <td><%= profile.text_field :first_name %></td>
+  <td><%= profile.text_field :first_name, class:'inpt-1' %></td>
 </tr>
 
  <tr>
   <td><%= profile.label :last_name %></td>
-  <td><%= profile.text_field :last_name %></td>
+  <td><%= profile.text_field :last_name, class:'inpt-1' %></td>
 </tr>
 <% end %>

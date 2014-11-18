@@ -1,36 +1,33 @@
-<html>
-<body>
 <div id="user_form" title="Users" style="display:none;">
    <%= render :partial => "new", :locals => {:user => User.new}%>
 </div>
-<div>
-<div class="pull-right" id ="new_user">
-  <button class="btn btn-primary btn-sm">
-    New User
-  </button>
+<div class="content-wrapper">
+  <div class="cnt-head">
+     <h1>Users</h1>
+     <label id="new_user"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>New User</label>
+   </div>
+  <table class="tbl-1" id="users_list" border="0" cellspacing="0" cellpadding="0">
+   <thead>
+    <tr>
+      <th align="left">First Name</th>
+      <th align="left">Last Name</th>
+          <th align="left">
+        <%= t("activerecord.attributes.user.email", :default => t("activerecord.labels.email", :default => "Email")) %>
+      </th>
+      <th align="left">Mobile Number</th>
+      <th align="left">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| -%>
+        <%= render :partial => 'user', :locals => {:user => user} %>
+      <% end -%>
+    </tbody>
+  </table>
 </div>
-<h3>Users</h3>
-<table class="table table-striped" id='users_list'>
- <thead>
-  <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-        <th>
-      <%= t("activerecord.attributes.user.email", :default => t("activerecord.labels.email", :default => "Email")) %>
-    </th>
-        <th>Mobile Number</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| -%>
-      <%= render :partial => 'user', :locals => {:user => user} %>
-    <% end -%>
-  </tbody>
-</table>
-</div>
+<script type="text/javascript">
+  altRows('users_list');
 
-<script>
   $(function() {
     var dialog,form;
     function submitForm() {
@@ -47,7 +44,7 @@
       width: 450,
       modal: true,
       buttons: {
-          "Create an account": submitForm,
+          "Create User": submitForm,
           Cancel: function() {
             dialog.dialog( "close" );
           }
@@ -60,6 +57,3 @@
     });
   });
   </script>
-
-  </body>
-  </html>

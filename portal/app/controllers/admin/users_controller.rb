@@ -21,7 +21,7 @@ class Admin::UsersController < Admin::AdminController
   def create
     @user = User.new(user_params)
     @user.organization_id = current_user.organization_id
-    generated_password = Devise.friendly_token.first(8)+"#"
+    generated_password = Devise.friendly_token.first(8)+"#"+"2"
     @user.password =  generated_password
     respond_to do |format|
       if @user.save

@@ -1,9 +1,9 @@
  <tr>
-  <td><%= user.first_name %></td>
-  <td><%= user.last_name %></td>
-  <td><%= user.email %></td>
-  <td><%= user.mobile_number %></td>
-  <td>
+  <td align="left"><%= user.first_name %></td>
+  <td align="left"><%= user.last_name %></td>
+  <td align="left"><%= user.email %></td>
+  <td align="left"><%= user.mobile_number %></td>
+  <td align="left" >
     <%= link_to "Edit", edit_admin_user_path(user)%>
     <% unless current_user == user%>
     <%= link_to "Delete", admin_user_path(user), :method => :delete, :data => { :confirm => 'Are you sure?' } %>

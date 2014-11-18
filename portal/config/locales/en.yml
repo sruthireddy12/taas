@@ -22,7 +22,7 @@
 en:
   hello: "Hello world"
   simple_captcha:
-    placeholder: "Enter the characters in image"
+    placeholder: "Enter the captcha"
     label: "Enter the code in the box:"
     refresh_button_text: "Refresh"
     message:

@@ -1,6 +1,6 @@
 #nav a, #subMenusContainer a {
 	display:block;
-	padding:7px 25px;
+	padding:7px 25px 5px 25px;
 	color:#FFF;
 	font-size:12px;
 }
@@ -25,16 +25,16 @@ margin-right:5px;
 	color:#FFF;
 }
 .subMenuParentBtn {
-	background: url(../images/arrow_right.gif) right center no-repeat;
+	background: url(/assets/arrow_right.gif) right center no-repeat;
 }
 .subMenuParentBtnFocused {
-	background: url(../images/arrow_right_over.gif) right center no-repeat;
+	background: url(/assets/arrow_right_over.gif) right center no-repeat;
 }
 .mainMenuParentBtn {
-	background: url(../images/arrow_down.gif) right center no-repeat;
+	background: url(/assets/arrow_down.gif) right center no-repeat;
 }
 .mainMenuParentBtnFocused {
-	background: url(../images/arrow_down_over.gif) right center no-repeat;
+	background: url(/assets/arrow_down_over.gif) right center no-repeat;
 }
 .smOW {
 	display:none;

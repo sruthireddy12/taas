@@ -1,7 +1,5 @@
-<%= form_for [:admin, user], :url => admin_users_path, :remote => true do |f| -%>
 <table border="0" cellspacing="7" cellpadding="0" align="center" width="400px">
-  <%= render :partial => "form", :locals => {:f => f} %>
-  </table>
-<% end -%>
-
-
+    <%= form_for [:admin, user], :url => admin_users_path, :remote => true do |f| -%>
+      <%= render :partial => "form", :locals => {:f => f} %>
+    <% end -%>
+</table>
