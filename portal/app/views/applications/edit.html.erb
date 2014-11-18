@@ -1,6 +1,70 @@
 <h1>Editing application</h1>
 
-<%= render 'form' %>
+<div class="reg-main">
+    <%= form_for @application, remote: true, html: {multipart: true, :id=>'edit_application' } do |f| %>
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+       
+          <%= f.text_field :name , class: "form-style1", placeholder: "Enter Here" %>
+          <%= f.text_field :point_of_contact , class: "form-style1", placeholder: "Enter Here" %>
+    
+          <%= f.text_field :url , class: "form-style1", id: "url_field", placeholder: "Enter Here"%>
+          <%= f.text_field :email , class: "form-style1", placeholder: "Enter Here" %>
+          <%= f.text_area :description, class: "form-style2", placeholder: "Enter Here" %>
+          <%= f.time_select :prefered_contact_time ,ampm: true %>
+          <div>
+          <%= f.file_field :file_paths, multiple: true%>
+	        <div class='uplod-list-box'></div>
+	        </div>
 
-<%= link_to 'Show', @application %> |
-<%= link_to 'Back', applications_path %>
+            <%= f.fields_for :credentials do |c| %>
+	           <div>  
+	            <%= c.text_field :role, class: 'form-style1' %>
+	            <%= c.text_field :username, class: 'form-style1' %>
+	            <%= c.text_field :password, class: 'form-style1' %>	                   
+	            <%= c.file_field :file_paths, multiple: true%>
+	            <div class='uplod-list-box'></div>
+	            </div>
+            <% end %>
+    <%end%>
+
+    <button type="submit" id='update_app' class="btn primary start">Start upload</button>
+  </div>
+
+  <script type='text/javascript'>
+      var filesList = [],
+        paramNames = [],
+        elem = $("#edit_application");
+      
+    	file_upload = elem.fileupload({
+		    dataType: "script",
+		    autoUpload: false,
+		    singleFileUploads: false,
+		    sequentialUploads: false,
+		    add: function (e, data) {
+		        var that = this;
+            var box = $("#" +e.currentTarget.id).parent().find('.uplod-list-box')
+		        data.context = box;
+		        numberOfFiles = filesList.length
+		        $.each(data.files, function (index, file) {
+		        	var img = '<span class=\"remove-file\"><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span>'
+		        	var node = $('<label>'+ file.name + img + '</label>')
+              node.appendTo(data.context);
+              filesList.push(file);
+		          paramNames.push(e.currentTarget.name);
+              node.find("span").click(function(){
+                  node.remove();
+                  data.files.splice(index,1);
+                  filesList.splice((numberOfFiles + index), 1);
+                  paramNames.splice((numberOfFiles + index), 1);
+              });
+		        });
+		            
+	    	} 
+  	   });
+
+    	$("#update_app").on("click", function(e){
+		    e.preventDefault();
+        file_upload.fileupload('send', {files:filesList, paramName: paramNames});
+		  })
+
+  </script>
