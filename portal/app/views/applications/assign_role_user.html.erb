@@ -1,0 +1,47 @@
+<div class="ura-main">
+  <div class="ura-left">
+    <div class="ura-left-head">
+      <div class="ura-left-head-box1"><input name="" type="checkbox" value="" /></div>
+      <div class="ura-left-head-box2">Users</div>
+      <div class="ura-left-head-box3">Roles</div>
+    </div>
+    <div class="ura-left-cnt">
+      <table width="648" border="0" cellspacing="0" cellpadding="0" class="ura-left-cnt-tbl">
+      <% @users.each do |u|%>
+        <tr>
+          <td align="center">
+            <input name="input" type="checkbox" value="" id="<%= u.id%>"/>
+          </td>
+          <td><%= u.email%></td>
+          <td class="role" ><label><span><input type="checkbox" /></span> rolename</label></td>
+        </tr>
+      <%end%>
+      
+      </table>
+    </div>
+  </div>
+  <div class="ura-right ">
+    <div class="ura-right-head">
+      Roles
+    </div>
+    <div class="ura-right-cnt">
+      
+      <table>
+      <% @roles.each do |role|%>
+      <tr><td><label><span><input name="" type="checkbox" value="" id="<%=role.id%>" /></span><%= role.name%></label></td></tr>
+      <%end%>
+      <tr>
+      <td><button type="button" onclick="assign_roles()">Assign</button></td>
+      </tr>
+      </table>
+      
+    </div>
+  </div>
+</div>
+<script>
+  function assign_roles(){
+    alert("Hi")
+    var n = $( "input:checked" ).length;
+    alert(n)
+  }
+</script>
