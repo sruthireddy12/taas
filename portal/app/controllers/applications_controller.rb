@@ -26,6 +26,7 @@ class ApplicationsController < ApplicationController
   end
 
   def edit
+    render :layout => !request.xhr?
   end
 
   def create

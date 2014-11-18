@@ -20,4 +20,8 @@ class User < ActiveRecord::Base
     first_name.to_s + last_name.to_s if (first_name || last_name)
   end
 
+  def is_organization_admin?
+    self.has_role?(:admin, organization)
+  end
+
 end

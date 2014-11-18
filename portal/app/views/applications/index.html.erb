@@ -13,7 +13,7 @@
       <th align="left" valign="middle">URL</th>
       <th align="left" valign="middle">Creator</th>
       <%if current_user.is_admin? %>
-      <th align="left" valign="middle">Action</th>
+      <th align="left" valign="middle">Actions</th>
       <%end%>
     </tr>
     <% count = 0 %>
@@ -23,9 +23,12 @@
         <td><%= link_to application.name,application_path(application.id) %></td>
         <td><%= application.url %></td>
         <td><%= application.creator.full_name || application.creator.email %></td>
-        <%if current_user.is_admin? %>
-          <td><%= link_to 'Delete', @application, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
-        <%end%>
+        <td>
+          <%- editable = (current_user.is_admin? || current_user.is_organization_admin? || current_user.is_admin_of(application)) %>
+
+          <%= link_to_if(editable, 'Edit', { controller: "applications", action: "edit", id: application}, {class: 'edit-link' })%>
+          <%= link_to 'Delete', application, :method => :delete, :data => { :confirm => 'Are you sure?' } if current_user.is_admin? %>
+        </td>
       </tr>
     <%end%>
   </table>
@@ -65,5 +68,20 @@
     $("#new-application").on("click", function() {
       dialog.dialog( "open" );
     });
+
+    $(".edit-link").on("click", function(e){
+       e.preventDefault();
+       var tag = $("<div></div>"),
+           url = $(this).attr('href')
+        $.ajax({
+          url: url,
+          success: function(data) {
+            tag.html(data).dialog({modal: true,
+              height: 800,
+              width: 1200}).
+            dialog('open');
+          }
+        });
+    })
   </script>
 
