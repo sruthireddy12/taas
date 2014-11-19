@@ -17,6 +17,7 @@
 //= require jquery-ui/dialog
 //= require jquery-ui/mouse
 //= require jquery-ui/position
+//= require jquery-fileupload/basic
 //= require_tree .
 
 function altRows(id){

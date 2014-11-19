@@ -21,8 +21,7 @@ class ApplicationsController < ApplicationController
 
   def new
     @application = Application.new
-    @application.credentials.build if @application.credentials.empty?
-    respond_with(@application)
+    render :layout => !request.xhr?
   end
 
   def edit
@@ -37,7 +36,7 @@ class ApplicationsController < ApplicationController
     ## Add file attacments for a application
     params[:application_file_paths].each do |file|
       @application.attachments.create(file_path: file)
-    end
+    end if params[:application_file_paths] && !params[:application_file_paths].empty?
     respond_with(@application)
   end
 

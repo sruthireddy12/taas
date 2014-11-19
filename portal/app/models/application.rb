@@ -11,5 +11,5 @@ class Application < ActiveRecord::Base
   validates_length_of :name, :within => 3..50, :too_long => "name is too long", :too_short => "name is too short"
   validates_uniqueness_of :name, scope: :organization_id
 
-  accepts_nested_attributes_for :credentials
+  accepts_nested_attributes_for :credentials, reject_if: proc { |attributes| attributes['role'].blank? }
 end

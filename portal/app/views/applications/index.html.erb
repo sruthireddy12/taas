@@ -1,6 +1,4 @@
-<div id="dialog-form" title="Add Application">
-  <%= render partial: 'form' ,locals: {application: @application}%>
-</div>
+
 <div class="content-wrapper">
   <div class="cnt-head">
     <h1>Applications</h1>
@@ -34,54 +32,75 @@
   </table>
 </div>
   <script type="text/javascript">
-    var dialog,form;
+
     function submitForm() {
-      dialog.find("form").submit();
-      dialog.dialog( "close" );
+      elem.fileupload('send', {files: filesList, paramName: paramNames});
+      if( filesList.length == 0 )
+        elem.submit();
+      $(this).dialog("close");
     }
 
-    function clearForm(){
-      $("#dialog-form").html("<%= escape_javascript(render partial: 'form' ,locals: {application: @application})%>");
-    }
-
-    dialog = $( "#dialog-form" ).dialog({
-      autoOpen: false,
-      height: 800,
-      width: 1200,
-      modal: true,
-      buttons: [
-        {
-            text: "Cancel",
-            "class": 'btn-style-2',
-            click: function() {
-                dialog.dialog( "close" );
-            }
-        },
-        {
-            text: "Save Application",
-            "class": 'btn-style',
-            click: submitForm
+    $("#new-application").on("click", function (e) {
+      e.preventDefault();
+      var tag = $("<div id=\"dialog-form\"></div>"),
+        url = 'applications/new';
+      $.ajax({
+        url: url,
+        success: function(data) {
+          tag.html(data).dialog({
+            modal: true,
+            height: 800,
+            width: 1200,
+            title: 'Create new Application',
+            buttons: [
+              {
+                text: "Cancel",
+                "class": 'btn-style-2',
+                click: function() {
+                  $(this).dialog("close")
+                }
+              },
+              {
+                text: "Save Application",
+                "class": 'btn-style',
+                click: submitForm
+              }
+            ]
+          }).
+          dialog('open');
         }
-      ],
-      close: clearForm
-    });
-    $("#new-application").on("click", function() {
-      dialog.dialog( "open" );
+      });
     });
 
-    $(".edit-link").on("click", function(e){
-       e.preventDefault();
-       var tag = $("<div></div>"),
-           url = $(this).attr('href')
-        $.ajax({
-          url: url,
-          success: function(data) {
-            tag.html(data).dialog({modal: true,
-              height: 800,
-              width: 1200}).
-            dialog('open');
-          }
-        });
+    $(".edit-link").on("click", function (e){
+      e.preventDefault();
+      var tag = $("<div></div>"),
+        url = $(this).attr('href');
+      $.ajax({
+        url: url,
+        success: function(data) {
+          tag.html(data).dialog({modal: true,
+            height: 800,
+            width: 1200,
+            title: 'Edit Application',
+            buttons: [
+              {
+                text: "Cancel",
+                "class": 'btn-style-2',
+                click: function() {
+                  $(this).dialog("close")
+                }
+              },
+              {
+                text: "Save Application",
+                "class": 'btn-style',
+                click: submitForm
+              }
+            ]
+          }).
+          dialog('open');
+        }
+      });
     })
   </script>
 

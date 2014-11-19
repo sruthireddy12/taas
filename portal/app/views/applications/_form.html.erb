@@ -1,6 +1,6 @@
 <div class="content-wrapper" style="margin-top:0%;">
   <div class="reg-main">
-    <%= form_for @application, remote: true, html: {multipart: true } do |f| %>
+    <%= form_for @application, remote: true, html: {multipart: true, class: 'application-form' } do |f| %>
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
       <table class="tbl-2" width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -39,6 +39,8 @@
                   </td>
                 </tr>
               </table>
+              <div class="uplod-list-box">
+              </div>
             </div>
           </td>
         </tr>
@@ -47,16 +49,17 @@
         </tr>
         <tr>
           <td colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;">
-            <div id='login-section' style="display:none;">
+            <div id='login-section' style="display:block;">
               <div id='role-section'>
+                <%= f.fields_for :credentials, @application.credentials.build do |c| %>
                 <table width="80%" border="0" cellpadding="0" cellspacing="0">
                   <tr>
                     <td width="14%" align="right">Role</td>
-                    <td width="16%"><input name="[role]" type="text" class="form-style1" id="role" placeholder="Enter Here" /></td>
+                    <td width="16%"><%= c.text_field :role, class: 'form-style1', :id => 'role' %></td>
                     <td width="7%" align="right">Username</td>
-                    <td width="19%"><input name="[username]" type="text" class="form-style1" id="username" placeholder="Enter Here" /></td>
+                    <td width="19%"><%= c.text_field :username, class: 'form-style1' %></td>
                     <td width="6%" align="right">Password</td>
-                    <td width="38%"><input name="[password]" type="password" class="form-style1" id="password" placeholder="Enter Here" /></td>
+                    <td width="38%"><%= c.text_field :password, class: 'form-style1' %></td>
                   </tr>
                 </table>
                 <div class="uplod-box">
@@ -64,11 +67,12 @@
                     <tr>
                       <td width="34%" align="right" style="padding-top:0px;">Upload File</td>
                       <td width="66%" style="padding-top:0px;">
-                        <input name="file_paths[]" type="file" multiple='multiple' class="form-style3 upload-field"/>
+                        <%= c.file_field :file_paths, multiple: true, class: "form-style3 upload-field"%>
                       </td>
                     </tr>
                   </table>
                 </div>
+                <% end %>
               </div>
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
@@ -76,6 +80,46 @@
                   </td>
                 </tr>
               </table>
+              <%- unless @application.new_record? %>
+                <%- @application.credentials.reset %>
+                <%= f.fields_for :credentials do |c| %>
+                  <div class="uploded-box">
+                    <div>
+                      <h1>Role : <span><%= c.object.role %></span><span class="remove-role"><img src="assets/close-icon.png" width="14" height="14" alt="delete"></span></h1>
+                      <input name="" type="button" class="btn-style-5 show-role" value="">
+                    </div>
+                    <div class="added-role-section" style="display: block;">
+                                  
+                      <table width="80%" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                          <tr>
+                            <td width="14%" align="right">Role</td>
+                            <td width="16%"><%= c.text_field :role, class: 'form-style1' %></td>
+                            <td width="7%" align="right">Username</td>
+                            <td width="19%"><%= c.text_field :username, class: 'form-style1' %></td>
+                            <td width="6%" align="right">Password</td>
+                            <td width="38%"><%= c.text_field :password, class: 'form-style1' %></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="uplod-box">
+                        <table width="90%" border="0" align="left" cellpadding="0" cellspacing="0">
+                          <tbody>
+                            <tr>
+                              <td width="34%" align="right" style="padding-top:0px;">Upload File</td>
+                              <td width="66%" style="padding-top:0px;">
+                                <%= c.file_field :file_paths, multiple: true, class: "form-style3 upload-field"%>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="uplod-list-box">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
             </div>
           </td>
         </tr>
@@ -87,9 +131,8 @@
 </div>
 
 <script type="text/javascript">
-  nestedForm = $('#role-section').clone();
 
-  $("#add_roles").on("click", function() {
+  $(document).on("click", "#add_roles", function () {
     lastNestedForm = $('.uploded-box').last();
     newNestedForm = $('#role-section').clone();
     uploadedBox = $('<div class=\"uploded-box\"></div>');
@@ -101,66 +144,108 @@
     newNestedForm.attr('class', 'added-role-section');
     newNestedForm.attr('style', 'display:none;');
 
+
     parentTd = $(this).closest('table').parent();
     formsOnPage = parentTd.children().length - 2;
-    nestedName = 'application[credentials_attributes][0]';
+    newNestedForm.find('input#role').each(function (){
+      oldId = $(this).attr('id');
+      newId = "application_credentials_attributes_0_role".replace(new RegExp(/_[0-9]+_/), "_" + formsOnPage +"_");
+      $(this).attr('id', newId);
+    })
+     
+    //nestedName = 'application[credentials_attributes][0]';
+    $('#role-section').find('select, input').each(function(){
+      oldId = $(this).attr('id');
+      if (oldId == 'role')
+        newId = oldId;
+      else
+        newId = oldId.replace(new RegExp(/_[0-9]+_/), "_" + (formsOnPage + 1) +"_");
 
-    $(newNestedForm).find('select, input').each(function(){
+      $(this).attr('id', newId);
+
       oldName = $(this).attr('name');
-      oldName = nestedName + oldName;
-      newName = oldName.replace(new RegExp(/\[[0-9]+\]/), "[" + formsOnPage + "]");
+      newName = oldName.replace(new RegExp(/\[[0-9]+\]/), "[" + (formsOnPage + 1) + "]");
       $(this).attr('name', newName);
     });
-    $(uploadedBox).append(newNestedForm)
+
+    //Removing the input for file upload as it is not editable
+    $(newNestedForm).find('.uplod-box').find('table').remove()
+    $(uploadedBox).append(newNestedForm);
     $(uploadedBox).appendTo(parentTd);
 
     $('#role-section').find('input:text').val('');
     $('#role-section').find('input:password').val('');
     $('#role-section').find('input:file')[0].value = '';
     $('#role-section').find('.uplod-list-box').remove();
+    bindUpload();
   });
 
-  $("input#url_field").keyup(function() {
+  $(document).on("keyup", "input#url_field",function() {
     if($(this).val() === ''){
       $("#login-section").hide();
     }
     else {
       $("#login-section").show();
     }
-
   });
-
-  $(document).on("change", '.upload-field', function(e) {
-      var file_list = e.currentTarget.files;
-      var attachmentsBox = $('<div class=\"uplod-list-box\" id=\"uplod-list-box\" type=\"file\"><h1>Attachments</h1></div>')
-      var parentDiv = $(this).closest('table').parent()
-      parentDiv.find('div.uplod-list-box').remove();
-      $.each(file_list, function(index, element){
-        var img = '<span class=\"remove-file\"><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span>'
-        // var img = '<span></span>'
-        var label = '<label>'+ element.name + img + '</label>'
-        attachmentsBox.append(label);
-      });
-      attachmentsBox.insertAfter($(this).closest('table'));
-  });
-
+ 
    $(document).on("click", '.show-role', function(e) {
        $(this).parent('div').parent().find('.added-role-section').toggle();
    });
 
    $(document).on("click", '.remove-role', function(e) {
-       $(this).parent().parent().parent().remove();
+       parentDiv = $(this).closest('div').parent()
+       input_file_name = parentDiv.find('div.added-role-section').find('input[type=file]')[0].name
+       i = 0;
+       noOfElements = paramNames.length
+       while(i < noOfElements){
+        if (paramNames[i] == input_file_name){
+          filesList.splice(i,1);
+          paramNames.splice(i,1);
+          i--;
+        }
+        i++;
+       }
+       parentDiv.remove();
    });
 
-    // $(document).on("click", '.remove-file', function(e) {
-    //     var input = $(this).closest('div').parent().find('input[type=file]')[0];
-        // $(this).parent().remove();
-        // var file_name = $(this).parent().text();
-        // $.each(input.files, function(index, element){
-        //     if(element.name === file_name) {
-        //       file_name.remove();
-              // input.files.splice(index, 1);
-        //     }
-        // });
-    // });
+    var filesList = [],
+        paramNames = [],
+        elem = $(".application-form");
+
+    function bindUpload() {
+        elem.fileupload({
+          dataType: "script",
+          autoUpload: false,
+          singleFileUploads: false,
+          sequentialUploads: false,
+          add: function (e, data) {
+              var that = this;
+              var uploadBox = $("#" +e.currentTarget.id).closest('div')
+              var box = uploadBox.find('.uplod-list-box')
+              if(box.length == 0)
+                box = $('<div class=\"uplod-list-box\"></div>');
+              box.appendTo(uploadBox);
+
+              data.context = box;
+              data.formData = elem.serializeArray();
+              paramName = e.currentTarget.name
+              numberOfFiles = filesList.length
+              $.each(data.files, function (index, file) {
+                var img = '<span class=\"remove-file\"><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span>'
+                var node = $('<label>'+ file.name + img + '</label>')
+                node.appendTo(data.context);
+                filesList.push(file);
+                paramNames.push(paramName);
+                node.find("span").click(function(){
+                    node.remove();
+                    data.files.splice(index,1);
+                    filesList.splice((numberOfFiles + index), 1);
+                    paramNames.splice((numberOfFiles + index), 1);
+                });
+              });
+            } 
+         });
+      }
+      bindUpload();
 </script>
