@@ -7,7 +7,8 @@ Rails.application.routes.draw do
     resources :users
     resources :organizations
   end
-  get '/applications/:id/assign_role_user' => 'applications#assign_role_user' ,as: 'role_users'
+  get '/applications/:id/assign_role_user' => 'applications#assign_role_user'
+  post '/applications/:id/assign_role_user' => 'applications#assign_role_user' ,as: 'role_users'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
