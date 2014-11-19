@@ -1,9 +1,11 @@
 class Admin::UsersController < Admin::AdminController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy]
   load_and_authorize_resource
   # GET /users
   # GET /users.json
   def index
+    @user = User.new
+    @user.build_profile if @user.profile.blank?
     if current_user.is_admin?
       @users = User.all
     elsif current_user.is_admin_of? current_user.organization
@@ -14,8 +16,12 @@ class Admin::UsersController < Admin::AdminController
   def show
   end
 
+  def new
+  end
+
 
   def edit
+    render :layout => !request.xhr?
   end
 
   def create
@@ -51,9 +57,11 @@ class Admin::UsersController < Admin::AdminController
       if @user.update(user_params)
         format.html { redirect_to admin_users_path, :notice => 'User was successfully updated.' }
         format.json { head :ok }
+        format.js
       else
         format.html { render :action => "edit" }
         format.json { render :json => @user.errors, :status => :unprocessable_entity }
+        format.js
       end
     end
   end
