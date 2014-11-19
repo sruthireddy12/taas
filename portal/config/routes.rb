@@ -16,8 +16,6 @@ Rails.application.routes.draw do
     root "devise/sessions#new"
   end
 
-   post '/admin/users/:id' => 'admin/users#update'
-
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
