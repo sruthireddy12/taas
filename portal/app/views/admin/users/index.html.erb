@@ -1,5 +1,5 @@
 <div id="user_form" title="Users" style="display:none;">
-   <%= render :partial => "form" , :locals => {:user => @user}%>
+   <%= render :partial => "form"%>
 </div>
 <div class="content-wrapper">
   <div class="cnt-head">
@@ -34,7 +34,7 @@
     }
 
     function clearForm(){
-      $("#user_form").html("<%= escape_javascript(render :partial => 'form', :locals => {:user => @user})%>");
+      $("#user_form").html("<%= escape_javascript(render :partial => 'form')%>");
     }
 
     dialog = $( "#user_form" ).dialog({
