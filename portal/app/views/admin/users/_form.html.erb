@@ -7,10 +7,12 @@
     </div>
   <% end %>
   <table border="0" cellspacing="7" cellpadding="0" align="center" width="400px">
+  <% unless current_user == @user%>
     <tr>
       <td><%= f.label :email %></td>
       <td><%= f.text_field :email, class:'inpt-1' %></td>
     </tr>
+    <% end %>
     <%- f.object.profile || f.object.build_profile %>
     <%= f.fields_for :profile do |profile|%>
      <tr>
