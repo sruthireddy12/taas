@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :applications
+  resources :roles
 
   devise_for :users, controllers: {registrations: 'registrations'}
   namespace :admin do
