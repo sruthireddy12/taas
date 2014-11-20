@@ -13,6 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20141203090551) do
 
+
   create_table "applications", force: true do |t|
     t.string   "name"
     t.text     "description"
