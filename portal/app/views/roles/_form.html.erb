@@ -1,0 +1,160 @@
+<%= form_for(@role) do |f| %>
+  <% if @role.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@role_sample.errors.count, "error") %> prohibited this role_sample from being saved:</h2>
+
+      <ul>
+      <% @role_sample.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :resource_type %><br>
+    <%= f.text_field :resource_type %>
+  </div>
+  <div class="field">
+    <%= f.label :resource_id %><br>
+    <%= f.number_field :resource_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+<div class="content-wrapper">
+  <div class="rc-main">
+    <div class="rc-head">
+     <%= form_for(@role) do |f| %>
+        <% if @role.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@role_sample.errors.count, "error") %> prohibited this role_sample from being saved:</h2>
+
+            <ul>
+              <% @role_sample.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
+          <tr>
+            <td align="right">Role Name</td>
+            <td>
+              <%= f.text_field :name , :class=>"form-style1" %>
+            </td>
+
+    
+            <td align="right">Description</td>
+            <td><%= f.text_area :description  class="form-style1" id="textfield2" %></td>
+          </tr>
+        </table>
+      <% end %>
+    </div>
+    <table class="tbl-1 tbl-1-border" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <th align="left" valign="middle">View</th>
+      <th align="center" valign="middle"><input name="" type="checkbox" value="" />Create</th>
+      <th align="center" valign="middle"><input name="" type="checkbox" value="" />Delete</th>
+      <th align="center" valign="middle"><input name="" type="checkbox" value="" />Yes</th>
+      <th align="center" valign="middle"><input name="" type="checkbox" value="" />Here</th>
+      <th align="center" valign="middle"><input name="" type="checkbox" value="" />Heading</th>
+      <th align="center" valign="middle"><input name="" type="checkbox" value="" />No</th>
+      <th align="center" valign="middle"><input name="" type="checkbox" value="" />Text</th>
+    </tr>
+   <tr>
+      <td width="200px" class="head">Your Heading Here</td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+    </tr>
+     <tr>
+      <td width="200px" class="head">Your Heading Here</td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+    </tr>
+     <tr>
+      <td width="200px" class="head">Your Heading Here</td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+    </tr>
+     <tr>
+      <td width="200px" class="head">Your Heading Here</td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+    </tr>
+     <tr>
+      <td width="200px" class="head">Your Heading Here</td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+    </tr>
+     <tr>
+      <td width="200px" class="head">Your Heading Here</td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+    </tr>
+     <tr>
+      <td width="200px" class="head">Your Heading Here</td>
+      <td align="center"></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+    </tr>
+     <tr>
+      <td width="200px" class="head">Your Heading Here</td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+      <td align="center"><input name="" type="checkbox" value="" /></td>
+    </tr>
+   </table> 
+  </div>    
+</div>
+
+
