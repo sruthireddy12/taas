@@ -1,0 +1,5 @@
+<% if @user.errors.any? -%>
+   $(document).find("#edit_user_form").html("<%= escape_javascript(render :partial => 'form', :locals => {:user => @user})%>");
+<% else -%>
+  $(window.location.reload("/admin/users"))
+<% end -%>

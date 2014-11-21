@@ -268,12 +268,9 @@ img, a img {
 	color:#333;
 	font-size:12px;
 }
-.oddrowcolor {
-	background-color:#FFF;
-}
-.evenrowcolor {
-	background-color:#efefef;
-}
+tr:nth-child(even) {background: #efefef}
+tr:nth-child(odd) {background: #FFF}
+
 .reg-main {
 	width:100%;
 	height:auto;

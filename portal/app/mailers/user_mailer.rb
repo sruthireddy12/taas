@@ -6,4 +6,11 @@ class UserMailer < ActionMailer::Base
     @password = password
     mail(:to => @user.email, :subject => "Welcome to TaasPro")
   end
+
+
+  def update(user, password)
+    @user = user
+    @password = password
+    mail(:to => @user.email, :subject => "Your TaasPro Account Changed")
+  end
 end

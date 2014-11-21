@@ -1,5 +1,5 @@
 <div id="user_form" title="Users" style="display:none;">
-   <%= render :partial => "new", :locals => {:user => User.new}%>
+   <%= render :partial => "form" %>
 </div>
 <div class="content-wrapper">
   <div class="cnt-head">
@@ -26,16 +26,14 @@
   </table>
 </div>
 <script type="text/javascript">
-  altRows('users_list');
-
+  var dialog,form;
   $(function() {
-    var dialog,form;
     function submitForm() {
       dialog.find("form").submit()
     }
 
     function clearForm(){
-      $("#user_form").html("<%= escape_javascript(render :partial => 'new', :locals => {:user => User.new})%>");
+      $("#user_form").html("<%= escape_javascript(render :partial => 'form')%>");
     }
 
     dialog = $( "#user_form" ).dialog({
@@ -43,6 +41,7 @@
       height: 450,
       width: 450,
       modal: true,
+       title: 'Create User',
       buttons: {
           "Create User": submitForm,
           Cancel: function() {
@@ -55,5 +54,31 @@
     $(document).on( "click", '#new_user', function() {
       dialog.dialog( "open" );
     });
+   });
+
+
+  $(document).on("click", ".edit_user_link", function(e) {
+    e.preventDefault();
+    var tag = $("<div id='user_edit_form'></div>"),
+    url = $(this).attr('href')
+     $.ajax({
+       url: url,
+       success: function(data) {
+         tag.html(data).dialog({
+           modal: true,
+           height: 450,
+           width: 450,
+            title: 'Edit User',
+           buttons: {
+             "Save User": function(){ $(this).find("form").submit();},
+             Cancel: function() {
+               $(this).dialog('close');
+             }
+           },
+         }).
+         dialog('open');
+       }
+     });
   });
+
   </script>

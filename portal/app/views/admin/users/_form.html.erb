@@ -1,23 +1,27 @@
-<%- unless f.object.errors.empty? %>
-  <div class='ui-state-highlight'>
-     <%-f.object.errors.full_messages.each do |msg| %>
+<%= form_for [:admin, @user], :remote => true do |f| -%>
+  <%- unless f.object.errors.empty? %>
+    <div class='ui-state-highlight'>
+      <%-f.object.errors.full_messages.each do |msg| %>
         <p><%= msg %></p>
-     <% end %>
-  </div>
-<% end %>
-<tr>
-  <td><%= f.label :email %></td>
-  <td><%= f.text_field :email, class:'inpt-1' %></td>
-</tr>
-<%- f.object.profile || f.object.build_profile %>
-<%= f.fields_for :profile do |profile|%>
- <tr>
-  <td><%= profile.label :first_name %></td>
-  <td><%= profile.text_field :first_name, class:'inpt-1' %></td>
-</tr>
+      <% end %>
+    </div>
+  <% end %>
+  <table border="0" cellspacing="7" cellpadding="0" align="center" width="400px">
+    <tr>
+      <td><%= f.label :email %></td>
+      <td><%= f.text_field :email, class:'inpt-1' %></td>
+    </tr>
+    <%- f.object.profile || f.object.build_profile %>
+    <%= f.fields_for :profile do |profile|%>
+      <tr>
+        <td><%= profile.label :first_name %></td>
+        <td><%= profile.text_field :first_name, class:'inpt-1' %></td>
+      </tr>
 
- <tr>
-  <td><%= profile.label :last_name %></td>
-  <td><%= profile.text_field :last_name, class:'inpt-1' %></td>
-</tr>
-<% end %>
+      <tr>
+        <td><%= profile.label :last_name %></td>
+        <td><%= profile.text_field :last_name, class:'inpt-1' %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end -%>
