@@ -70,6 +70,12 @@ class ApplicationsController < ApplicationController
     @roles = @application.roles
   end
 
+  def delete_role_user
+    binding.pry
+    # respond_with @application,location: assign_role_user
+    # render action: 'assign_role_user'
+  end
+
   private
     def set_application
       @application = Application.find(params[:id])
