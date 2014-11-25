@@ -25,7 +25,7 @@
 
           <%= link_to_if(editable, 'Edit', { controller: "applications", action: "edit", id: application}, {class: 'edit-link' })%>
           <%= link_to 'Delete', application, :method => :delete, :data => { :confirm => 'Are you sure?' } if current_user.is_admin? %>
-        </td>
+          <%= link_to 'Assign', { controller: "roles_users", action: "index", id: application}, {class: 'assign_role_user' }%></td>
       </tr>
     <%end%>
   </table>
@@ -93,6 +93,34 @@
                 text: "Save Application",
                 "class": 'btn-style',
                 click: submitForm
+              }
+            ]
+          }).
+          dialog('open');
+        }
+      });
+    })
+
+    $(".assign_role_user").on("click", function (e){
+      e.preventDefault();
+      var tag = $("<div></div>"),
+        url = $(this).attr('href');
+      $.ajax({
+        url: url,
+        success: function(data) {
+          tag.html(data).dialog({modal: true,
+            height: 800,
+            width: 1200,
+            closeOnEscape: false,
+            title: 'Assign User Roles',
+            buttons: [
+              {
+                text: "Cancel",
+                "class": 'btn-style-2',
+                click: function() {
+                  $(this).dialog("close")
+                  window.location.reload();
+                }
               }
             ]
           }).

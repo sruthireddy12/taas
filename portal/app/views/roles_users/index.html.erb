@@ -5,25 +5,8 @@
       <div class="ura-left-head-box2">Users</div>
       <div class="ura-left-head-box3">Roles</div>
     </div>
-    <div class="ura-left-cnt">
-      <table width="648" border="0" cellspacing="0" cellpadding="0" class="ura-left-cnt-tbl">
-        <% @users.each do |u|%>
-          <tr>
-            <td align="center">
-              <input name="user" type="checkbox" id="<%= u.id%>" class="users" value="<%= u.id%>"/>
-            </td>
-            <td><%= u.email %></td>
-            <% u.roles.each do |role|%>
-              <td class="role">
-                <label><%= role.name %>
-                <%= link_to image_tag("close-icon.png", width: 14, height: 14, alt: "delete"), { action: 'delete_role_user',controller: 'applications'}, :confirm => 'Are you sure?', :method => :delete %>
-                <!-- <span class="remove-role" value=[<%= role.id%>,<%= role.id%>]><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span></label> -->
-              </td>
-            <%end%>
-            <td><%= hidden_field 'application','id',value: @application.id %></td>
-          </tr>
-        <%end%>
-      </table>
+    <div id="mapped_users_roles" class="ura-left-cnt">
+    <%= render partial: 'roles_users' ,locals: {application: @application, users: @users}%>
     </div>
   </div>
   <div class="ura-right ura-right-disable" id="role_cnt">
@@ -38,36 +21,41 @@
               <label>
                 <span>
                 <input name="role" type="checkbox" id="<%= role.id%>" class="roles" value="<%= role.id%>"/>
-                  <%#= check_box_tag "roles", role.id %>
                 </span>
                 <%= role.name%>
               </label>
             </td>
           </tr>
         <%end%>
-        <tr>
-          <td>
-            <button type="button" disabled="disabled" onclick="assign_roles()" id="submit">Assign</button>
-          </td>
-        </tr>
       </table>
     </div>
+      <button align="center" type="button" disabled="disabled" onclick="assign_roles()" id="submit">Assign</button>
   </div>
 </div>
 <script>
-var applicationId = $("#application_id").val()
+  var applicationId = $("#application_id").val()
   function assign_roles(){
     var valueSelector = function() { return this.value; };
     var userChecked = $("input:checkbox[name=user]:checked").map(valueSelector).get();
     var roleChecked = $("input:checkbox[name=role]:checked").map(valueSelector).get();
-    $.ajax('/applications/' + applicationId + '/assign_role_user', {
+    $.ajax('/applications/' + applicationId + '/roles_users/create', {
       type: 'POST',
       data: {users: userChecked,roles: roleChecked},
       datatype: 'json',
       success: function(data, textStatus, jqHXR) {
-        alert("Success")
+        unCheckAll();
       }
     });
+  }
+
+  function unCheckAll(){
+    $('.users').each(function() {
+        this.checked = false;
+      });
+    $('.roles').each(function() {
+        this.checked = false;
+      });
+    disableRole()
   }
 
   $("#all_users").on('click',function(){
@@ -83,10 +71,10 @@ var applicationId = $("#application_id").val()
       });
       disableRole()
     }
-    enableAssignButton()
+    assignButtonAction()
   })
 
-  $("#all_roles").on('click',function(){
+  $(document).on('click',"#all_roles",function(){
     if(this.checked) {
       $('.roles').each(function() {
         this.checked = true;
@@ -139,13 +127,16 @@ var applicationId = $("#application_id").val()
   }
 
   $(document).on("click", '.remove-role', function(e) {
-    alert($(this))
+    roleId = $(this).attr('roleid')
+    userId = $(this).attr('userid')
+    e.preventDefault();
     if(confirm("Are you sure?")){
-      $.ajax('/applications/' + 'delete_role_user/' + applicationId, {
+      $.ajax('/applications/' + applicationId + '/roles_users/destroy', {
         type: 'DELETE',
         datatype: 'json',
+        data: {user: userId,role: roleId},
         success: function(data, textStatus, jqHXR) {
-          alert("Delete Success")
+          alert("Delete Functionality not completed")
         }
       });
     }
