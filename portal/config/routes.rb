@@ -7,9 +7,9 @@ Rails.application.routes.draw do
     resources :users
     resources :organizations
   end
-  get '/applications/:id/assign_role_user' => 'applications#assign_role_user'
-  post '/applications/:id/assign_role_user' => 'applications#assign_role_user' ,as: 'role_users'
-  delete '/applications/delete_role_user/:id' => 'applications#delete_role_user' ,as: 'delete_role_user'
+  get '/applications/:id/roles_users' => 'roles_users#index', as: 'roles_users'
+  post '/applications/:id/roles_users/create' => 'roles_users#create'
+  delete '/applications/:id/roles_users/destroy' => 'roles_users#destroy' ,as: 'destroy_role_user'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
