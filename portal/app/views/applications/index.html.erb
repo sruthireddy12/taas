@@ -101,7 +101,7 @@
       });
     })
 
-    $(".assign_role_user").on("click", function (e){
+    $(document).on("click",".assign_role_user", function (e){
       e.preventDefault();
       var tag = $("<div></div>"),
         url = $(this).attr('href');
@@ -111,15 +111,16 @@
           tag.html(data).dialog({modal: true,
             height: 800,
             width: 1200,
-            closeOnEscape: false,
             title: 'Assign User Roles',
+            beforeClose: function(event, ui) { 
+              window.location.reload();
+            },
             buttons: [
               {
                 text: "Cancel",
                 "class": 'btn-style-2',
                 click: function() {
                   $(this).dialog("close")
-                  window.location.reload();
                 }
               }
             ]
