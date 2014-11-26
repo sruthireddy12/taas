@@ -25,4 +25,17 @@ class User < ActiveRecord::Base
     self.has_role?(:admin, organization)
   end
 
+  def find_roles(app_id)
+    roles = []
+    unless app_id.blank?
+      users_role = UsersRole.where(application_id: app_id,user_id: self.id)
+      if users_role.blank?
+        roles
+      else
+        role_ids = users_role.map{|ur| ur.role_id}
+        roles = Role.where(id: role_ids)
+      end
+    end
+  end
+
 end
