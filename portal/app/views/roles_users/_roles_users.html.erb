@@ -5,7 +5,8 @@
         <input name="user" type="checkbox" id="<%= u.id%>" class="users" value="<%= u.id%>"/>
       </td>
       <td><%= u.email %></td>
-      <% u.roles.each do |role|%>
+      <% roles = u.find_roles(application.id)%>
+      <% roles.each do |role|%>
         <td class="role">
           <label><%= role.name %>
           <%#= link_to image_tag("close-icon.png", width: 14, height: 14, alt: "delete"), { action: 'destroy',controller: "roles_users"}, :confirm => 'Are you sure?', :method => :delete,locals: {roleid: role.id,userid: u.id} %>

@@ -5,7 +5,6 @@
   </div>
   <table class="tbl-1" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <th align="left" valign="middle">Sl No.</th>
       <th align="left" valign="middle">Name</th>
       <th align="left" valign="middle">URL</th>
       <th align="left" valign="middle">Creator</th>
@@ -13,10 +12,8 @@
       <th align="left" valign="middle">Actions</th>
       <%end%>
     </tr>
-    <% count = 0 %>
     <% @applications.each do |application| %>
       <tr>
-        <td><%= count += 1 %></td>
         <td><%= link_to application.name,application_path(application.id) %></td>
         <td><%= application.url %></td>
         <td><%= application.creator.full_name || application.creator.email %></td>
@@ -121,7 +118,7 @@
                 "class": 'btn-style-2',
                 click: function() {
                   $(this).dialog("close")
-                }
+                },
               }
             ]
           }).

@@ -11,11 +11,10 @@ class RolesUsersController < ApplicationController
 				user = User.find_by_id(u.to_i)
 				params[:roles].each do |r|
 					role = Role.find_by_id(r.to_i)
-					# users_roles = UsersRoles.where(
-					# 	application_id: @application.id ,
-					# 	user_id: user.id ,
-					# 	role_id: role.id).first_or_intialize
-					role.users << user unless role.users.include?(user)
+					users_roles = UsersRole.where(
+						application_id: @application.id ,
+						user_id: user.id ,
+						role_id: role.id).first_or_create
 				end
 			end
 		end
@@ -24,18 +23,18 @@ class RolesUsersController < ApplicationController
 	def destroy
 		user = User.find_by_id(params[:user].to_i)
 		role = Role.find_by_id(params[:role].to_i)
-		# users_roles = UsersRoles.where(
-		# 	application_id: @application.id ,
-		# 	user_id: user.id ,
-		# 	role_id: role.id)
-		# users_roles.delete_all unless users_roles.blank?
+		users_roles = UsersRole.where(
+			application_id: @application.id ,
+			user_id: user.id ,
+			role_id: role.id)
+		users_roles.delete_all unless users_roles.blank?
 	end
 
 	private
 		def set_data
 			@application = Application.find_by_id(params[:id])
 			@users = @application.organization.users
-			@roles = @application.roles
+			@roles = @application.organization.roles
 		end
 
 end
