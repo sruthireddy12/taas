@@ -7,13 +7,46 @@
     </div>
     <div class="ura-left-cnt">
       <table width="648" border="0" cellspacing="0" cellpadding="0" class="ura-left-cnt-tbl">
+      
+
+
+
+      <%= form_for Role.new,url: role_users_path, html: {multipart: true } do |r|%>
+        <%i = 1%>
+        <% @users.each do |u|%>
+          <tr>
+            <td align="center">
+              <input name="input" type="checkbox" value="" id="<%= i%>"/>
+            </td>
+            <td><%#= r.check_box u.email%></td>
+          </tr>
+          <% u.roles.each do |role|%>
+            <%= r.text_field :name,value: role.name %>
+          <%end%>
+        <%end%>
+        <%= r.submit "Update" %>
+      <%end%>
+
+
+
+
+
+
+
+
+      <%i = 1%>
       <% @users.each do |u|%>
         <tr>
           <td align="center">
             <input name="input" type="checkbox" value="" id="<%= u.id%>"/>
           </td>
           <td><%= u.email%></td>
-          <td class="role" ><label><span><input type="checkbox" /></span> rolename</label></td>
+          <%j = 0%>
+          <% u.roles.each do |role|%>
+            <td class="role" ><label><%= text_field "role_#{j}","id",value: role.name %><span><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span></label></td>
+            <% j+=1%>
+          <%end%>
+          <% i+=1%>
         </tr>
       <%end%>
       
