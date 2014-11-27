@@ -7,49 +7,20 @@
     </div>
     <div class="ura-left-cnt">
       <table width="648" border="0" cellspacing="0" cellpadding="0" class="ura-left-cnt-tbl">
-      
-
-
-
-      <%= form_for Role.new,url: role_users_path, html: {multipart: true } do |r|%>
-        <%i = 1%>
         <% @users.each do |u|%>
           <tr>
             <td align="center">
-              <input name="input" type="checkbox" value="" id="<%= i%>"/>
+              <%= check_box_tag "users[#{u.id}]", u.id %>
             </td>
-            <td><%#= r.check_box u.email%></td>
+            <td><%= u.email %></td>
+            <% u.roles.each do |role|%>
+              <td class="role">
+                <label><%= role.name %><span><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span></label>
+              </td>
+            <%end%>
+            <td><%= hidden_field 'application','id',value: @application.id %></td>
           </tr>
-          <% u.roles.each do |role|%>
-            <%= r.text_field :name,value: role.name %>
-          <%end%>
         <%end%>
-        <%= r.submit "Update" %>
-      <%end%>
-
-
-
-
-
-
-
-
-      <%i = 1%>
-      <% @users.each do |u|%>
-        <tr>
-          <td align="center">
-            <input name="input" type="checkbox" value="" id="<%= u.id%>"/>
-          </td>
-          <td><%= u.email%></td>
-          <%j = 0%>
-          <% u.roles.each do |role|%>
-            <td class="role" ><label><%= text_field "role_#{j}","id",value: role.name %><span><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span></label></td>
-            <% j+=1%>
-          <%end%>
-          <% i+=1%>
-        </tr>
-      <%end%>
-      
       </table>
     </div>
   </div>
@@ -60,21 +31,40 @@
     <div class="ura-right-cnt">
       
       <table>
-      <% @roles.each do |role|%>
-      <tr><td><label><span><input name="" type="checkbox" value="" id="<%=role.id%>" /></span><%= role.name%></label></td></tr>
-      <%end%>
-      <tr>
-      <td><button type="button" onclick="assign_roles()">Assign</button></td>
-      </tr>
+        <% @roles.each do |role|%>
+          <tr>
+            <td>
+              <label>
+                <span>
+                  <%= check_box_tag "roles[#{role.id}]", role.id %>
+                </span>
+                <%= role.name%>
+              </label>
+            </td>
+          </tr>
+        <%end%>
+        <tr>
+          <td>
+            <button type="button" onclick="assign_roles()">Assign</button>
+          </td>
+        </tr>
       </table>
-      
     </div>
   </div>
 </div>
 <script>
   function assign_roles(){
-    alert("Hi")
+    var applicationId = $("#application_id").val()
     var n = $( "input:checked" ).length;
-    alert(n)
+    var idSelector = function() { return this.id; };
+    var checked = $(":checkbox:checked").map(idSelector).get();
+    $.ajax('/applications/' + applicationId + '/assign_role_user', {
+      type: 'POST',
+      data: {user_role_map: [checked]},
+      datatype: 'json',
+      success: function(data, textStatus, jqHXR) {
+        alert("Success")
+      }
+    });
   }
 </script>

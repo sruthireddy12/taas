@@ -51,9 +51,14 @@ class ApplicationsController < ApplicationController
   end
 
   def assign_role_user
-    # binding.pry
+    binding.pry
+    unless params[:user_role_map].blank?
+      roles_users = params[:user_role_map]['0'].group_by{|a| a[0,5]}
+      users = roles_users['users']
+      roles = roles_users['roles'] #roles_users.select{ |i| i[/roles_\d/] }
+    end
     @users = @application.organization.users
-    @roles = Role.all
+    @roles = @application.roles
   end
 
   private
