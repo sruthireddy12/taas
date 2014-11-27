@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 	belongs_to :organization
 	rolify
   has_one :profile
+  has_many :roles, through: :users_roles
   accepts_nested_attributes_for :profile
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
