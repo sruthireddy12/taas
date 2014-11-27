@@ -50,6 +50,12 @@ class ApplicationsController < ApplicationController
     respond_with(@application)
   end
 
+  def assign_role_user
+    # binding.pry
+    @users = @application.organization.users
+    @roles = Role.all
+  end
+
   private
     def set_application
       @application = Application.find(params[:id])
