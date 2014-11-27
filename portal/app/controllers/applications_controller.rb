@@ -51,7 +51,12 @@ class ApplicationsController < ApplicationController
   end
 
   def assign_role_user
-    # binding.pry
+    @users = @application.organization.users
+    @roles = @application.roles
+    render :layout => !request.xhr?
+  end
+
+  def create_role_user
     unless params[:users].blank? && params[:roles].blank?
       params[:users].each do |u|
         user = User.find_by_id(u.to_i)
@@ -60,20 +65,14 @@ class ApplicationsController < ApplicationController
           role.users << user unless role.users.include?(user)
         end
       end
-    #   roles_users = params[:user_role_map]['0'].group_by{|a| a[0,5]}
-    #   users = roles_users['users']
-    #   roles = roles_users['roles'] #roles_users.select{ |i| i[/roles_\d/] }
-
     end
-
     @users = @application.organization.users
     @roles = @application.roles
   end
 
   def delete_role_user
-    binding.pry
-    # respond_with @application,location: assign_role_user
-    # render action: 'assign_role_user'
+    @users = @application.organization.users
+    @roles = @application.roles
   end
 
   private
