@@ -22,6 +22,10 @@
         <td><%= profile.label :last_name %></td>
         <td><%= profile.text_field :last_name, class:'inpt-1' %></td>
       </tr>
+      <tr>
+        <td><%= f.check_box :is_organization_admin %></td>
+        <td><%= "Organization Admin" %></td>
+      </tr>
     <% end %>
   </table>
 <% end -%>

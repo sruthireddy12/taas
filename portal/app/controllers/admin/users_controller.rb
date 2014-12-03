@@ -6,9 +6,9 @@ class Admin::UsersController < Admin::AdminController
   def index
     @user = User.new
     @user.build_profile if @user.profile.blank?
-    if current_user.is_admin?
+    if current_user.is_super_admin?
       @users = User.all
-    elsif current_user.is_admin_of? current_user.organization
+    elsif current_user.is_organization_admin?
       @users = current_user.organization.users
     end
   end
@@ -82,6 +82,6 @@ class Admin::UsersController < Admin::AdminController
     end
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, profile_attributes: [:first_name, :last_name] )
+      params.require(:user).permit(:email, :password, :password_confirmation, :is_organization_admin?, profile_attributes: [:first_name, :last_name] )
     end
 end
