@@ -64,19 +64,13 @@ class User < ActiveRecord::Base
     is_organization_admin?
   end
 
-  def is_organization_admin=(val)
-    admin_role = Role.find_or_create(name: 'organization_admin', organization_id: organization.id)
-    if val.to_i == 0   
-      self.roles.delete(admin_role)
-    else
-      self.roles << admin_role
-    end
-  end
-
-  # def get_user_apps
-  #   roles_users = RolesUser.where("user_id = #{self.id} and application_id is not null")
-  #   app_ids = roles_users.map{|ru| ru.application_id}
-  #   applications = Application.where(id: app_ids)
+  # def is_organization_admin=(val)
+    # admin_role = Role.where(name: 'organization_admin', organization_id: organization.id).first_or_create
+    # if val.to_i == 0
+    #   self.roles.delete(admin_role)
+    # else
+    #   self.roles << admin_role
+    # end
   # end
 
 end

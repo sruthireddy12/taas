@@ -31,6 +31,7 @@ class Admin::UsersController < Admin::AdminController
     @user.password =  generated_password
     respond_to do |format|
       if @user.save
+        create_or_delete_roll_mapping(params[:user][:is_organization_admin])
         UserMailer.welcome_email(@user, generated_password).deliver
         #flash[:notice] = flash[:notice].to_a.concat @user.errors.full_messages
         format.html { redirect_to admin_users_path, :notice => 'User was successfully created.' }
@@ -55,6 +56,7 @@ class Admin::UsersController < Admin::AdminController
  
     respond_to do |format|
       if @user.update(user_params)
+        create_or_delete_roll_mapping(params[:user][:is_organization_admin])
         UserMailer.update(@user, params[:user][:password]).deliver
         format.html { redirect_to admin_users_path, :notice => 'User was successfully updated.' }
         format.json { head :ok }
@@ -75,6 +77,15 @@ class Admin::UsersController < Admin::AdminController
     end
   end
 
+  def create_or_delete_roll_mapping(organization_admin)
+    admin_role = Role.where(name: 'organization_admin', organization_id: @user.organization.id).first_or_create
+    if organization_admin.to_i == 0
+      @user.roles.delete(admin_role)
+    else
+      @user.roles << admin_role
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -82,6 +93,6 @@ class Admin::UsersController < Admin::AdminController
     end
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :is_organization_admin?, profile_attributes: [:first_name, :last_name] )
+      params.require(:user).permit(:email, :password, :password_confirmation, :is_organization_admin, profile_attributes: [:first_name, :last_name] )
     end
 end
