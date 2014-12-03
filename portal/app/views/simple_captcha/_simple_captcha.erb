@@ -25,7 +25,6 @@
   .simple_captcha_refresh_button{
     width: 20px;
     height: 20px;
-    background: #d00000;
     text-indent: -9999;
     cursor: pointer;
   }
@@ -41,6 +40,7 @@
   </div>
 
   <div class='simple_captcha_refresh_button' style= "float:left;">
-    <%= simple_captcha_options[:refresh_button] %>
+    <%- link ="/simple_captcha?id=simple_captcha-#{simple_captcha_options[:field_value][0,11]}" %>
+    <a href="<%= link %>" data-remote="true"><span><img src="/assets/refresh.png" width="28" height="28" alt="logout" /></span></a>
   </div>
 </div>

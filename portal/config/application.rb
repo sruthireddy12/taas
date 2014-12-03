@@ -23,9 +23,9 @@ module Portal
       class_attr_index = html_tag.index 'class="'
       unless html_tag =~ /^<label/
         if class_attr_index
-          html_tag.insert class_attr_index+7, 'error ui-state-error'
+          html_tag.insert class_attr_index+7, 'error ui-state-error '
         else
-          html_tag.insert html_tag.index('>'), ' class="error ui-state-error"'
+          html_tag.insert html_tag.index('>'), ' class="error ui-state-error "'
         end
       else
         html_tag

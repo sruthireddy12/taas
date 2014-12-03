@@ -6,7 +6,7 @@
      <h1>Users</h1>
      <label id="new_user"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>New User</label>
    </div>
-  <table class="tbl-1" id="users_list" border="0" cellspacing="0" cellpadding="0">
+  <table class="tbl-1 alternate-color" id="users_list" border="0" cellspacing="0" cellpadding="0">
    <thead>
     <tr>
       <th align="left">First Name</th>
@@ -19,8 +19,15 @@
     </tr>
     </thead>
     <tbody>
-      <% @users.each do |user| -%>
-        <%= render :partial => 'user', :locals => {:user => user} %>
+     <% organization_name = ''%>
+      <% @users.sort{|a,b| a.organization<=>b.organization}.each do |user| %>
+        <% if (organization_name == '' || organization_name != user.organization.domain) && current_user.is_super_admin? %>
+          <tr>
+            <td colspan="6" align="middle"><b>Organization</b> : <%= user.organization.domain.upcase%></td>
+          </tr>
+          <% organization_name = user.organization.domain%>
+        <%end%>
+        <%= render :partial => 'user', :locals => {user: user,organization_name: organization_name} %>
       <% end -%>
     </tbody>
   </table>
