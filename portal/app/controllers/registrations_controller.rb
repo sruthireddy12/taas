@@ -21,7 +21,7 @@ class RegistrationsController < Devise::RegistrationsController
 	    yield resource if block_given?
 	    if resource_saved
 	      #Making the first registered user as admin for that organization
-	      resource.add_role :admin, organization
+	      resource.add_role :organization_admin, organization
 	      UserMailer.welcome_email(resource, params["user"]["password"]).deliver
 	      if resource.active_for_authentication?
 	        set_flash_message :notice, :signed_up if is_flashing_format?

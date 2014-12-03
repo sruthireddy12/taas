@@ -5,18 +5,20 @@ class ApplicationsController < ApplicationController
   def index
     @application = Application.new
     @application.credentials.build if @application.credentials.empty?
-    if current_user.is_admin?
+    if current_user.is_super_admin?
       @applications = Application.all
-    elsif current_user.is_admin_of? current_user.organization
+    elsif current_user.is_organization_admin?
       @applications = current_user.organization.applications
     else
-      @applications = Application.with_roles([:admin, :user], current_user)
+      @applications = current_user.organization.applications
+      # @applications = Application.with_roles([:admin, :user], current_user)
     end
     respond_with(@applications)
   end
 
   def show
-    respond_with(@application)
+    # respond_with(@application)
+    render :layout => !request.xhr?
   end
 
   def new
@@ -48,31 +50,6 @@ class ApplicationsController < ApplicationController
   def destroy
     @application.destroy
     respond_with(@application)
-  end
-
-  def assign_role_user
-    @users = @application.organization.users
-    @roles = @application.roles
-    render :layout => !request.xhr?
-  end
-
-  def create_role_user
-    unless params[:users].blank? && params[:roles].blank?
-      params[:users].each do |u|
-        user = User.find_by_id(u.to_i)
-        params[:roles].each do |r|
-          role = Role.find_by_id(r.to_i)
-          role.users << user unless role.users.include?(user)
-        end
-      end
-    end
-    @users = @application.organization.users
-    @roles = @application.roles
-  end
-
-  def delete_role_user
-    @users = @application.organization.users
-    @roles = @application.roles
   end
 
   private

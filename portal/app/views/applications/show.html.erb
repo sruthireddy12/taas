@@ -4,23 +4,24 @@
     <th colspan="4">Application Information</th>
   </tr>
   <tr>
-    <td ><label><b>Application Name : </b> </label><%= @application.name %></td>
+    <td align="right"><b>Application Name</b></td>
+    <td ><%= @application.name %></td>
+    <td  align="right"><b> Point of Contact </b></td>
+    <td ><%= @application.point_of_contact %></td>
   </tr>
   <tr>
-    <td ><label><b>Point of Contact : </label></b> <%= @application.point_of_contact %></td>
+    <td align="right"><b> URL </b></td>
+    <td><%= @application.url %></td>
+    <td align="right"><b> Email </b></td>
+    <td><%= @application.email %></td>
   </tr>
   <tr>
-    <td ><label ><b>URL : </b> </label><%= @application.url %></td>
+    <td align="right"><b> Description </b></td>
+    <td rowspan="2" valign="top"><%= @application.description %></td>
+    <td align="right"><b> Preferred Time </b></td>
+    <td><%= @application.prefered_contact_time.strftime("%H:%M %p") %></td>
   </tr>
-  <tr>
-    <td ><b>Email : </b> <%= @application.email %></td>
-  </tr>
-  <tr>
-    <td ><b>Description : </b> <%= @application.description %></td>
-  </tr>
-  <tr>
-    <td ><b>Preferred Time : </b> <%= @application.prefered_contact_time.strftime("%H:%M %p") %></td>
-  </tr>
+  <tr></tr>
   <% unless @application.attachments.blank? %>
     <tr>
       <th colspan="4">Application Attachments</th>
@@ -28,7 +29,7 @@
     <tr>
       <%@application.attachments.each do |attachment|%>
         <td><%#=link_to attachment.file_path.file.filename, attachment.file_path_url%>
-        <a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a>
+        <a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a></td>
       <%end%>
     </tr>
   <%end%>
@@ -46,7 +47,7 @@
         <tr>
           <%credential.attachments.each do |attachment|%>
             <td ><%#= link_to attachment.file_path.file.filename, attachment.file_path_url, target: "_blank" %>
-            <a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a>
+            <a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a></td>
           <%end%>
         </tr>
       <%end%>
@@ -56,5 +57,5 @@
     <%end%>
   <%end%>
 </table>
-<%= link_to 'Edit', edit_application_path(@application) %> |
-<%= link_to 'Back', applications_path %>
+<%#= link_to 'Edit', edit_application_path(@application) %> |
+<%#= link_to 'Back', applications_path %>

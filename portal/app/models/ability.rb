@@ -6,17 +6,17 @@ class Ability
     #
     #user ||= User.new # guest user (not logged in)
     if user
-      if user.has_role? :admin
+      if user.has_role? :super_admin
         can :manage, :all
-      elsif user.has_role? :admin, user.organization
+      elsif user.has_role? :organization_admin, user.organization
         can :manage, User, :organization_id => user.organization_id
         can :manage, Application, :organization_id => user.organization_id
       else
         can :update, Application do |app|
-          user.is_admin_of? app && app.organization_id == user.organization_id
+          !user.find_roles(app.id).map{|r| r.permissions }.flatten.uniq.select { |p| p.subject_class == 'Application' && p.action == 'edit'}.blank?
         end
         can :read, Application do |app|
-          user.has_any_role?(:admin, { :name => :admin, :resource => app }, { :name => :user, :resource => app }) && app.organization_id == user.organization_id
+          !user.find_roles(app.id).map{|r| r.permissions }.flatten.uniq.select { |p| p.subject_class == 'Application' && p.action == 'view'}.blank?
         end
       end
     end

@@ -1,28 +1,38 @@
 <div class="content-wrapper">
   <div class="cnt-head">
     <h1>Applications</h1>
-    <label id="new-application"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>Add Application</label>
+    <%if current_user.is_super_admin? || current_user.is_organization_admin?%>
+      <label id="new-application"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>Add Application</label>
+    <%end%>
   </div>
   <table class="tbl-1" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
       <th align="left" valign="middle">Name</th>
       <th align="left" valign="middle">URL</th>
       <th align="left" valign="middle">Creator</th>
-      <%if current_user.is_admin? %>
-      <th align="left" valign="middle">Actions</th>
-      <%end%>
+      <th align="middle" valign="middle" colspan="3">Actions</th>
     </tr>
-    <% @applications.each do |application| %>
+    <%organization_name = ''%>
+    <% @applications.sort{|a,b| a.organization<=>b.organization}.each do |application| %>
+      <% if (organization_name == '' || organization_name != application.organization.name) && current_user.is_super_admin? %>
+        <tr>
+          <td colspan="6" align="middle"><b>Organization</b> : <%= application.organization.name.upcase%></td>
+        </tr>
+        <% organization_name = application.organization.name%>
+      <%end%>
       <tr>
-        <td><%= link_to application.name,application_path(application.id) %></td>
+        <td><%= link_to_if(action_active(application,'view'),application.name,{ controller: "applications", action: "show", id: application} , {class: 'view-link' }) %></td>
         <td><%= application.url %></td>
         <td><%= application.creator.full_name || application.creator.email %></td>
         <td>
-          <%- editable = (current_user.is_admin? || current_user.is_organization_admin? || current_user.is_admin_of(application)) %>
-
-          <%= link_to_if(editable, 'Edit', { controller: "applications", action: "edit", id: application}, {class: 'edit-link' })%>
-          <%= link_to 'Delete', application, :method => :delete, :data => { :confirm => 'Are you sure?' } if current_user.is_admin? %>
-          <%= link_to 'Assign', { controller: "roles_users", action: "index", id: application}, {class: 'assign_role_user' }%></td>
+          <%= link_to 'Edit', { controller: "applications", action: "edit", id: application}, {class: 'edit-link' } if action_active(application,'edit')%>
+        </td>
+        <td>
+          <%= link_to 'Delete', application, :method => :delete, :data => { :confirm => 'Are you sure?' } if action_active(application) %>
+        </td>
+        <td>
+          <%= link_to 'Assign', { controller: "roles_users", action: "index", id: application}, {class: 'assign_role_user' } if action_active(application,'assign_role')%>
+        </td>
       </tr>
     <%end%>
   </table>
@@ -67,35 +77,61 @@
       });
     });
 
+    $(".view-link").on("click", function (e){
+        e.preventDefault();
+        var tag = $("<div></div>"),
+          url = $(this).attr('href');
+        $.ajax({
+          url: url,
+          success: function(data) {
+            tag.html(data).dialog({modal: true,
+              height: 800,
+              width: 1200,
+              title: 'Application Details',
+              buttons: [
+                {
+                  text: "Cancel",
+                  "class": 'btn-style-2',
+                  click: function() {
+                    $(this).dialog("close")
+                  }
+                },
+              ]
+            }).
+            dialog('open');
+          }
+        });
+    });
+
     $(".edit-link").on("click", function (e){
-      e.preventDefault();
-      var tag = $("<div></div>"),
-        url = $(this).attr('href');
-      $.ajax({
-        url: url,
-        success: function(data) {
-          tag.html(data).dialog({modal: true,
-            height: 800,
-            width: 1200,
-            title: 'Edit Application',
-            buttons: [
-              {
-                text: "Cancel",
-                "class": 'btn-style-2',
-                click: function() {
-                  $(this).dialog("close")
+        e.preventDefault();
+        var tag = $("<div></div>"),
+          url = $(this).attr('href');
+        $.ajax({
+          url: url,
+          success: function(data) {
+            tag.html(data).dialog({modal: true,
+              height: 800,
+              width: 1200,
+              title: 'Edit Application',
+              buttons: [
+                {
+                  text: "Cancel",
+                  "class": 'btn-style-2',
+                  click: function() {
+                    $(this).dialog("close")
+                  }
+                },
+                {
+                  text: "Save Application",
+                  "class": 'btn-style',
+                  click: submitForm
                 }
-              },
-              {
-                text: "Save Application",
-                "class": 'btn-style',
-                click: submitForm
-              }
-            ]
-          }).
-          dialog('open');
-        }
-      });
+              ]
+            }).
+            dialog('open');
+          }
+        });
     })
 
     $(document).on("click",".assign_role_user", function (e){
