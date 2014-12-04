@@ -1,0 +1,5 @@
+<% if @role.errors.any? -%>
+  $("#role-form").html("<%= escape_javascript(render partial: 'form', locals: { role: @role })%>");
+<% else -%>
+  $(window.location.reload("/roles"))
+<% end -%>

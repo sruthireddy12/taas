@@ -5,7 +5,7 @@
       <label id="new-application"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>Add Application</label>
     <%end%>
   </div>
-  <table class="tbl-1" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <table class="tbl-1 alternate-color" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
       <th align="left" valign="middle">Name</th>
       <th align="left" valign="middle">URL</th>
@@ -14,11 +14,11 @@
     </tr>
     <%organization_name = ''%>
     <% @applications.sort{|a,b| a.organization<=>b.organization}.each do |application| %>
-      <% if (organization_name == '' || organization_name != application.organization.name) && current_user.is_super_admin? %>
+      <% if (organization_name == '' || organization_name != application.organization.domain) && current_user.is_super_admin? %>
         <tr>
-          <td colspan="6" align="middle"><b>Organization</b> : <%= application.organization.name.upcase%></td>
+          <td colspan="6" align="middle"><b>Organization</b> : <%= application.organization.domain.upcase%></td>
         </tr>
-        <% organization_name = application.organization.name%>
+        <% organization_name = application.organization.domain%>
       <%end%>
       <tr>
         <td><%= link_to_if(action_active(application,'view'),application.name,{ controller: "applications", action: "show", id: application} , {class: 'view-link' }) %></td>

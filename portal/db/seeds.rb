@@ -7,12 +7,14 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-organization = Organization.create(name: 'TechSophy', description: '', domain: 'techsophy.com')
+organization = Organization.where(name: 'TechSophy', description: '', domain: 'techsophy.com').first_or_create
 admin_user = User.create(email: "admin@techsophy.com", password: "Tech@123",organization_id: organization.id)
 admin_role = admin_user.add_role :super_admin
-# super_admin_role = super_admin_user.add_role :super_admin , admin_organization.id
-
-
+Permission.where(subject_class: 'Application',action: 'view').first_or_create
+Permission.where(subject_class: 'Application',action: 'edit').first_or_create
+Permission.where(subject_class: 'Application',action: 'upload').first_or_create
+Permission.where(subject_class: 'Application',action: 'download').first_or_create
+Permission.where(subject_class: 'Application',action: 'assign_role').first_or_create
 
 # organization_techrain = Organization.create(name: 'Techrains',domain: 'techrains.com')
 # techrain_user = User.create(email: "admin@techrains.com", password: "tech@123", organization_id: organization_techrain.id)

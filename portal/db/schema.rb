@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20141203090551) do
     t.datetime "updated_at"
     t.text     "description"
     t.integer  "organization_id"
+
   end
 
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree

@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   attr_accessor :is_organization_admin
 	belongs_to :organization
   has_one :profile
-  has_and_belongs_to_many :roles, join_table: :users_roles
+  has_and_belongs_to_many :roles, join_table: :users_roles, dependent: :destroy
   accepts_nested_attributes_for :profile
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

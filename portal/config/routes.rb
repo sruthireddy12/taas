@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :applications
+  resources :roles
+  post '/roles/destory_all' => 'roles#destory_all', as: 'destory_all'
 
   devise_for :users, controllers: {registrations: 'registrations'}
   namespace :admin do

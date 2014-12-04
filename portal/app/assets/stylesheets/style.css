@@ -268,8 +268,8 @@ img, a img {
 	color:#333;
 	font-size:12px;
 }
-tr:nth-child(even) {background: #efefef}
-tr:nth-child(odd) {background: #FFF}
+.alternate-color  tr:nth-child(even) {background: #efefef}
+.alternate-color  tr:nth-child(odd) {background: #FFF}
 
 .reg-main {
 	width:100%;
@@ -517,6 +517,7 @@ span.required {
 	font-weight: bold;
 }
 
+
 /* **********************  User role asign  ********************** */
 
 .ura-main {
@@ -667,3 +668,61 @@ span.required {
 .ura-right-cnt label:hover {
 	background:url(/assets/ura-right-btn-bg-hover.png) repeat-x;
 }
+
+/* **********************  Role Creation  ********************** */
+
+.rc-main {
+	height:auto;
+	float:left;
+	padding:10px;
+}
+
+.rc-head {
+	width:900px;
+	height:60px;
+	float:left;
+	background:url(/assets/rc-head-main.png) repeat-x;
+}
+.rc-head table {
+	height:auto;
+	position:relative;
+	left:50%;
+	margin-left:-300px;
+}
+.rc-head td.head {
+	background:#09F;
+	color:#2a2a2a;
+	font-size:14px;
+}
+
+.rc-head td{padding:5px;
+}
+
+
+.tbl-1 th input {
+	width:10px;
+	height:10px;
+	margin:3px 5px 4px 0px;
+}
+.tbl-1 td {
+	padding:7px;
+	color:#333;
+	font-size:12px;
+}
+.tbl-1 td.head {
+	background:#d6e5ec;
+}
+
+.tbl-1-border {
+	border:#CCC solid;
+	border-width:1px 0px 0px 1px;
+}
+.tbl-1-border td {
+	border:#CCC solid;
+	border-width:0px 1px 1px 0px;
+}
+.tbl-1-border th {
+	border:#CCC solid;
+	border-width:0px 1px 0px 0px;
+}
+
