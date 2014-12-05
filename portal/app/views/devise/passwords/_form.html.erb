@@ -1,0 +1,17 @@
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name),remote: true, html: { method: :post }) do |f| %>
+  <%- unless f.object.errors.empty? %>
+    <div class='ui-state-highlight'>
+    <%= binding.pry%>
+       <%-f.object.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+       <% end %>
+    </div>
+  <% end %>
+  	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:5px;">
+    	<tr>
+	    	<td><%= f.label :email %><br /></td>
+	    	<td><%= f.email_field :email, autofocus: true, class:'inpt-1' %></td>
+	  	</tr>
+	</table>
+<% end %>

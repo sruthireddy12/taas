@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Untitled Document</title>
-<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="/assets/style.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 body{ 
     background:url(/assets/blue-bg.jpg) no-repeat right top #0096ce;
@@ -39,7 +39,7 @@ body{
              <% if devise_mapping.rememberable? -%>
               <td valign="middle" width="100"><label class="login-lbl"><%= f.check_box :remember_me %> Remember me</label></td>
               <%end%>
-             <td><%= link_to "Forgot your password?", new_password_path(resource_name) %></td>
+             <td><%= link_to "Forgot your password?", new_password_path(resource_name), {class: 'forgot_password'} %></td>
               <%#= f.simple_captcha :label => "Enter numbers..", :placeholder => 'Enter the text shown in the image' %>
 
               <td align="right"><%= f.submit "Log in",class: "login-btn" %></td>
@@ -97,6 +97,43 @@ body{
       dialog.dialog( "open" );
     });
   });
+
+  $(document).on("click",".forgot_password", function (e){
+    e.preventDefault();
+    var tag = $("<div id='change-password-form'></div>"),
+      url = $(this).attr('href');
+    $.ajax({
+      url: url,
+      success: function(data) {
+        tag.html(data).dialog({modal: true,
+          height: 180,
+          width: 420,
+          title: 'Forgot Your Password?',
+          beforeClose: function(event, ui) { 
+            window.location.reload();
+          },
+          buttons: [
+            {
+              text: "Cancel",
+              click: function (event, ui) {
+                $(this).dialog('close');
+              }
+            },
+            {
+              text: "Send me reset password instructions",
+              click: submitChangePasswordForm
+            }
+          ]
+        }).
+        dialog('open');
+      }
+    });
+  })
+
+  function submitChangePasswordForm(){
+    $(this).find("form").submit()
+  }
+
   </script>
   </body>
 

@@ -725,4 +725,17 @@ span.required {
 	border:#CCC solid;
 	border-width:0px 1px 0px 0px;
 }
-
+.forgot-password-box {
+	width:710px;
+	height:auto;
+	float:left;
+	background:#FFF;
+	border-bottom:#005f95 4px solid;
+}
+.org-app-bar {
+	width:100%;
+	height:auto;
+	float:left;
+	border-top:1px solid #cecece;
+	background:#ececec;
+}
