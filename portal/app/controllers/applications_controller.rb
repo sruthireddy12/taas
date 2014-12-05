@@ -4,6 +4,7 @@ class ApplicationsController < ApplicationController
 
   def index
     @application = Application.new
+    @organizations = current_user.is_super_admin? ? Organization.all : current_user.organization.to_a
     @application.credentials.build if @application.credentials.empty?
     if current_user.is_super_admin?
       @applications = Application.all

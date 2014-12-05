@@ -23,7 +23,7 @@
       <% @users.sort{|a,b| a.organization<=>b.organization}.each do |user| %>
         <% if (organization_name == '' || organization_name != user.organization.domain) && current_user.is_super_admin? %>
           <tr>
-            <td colspan="6" align="middle"><b>Organization</b> : <%= user.organization.domain.upcase%></td>
+            <td colspan="6" align="middle"><b>Organization</b> : <%= user.organization.domain.split('.')[0].upcase%></td>
           </tr>
           <% organization_name = user.organization.domain%>
         <%end%>
