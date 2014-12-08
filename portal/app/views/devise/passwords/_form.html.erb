@@ -1,8 +1,6 @@
-
 <%= form_for(resource, as: resource_name, url: password_path(resource_name),remote: true, html: { method: :post }) do |f| %>
   <%- unless f.object.errors.empty? %>
     <div class='ui-state-highlight'>
-    <%= binding.pry%>
        <%-f.object.errors.full_messages.each do |msg| %>
           <p><%= msg %></p>
        <% end %>

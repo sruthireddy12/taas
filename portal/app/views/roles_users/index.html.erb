@@ -29,7 +29,7 @@
         <%end%>
       </table>
     </div>
-      <button align="center" type="button" disabled="disabled" onclick="assign_roles()" id="submit">Assign</button>
+      <!-- <button align="center" type="button" disabled="disabled" onclick="assign_roles()" id="submit">Assign</button> -->
   </div>
 </div>
 <script>
@@ -119,10 +119,12 @@
     var roleChecked = $("input:checkbox[name=role]:checked").map(valueSelector).get();
     var userChecked = $("input:checkbox[name=user]:checked").map(valueSelector).get();
     if(roleChecked.length > 0 && userChecked.length > 0){
-      $("#submit").attr('disabled',false);
+      // $("#submit").attr('disabled',false);
+      $("#submit").prop('disabled', false).button('refresh')
     }
     else{
-      $("#submit").attr('disabled',true);
+      // $("#submit").attr('disabled',true);
+      $("#submit").prop('disabled', true).button('refresh')
     }
   }
 
