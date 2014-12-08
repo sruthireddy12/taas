@@ -3,34 +3,39 @@
 </div>
 <div class="content-wrapper">
   <div class="cnt-head">
-     <h1>Users</h1>
-     <label id="new_user"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>New User</label>
+    <h1>Users</h1>
+    <label id="new_user"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>New User</label>
    </div>
-  <table class="tbl-1 alternate-color" id="users_list" border="0" cellspacing="0" cellpadding="0">
-   <thead>
-    <tr>
-      <th align="left">First Name</th>
-      <th align="left">Last Name</th>
-          <th align="left">
-        <%= t("activerecord.attributes.user.email", :default => t("activerecord.labels.email", :default => "Email")) %>
-      </th>
-      <th align="left">Mobile Number</th>
-      <th align="left">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-     <% organization_name = ''%>
-      <% @users.sort{|a,b| a.organization<=>b.organization}.each do |user| %>
-        <% if (organization_name == '' || organization_name != user.organization.domain) && current_user.is_super_admin? %>
-          <tr>
-            <td colspan="6" align="middle"><b>Organization</b> : <%= user.organization.domain.split('.')[0].upcase%></td>
-          </tr>
-          <% organization_name = user.organization.domain%>
-        <%end%>
-        <%= render :partial => 'user', :locals => {user: user,organization_name: organization_name} %>
+
+  <% @organizations.each do |organization|%>
+    <% if current_user.is_super_admin? %>
+      <div class="org-user-bar show-user" organization-id="<%= organization.id%>">
+        <h1><span><%= organization.domain.split('.')[0].upcase %></span></h1>
+      </div>
+      <div class="user-detail-<%=organization.id%>" style="display: none;">
+    <%end%>
+    <table class="tbl-1 alternate-color" id="users_list" border="0" cellspacing="0" cellpadding="0" style = "float:left;">
+     <thead>
+      <tr>
+        <th align="left">First Name</th>
+        <th align="left">Last Name</th>
+            <th align="left">
+          <%= t("activerecord.attributes.user.email", :default => t("activerecord.labels.email", :default => "Email")) %>
+        </th>
+        <th align="left">Mobile Number</th>
+        <th align="left">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% organization.users.each do |user| %>
+        <%= render :partial => 'user', :locals => {user: user} %>
       <% end -%>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+    <% if current_user.is_super_admin? %>
+      </div>
+    <%end%>
+  <%end%>
 </div>
 <script type="text/javascript">
   var dialog,form;
@@ -87,5 +92,12 @@
        }
      });
   });
+
+
+  $(document).on("click", '.show-user', function(e) {
+    var organizationId = $(this).attr('organization-id')
+    var finalDivId = ".user-detail-"+organizationId
+    $(this).parent('div').parent().find(finalDivId).toggle();
+   });
 
   </script>

@@ -5,6 +5,7 @@ class Admin::UsersController < Admin::AdminController
   # GET /users.json
   def index
     @user = User.new
+    @organizations = current_user.is_super_admin? ? Organization.all : [current_user.organization]
     @user.build_profile if @user.profile.blank?
     if current_user.is_super_admin?
       @users = User.all

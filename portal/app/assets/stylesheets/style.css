@@ -241,6 +241,7 @@ img, a img {
 	line-height:27px;
 	font-size:13px;
 	margin-top:11px;
+	margin-left: 7px;
 }
 .cnt-head label span {
 	display:block;
@@ -734,6 +735,14 @@ span.required {
 	border-bottom:#005f95 4px solid;
 }
 .org-app-bar {
+	width:100%;
+	height:auto;
+	float:left;
+	border-top:1px solid #cecece;
+	background:#ececec;
+}
+
+.org-user-bar {
 	width:100%;
 	height:auto;
 	float:left;
