@@ -6,37 +6,39 @@
     <%end%>
   </div>
   <% @organizations.each do |organization|%>
-    <div class="org-app-bar show-app" organization-id="<%= organization.id%>">
-      <% if current_user.is_super_admin? %>
+    <% if current_user.is_super_admin? %>
+      <div class="org-app-bar show-app" organization-id="<%= organization.id%>">
         <h1><span><%= organization.domain.split('.')[0].upcase %></span></h1>
-      <%end%>
-    </div>
-    <div class="application-detail-<%=organization.id%>" style="display: none;">
-      <table class="tbl-1 alternate-color" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0" style="float:left;">
-        <tr>
-          <th align="left" valign="middle">Name</th>
-          <th align="left" valign="middle">URL</th>
-          <th align="left" valign="middle">Created By</th>
-          <th align="middle" valign="middle" colspan="3">Actions</th>
-        </tr>
-        <% organization.applications.each do |application| %>
+      </div>
+      <div class="application-detail-<%=organization.id%>" style="display: none;">
+    <%end%>
+        <table class="tbl-1 alternate-color" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0" style="float:left;">
           <tr>
-            <td><%= link_to_if(action_active(application,'view'),application.name,{ controller: "applications", action: "show", id: application} , {class: 'view-link' }) %></td>
-            <td><%= application.url %></td>
-            <td><%= application.creator.full_name || application.creator.email %></td>
-            <td>
-              <%= link_to 'Edit', { controller: "applications", action: "edit", id: application}, {class: 'edit-link' } if action_active(application,'edit')%>
-            </td>
-            <td>
-              <%= link_to 'Delete', application, :method => :delete, :data => { :confirm => 'Are you sure?' } if action_active(application) %>
-            </td>
-            <td>
-              <%= link_to 'Assign', { controller: "roles_users", action: "index", id: application}, {class: 'assign_role_user' } if action_active(application,'assign_role')%>
-            </td>
+            <th align="left" valign="middle">Name</th>
+            <th align="left" valign="middle">URL</th>
+            <th align="left" valign="middle">Created By</th>
+            <th align="middle" valign="middle" colspan="3">Actions</th>
           </tr>
-        <%end%>
-      </table>
-    </div>
+          <% organization.applications.each do |application| %>
+            <tr>
+              <td><%= link_to_if(action_active(application,'view'),application.name,{ controller: "applications", action: "show", id: application} , {class: 'view-link' }) %></td>
+              <td><%= application.url %></td>
+              <td><%= application.creator.full_name || application.creator.email %></td>
+              <td>
+                <%= link_to 'Edit', { controller: "applications", action: "edit", id: application}, {class: 'edit-link' } if action_active(application,'edit')%>
+              </td>
+              <td>
+                <%= link_to 'Delete', application, :method => :delete, :data => { :confirm => 'Are you sure?' } if action_active(application) %>
+              </td>
+              <td>
+                <%= link_to 'Assign', { controller: "roles_users", action: "index", id: application}, {class: 'assign_role_user' } if action_active(application,'assign_role')%>
+              </td>
+            </tr>
+          <%end%>
+        </table>
+    <% if current_user.is_super_admin? %>
+      </div>
+    <%end%>
     <br \>
   <%end%>
 </div>
