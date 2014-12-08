@@ -725,6 +725,7 @@ span.required {
 	border:#CCC solid;
 	border-width:0px 1px 0px 0px;
 }
+
 .forgot-password-box {
 	width:710px;
 	height:auto;
@@ -739,3 +740,5 @@ span.required {
 	border-top:1px solid #cecece;
 	background:#ececec;
 }
+
+

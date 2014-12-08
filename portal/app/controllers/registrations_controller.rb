@@ -41,7 +41,11 @@ class RegistrationsController < Devise::RegistrationsController
 	      end
 	      respond_with resource
 	    end
-	end
+		end
+  end
+
+  def edit
+    render :layout => !request.xhr?
   end
 
   private
