@@ -48,18 +48,21 @@
           height: 600,
           width: 950,
           title: 'Create Role',
+          open: function (event, ui) {
+            $('.ui-widget-overlay').addClass('override');
+          },
           buttons: [
+            {
+              text: "Save",
+              "class": 'btn-style',
+              click: submitForm
+            },
             {
               text: "Cancel",
               "class": 'btn-style-2',
               click: function() {
                 $(this).dialog("close")
               }
-            },
-            {
-              text: "Save",
-              "class": 'btn-style',
-              click: submitForm
             }
           ]
         }).
@@ -79,18 +82,21 @@
             height: 600,
             width: 950,
             title: 'Edit Role',
+            open: function (event, ui) {
+              $('.ui-widget-overlay').addClass('override');
+            },
             buttons: [
+              {
+                text: "Save Role",
+                "class": 'btn-style',
+                click: submitForm
+              },
               {
                 text: "Cancel",
                 "class": 'btn-style-2',
                 click: function() {
                   $(this).dialog("close")
                 }
-              },
-              {
-                text: "Save Role",
-                "class": 'btn-style',
-                click: submitForm
               }
             ]
           }).

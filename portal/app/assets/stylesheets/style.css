@@ -568,8 +568,10 @@ span.required {
 }
 
 .ura-left-cnt {
-  width:708px;
-  height:400px;
+  /*width:708px;
+  height:400px;*/
+  width:auto;
+  height:auto;
   float:left;
   overflow:auto;
   overflow-x:hidden;
@@ -642,8 +644,10 @@ span.required {
 }
 
 .ura-right-cnt {
-	width:254px;
-	height:400px;
+/*	width:254px;
+	height:400px;*/
+	width:auto;
+	height:auto;
 	float:left;
 	overflow:auto;
 	overflow-x:hidden;
@@ -741,7 +745,6 @@ span.required {
 	border-top:1px solid #cecece;
 	background:#ececec;
 }
-
 .org-user-bar {
 	width:100%;
 	height:auto;
@@ -749,5 +752,9 @@ span.required {
 	border-top:1px solid #cecece;
 	background:#ececec;
 }
-
-
+.ui-widget-overlay.override {
+    background: repeat-x scroll 50% 50% #2F4F4F;
+    /*background-color: rgb(50, 50, 50) !important;*/
+    opacity:0.3;
+    filter:Alpha(Opacity=15);
+}

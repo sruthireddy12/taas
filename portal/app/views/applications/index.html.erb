@@ -61,19 +61,22 @@
             modal: true,
             height: 800,
             width: 1200,
+            open: function (event, ui) {
+              $('.ui-widget-overlay').addClass('override');
+            },
             title: 'Create new Application',
             buttons: [
+              {
+                text: "Save Application",
+                "class": 'btn-style',
+                click: submitForm
+              },
               {
                 text: "Cancel",
                 "class": 'btn-style-2',
                 click: function() {
                   $(this).dialog("close")
                 }
-              },
-              {
-                text: "Save Application",
-                "class": 'btn-style',
-                click: submitForm
               }
             ]
           }).
@@ -92,6 +95,9 @@
             tag.html(data).dialog({modal: true,
               height: 800,
               width: 1200,
+              open: function (event, ui) {
+                $('.ui-widget-overlay').addClass('override');
+              },
               title: 'Application Details',
               buttons: [
                 {
@@ -118,19 +124,22 @@
             tag.html(data).dialog({modal: true,
               height: 800,
               width: 1200,
+              open: function (event, ui) {
+                $('.ui-widget-overlay').addClass('override');
+              },
               title: 'Edit Application',
               buttons: [
+                {
+                  text: "Save Application",
+                  "class": 'btn-style',
+                  click: submitForm
+                },
                 {
                   text: "Cancel",
                   "class": 'btn-style-2',
                   click: function() {
                     $(this).dialog("close")
                   }
-                },
-                {
-                  text: "Save Application",
-                  "class": 'btn-style',
-                  click: submitForm
                 }
               ]
             }).
@@ -147,13 +156,23 @@
         url: url,
         success: function(data) {
           tag.html(data).dialog({modal: true,
-            height: 800,
-            width: 1200,
+            height: 500,
+            width: 1012,
             title: 'Assign User Roles',
+            open: function (event, ui) {
+              $('.ui-widget-overlay').addClass('override');
+            },
             beforeClose: function(event, ui) { 
               window.location.reload();
             },
             buttons: [
+              {
+                text: "Assign",
+                "class": 'btn-style',
+                "disabled": "disabled",
+                "id": "submit",
+                click: submitRole
+              },
               {
                 text: "Cancel",
                 "class": 'btn-style-2',
@@ -167,6 +186,10 @@
         }
       });
     });
+
+    function submitRole(){
+      assign_roles()
+    }
 
    $(document).on("click", '.show-app', function(e) {
     var organizationId = $(this).attr('organization-id')

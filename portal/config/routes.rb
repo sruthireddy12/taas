@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :roles
   post '/roles/destory_all' => 'roles#destory_all', as: 'destory_all'
 
-  devise_for :users, controllers: {registrations: 'registrations'}
+  devise_for :users, controllers: {registrations: 'registrations',passwords: 'passwords'}
   namespace :admin do
     get '/' => 'users#index'
     resources :users
