@@ -1,11 +1,11 @@
-<div class="content-wrapper">
+<div class="content-wrapper" style="margin-top:0px;">
   <div class="cnt-head">
     <h1>Roles</h1>
     <label id="delete_role"><span><img src="/assets/button_minus_red.png" width="16" height="16" alt="plus" /></span>Delete Role</label>
     <label id="new_role"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>New Role</label>
   </div>
 
-  <table class="tbl-1 alternate-color">
+  <table class="tbl-1 alternate-color" cellpadding="0px" cellspacing="0px">
     <thead>
       <tr>
         <th align="left"><%= check_box_tag "all_roles", 'all_roles' %></th>
@@ -45,8 +45,8 @@
       success: function(data) {
         tag.html(data).dialog({
           modal: true,
-          height: 600,
-          width: 950,
+          height: 'auto',
+          width: 'auto',
           title: 'Create Role',
           open: function (event, ui) {
             $('.ui-widget-overlay').addClass('override');
