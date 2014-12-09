@@ -11,6 +11,8 @@ class Admin::UsersController < Admin::AdminController
       @users = User.all
     elsif current_user.is_organization_admin?
       @users = current_user.organization.users
+    else
+      @users = User.where("created_by = #{current_user.id} or id = #{current_user.id}")
     end
   end
 
@@ -30,6 +32,7 @@ class Admin::UsersController < Admin::AdminController
     @user.organization_id = current_user.organization_id
     generated_password = Devise.friendly_token.first(8)+"#"+"2"
     @user.password =  generated_password
+    @user.created_by = current_user.id
     respond_to do |format|
       if @user.save
         create_or_delete_role_mapping(params[:user][:is_organization_admin])

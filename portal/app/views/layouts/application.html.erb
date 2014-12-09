@@ -11,7 +11,7 @@
         <div class="header-top-nav">
           <ul id="nav">
             <li><a href="#"><span><img src="/assets/user-icon.png" width="14" height="14" alt="user" /></span><%= current_user.email%></a></li>
-            <% if current_user.is_super_admin? || current_user.is_organization_admin?%>
+            <% if current_user.is_super_admin? || current_user.is_organization_admin? || action_active(current_user,"create")%>
               <li><a href="#"><span><img src="/assets/setting-icon.png" width="14" height="14" alt="settings" /></span>
               Administration</a>
                 <ul>

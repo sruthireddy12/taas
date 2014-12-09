@@ -126,7 +126,7 @@
       return false;
     }
     e.preventDefault();
-    if(confirm("Are you sure?")){
+    if(confirm("Are you sure?, Corresponding users and permissions data will delete.")){
       $.ajax('/roles/destory_all', {
         type: 'POST',
         datatype: 'json',

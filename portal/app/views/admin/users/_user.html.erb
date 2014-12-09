@@ -4,9 +4,9 @@
   <td align="left"><%= user.email %></td>
   <td align="left"><%= user.mobile_number %></td>
   <td align="left" >
-    <%= link_to "Edit", edit_admin_user_path(user), class: "edit_user_link"%>
+    <%= link_to "Edit", edit_admin_user_path(user), class: "edit_user_link" if (action_active(user,'delete') || current_user== user)%>
     <% unless current_user == user%>
-    <%= link_to "Delete", admin_user_path(user), :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+    <%= link_to "Delete", admin_user_path(user), :method => :delete, :data => { :confirm => 'Are you sure?' } if action_active(user,'delete') %>
     <%end%>
   </td>
 </tr>
