@@ -1,10 +1,10 @@
 <table width="648" border="0" cellspacing="0" cellpadding="0" class="ura-left-cnt-tbl">
   <% users.each do |u|%>
     <tr>
-      <td align="center">
+      <td align="center" width="35" height="30">
         <input name="user" type="checkbox" id="<%= u.id%>" class="users" value="<%= u.id%>"/>
       </td>
-      <td><%= u.email %></td>
+      <td width="175"><%= u.email %></td>
       <% roles = u.find_roles(application.id)%>
       <% roles.each do |role|%>
         <td class="role">

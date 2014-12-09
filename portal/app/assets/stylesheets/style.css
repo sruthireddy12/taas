@@ -577,9 +577,9 @@ span.required {
 }
 
 .ura-left-cnt {
-  /*width:708px;
-  height:400px;*/
-  width:auto;
+  width:708px;
+  /*height:400px;
+  width:100%;*/
   height:auto;
   float:left;
   overflow:auto;
@@ -587,7 +587,7 @@ span.required {
 }
 
 .ura-left-cnt-tbl {
-  width:auto;
+  width:708px;
   height:auto;
 }
 
@@ -671,12 +671,13 @@ span.required {
 	display:block;
 	font-size:14px;
 	cursor:pointer;
+	float: left;
 }
 
 .ura-right-cnt label span {
 	display:block;
 	float:left;
-	margin:11px 5px 0px 10px;
+	margin:3px 5px 0px 10px;
 }
 
 .ura-right-cnt label:hover {

@@ -82,17 +82,17 @@
           title: 'Edit Password',
           buttons: [
             {
+              text: "Save Password",
+              "class": 'btn-style',
+              click: submitForm
+            },
+            {
               text: "Cancel",
               "class": 'btn-style-2',
               click: function() {
                 $(this).dialog("close")
               }
             },
-            {
-              text: "Save Password",
-              "class": 'btn-style',
-              click: submitForm
-            }
           ]
         }).
         dialog('open');
