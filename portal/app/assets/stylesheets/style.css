@@ -261,8 +261,17 @@ img, a img {
 	background:url(/assets/th-bg.png) repeat-x;
 	height:32px;
 	font-size:13px;
+	font-weight: bold;
 	color:#304f5f;
 	padding:0px 7px;
+}
+.tbl-1 a {
+	font-size:13px;
+	color:#0083ce;
+	text-decoration: underline;
+}
+.tbl-1 a:hover {
+	color:#000;
 }
 .tbl-1 td {
 	padding:7px;
@@ -757,4 +766,30 @@ span.required {
     /*background-color: rgb(50, 50, 50) !important;*/
     opacity:0.3;
     filter:Alpha(Opacity=15);
+}
+.apl-main{width:100%;
+	height:auto;
+	float:left;
+}
+
+.apl-head{width:100%;
+	height:26px;
+	line-height:26px;
+	float:left;
+	background:url("/assets/apl-head-bg.png") repeat-x;
+	font-size:13px;
+	text-transform:uppercase;
+	color:#1e1e1e;
+	cursor:pointer;
+	margin-bottom:1px;
+}
+
+.apl-head:hover{
+	background:url("/assets/apl-head-bg-hover.png") repeat-x;
+}
+
+.apl-head label{width:auto;
+	height:auto;
+	float:left;
+	margin:2px 6px 6px 6px;
 }

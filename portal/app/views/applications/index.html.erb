@@ -7,9 +7,15 @@
   </div>
   <% @organizations.each do |organization|%>
     <% if current_user.is_super_admin? %>
-      <div class="org-app-bar show-app" organization-id="<%= organization.id%>">
-        <h1><span><%= organization.domain.split('.')[0].upcase %></span></h1>
+    <div class="apl-main">
+      <div class="apl-head show-app" organization-id="<%= organization.id%>">
+        <label><img src="/assets/apl-head-icon2.png" width="12" height="12" alt="plus" id="image_icon"/></label>
+          <%= organization.domain.split('.')[0].upcase %>
       </div>
+    </div>
+<!--       <div class="org-app-bar show-app" organization-id="<%= organization.id%>">
+        <h1><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" id="image_icon"/></span><span><%= organization.domain.split('.')[0].upcase %></span></h1>
+      </div> -->
       <div class="application-detail-<%=organization.id%>" style="display: none;">
     <%end%>
         <table class="tbl-1 alternate-color" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0" style="float:left;">
@@ -24,14 +30,14 @@
               <td><%= link_to_if(action_active(application,'view'),application.name,{ controller: "applications", action: "show", id: application} , {class: 'view-link' }) %></td>
               <td><%= application.url %></td>
               <td><%= application.creator.full_name || application.creator.email %></td>
-              <td>
-                <%= link_to 'Edit', { controller: "applications", action: "edit", id: application}, {class: 'edit-link' } if action_active(application,'edit')%>
+              <td align="center" width="60px">
+                <%= link_to image_tag("edit.png", :border => 0), { controller: "applications", action: "edit", id: application}, {class: 'edit-link' } if action_active(application,'edit')%>
               </td>
-              <td>
-                <%= link_to 'Delete', application, :method => :delete, :data => { :confirm => 'Are you sure?' } if action_active(application) %>
+              <td align="center" width="60px">
+                <%= link_to image_tag("assign.png", :border => 0), { controller: "roles_users", action: "index", id: application}, {class: 'assign_role_user',title: "Assign",rel: 'tooltip',relative: true } if action_active(application,'assign_role')%>
               </td>
-              <td>
-                <%= link_to 'Assign', { controller: "roles_users", action: "index", id: application}, {class: 'assign_role_user' } if action_active(application,'assign_role')%>
+              <td align="center" width="60px">
+                <%= link_to image_tag("delete.png", :border => 0), application, :method => :delete, :data => { :confirm => 'Are you sure?' } if action_active(application) %>
               </td>
             </tr>
           <%end%>
@@ -194,7 +200,18 @@
    $(document).on("click", '.show-app', function(e) {
     var organizationId = $(this).attr('organization-id')
     var finalDivId = ".application-detail-"+organizationId
-       $(this).parent('div').parent().find(finalDivId).toggle();
+    $(this).parent('div').parent().find(finalDivId).toggle();
+    var plus = $(this).find('#image_icon').attr('src');
+    if (plus == "/assets/apl-head-icon2.png")
+    {
+      $(this).find('#image_icon').removeAttr('src')
+      $(this).find('#image_icon').attr('src','/assets/apl-head-icon1.png')
+    }
+    else 
+    {
+      $(this).find('#image_icon').removeAttr('src')
+      $(this).find('#image_icon').attr('src','/assets/apl-head-icon2.png')
+    }
    });
   </script>
 

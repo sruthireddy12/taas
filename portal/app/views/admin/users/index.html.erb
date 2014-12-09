@@ -10,9 +10,12 @@
    </div>
   <% if current_user.is_super_admin? %>
     <% @organizations.each do |organization|%>
-        <div class="org-user-bar show-user" organization-id="<%= organization.id%>">
-          <h1><span><%= organization.domain.split('.')[0].upcase %></span></h1>
+      <div class="apl-main">
+        <div class="apl-head show-user" organization-id="<%= organization.id%>">
+          <label><img src="/assets/apl-head-icon2.png" width="12" height="12" alt="plus" id="image_icon"/></label>
+            <%= organization.domain.split('.')[0].upcase %>
         </div>
+      </div>
         <div class="user-detail-<%=organization.id%>" style="display: none;">
       <table class="tbl-1 alternate-color" id="users_list" border="0" cellspacing="0" cellpadding="0" style = "float:left;">
        <thead>
@@ -125,6 +128,17 @@
     var organizationId = $(this).attr('organization-id')
     var finalDivId = ".user-detail-"+organizationId
     $(this).parent('div').parent().find(finalDivId).toggle();
+    var plus = $(this).find('#image_icon').attr('src');
+    if (plus == "/assets/apl-head-icon2.png")
+    {
+      $(this).find('#image_icon').removeAttr('src')
+      $(this).find('#image_icon').attr('src','/assets/apl-head-icon1.png')
+    }
+    else 
+    {
+      $(this).find('#image_icon').removeAttr('src')
+      $(this).find('#image_icon').attr('src','/assets/apl-head-icon2.png')
+    }
    });
 
   </script>

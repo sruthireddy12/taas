@@ -25,7 +25,7 @@ body{
       <div class="login-box-inr1-cnt">
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <% flash.each do |name, msg| %>
-            <%= content_tag :div, msg, :id => "flash_#{name}",class: "ui-state-highlight" %>
+            <%= content_tag :div, msg, :id => "flash_#{name}",class: "ui-state-highlight",style: "color:#F00; line-height:20px; padding-left:5px; margin-top:7px;" %>
           <% end %>
 
            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:5px;">
