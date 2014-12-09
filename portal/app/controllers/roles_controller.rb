@@ -1,6 +1,6 @@
 class RolesController < ApplicationController
 	before_action :set_role, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /roles
   # GET /roles.json
   def index
@@ -19,15 +19,13 @@ class RolesController < ApplicationController
   # GET /roles/new
   def new
     @role = Role.new
-    @permissions = Permission.all.group('subject_class')
-    @all_actions = StaticData::ACTIONS
+    set_action_permission
     render :layout => !request.xhr?
   end
 
   # GET /roles/1/edit
   def edit
-    @permissions = Permission.all.group('subject_class')
-    @all_actions = StaticData::ACTIONS
+    set_action_permission
     render :layout => !request.xhr?
   end
 
@@ -36,31 +34,21 @@ class RolesController < ApplicationController
   def create
     @role =  Role.new(role_params)
     @role.organization_id = current_user.organization.id
-    respond_to do |format|
-      if @role.save
-        role_permission_mappings(params[:permission])
-        format.html { redirect_to roles_path, notice: 'Role sample was successfully created.' }
-        format.json { render :roles_path, status: :created, location: @role }
-      else
-        format.html { render :new }
-        format.json { render json: @role.errors, status: :unprocessable_entity }
-      end
+    if @role.save
+      role_permission_mappings(params[:permission])
     end
+    set_action_permission
+    respond_with(@role)
   end
 
   # PATCH/PUT /roles/1
   # PATCH/PUT /roles/1.json
   def update
-    respond_to do |format|
-      if @role.update(role_params)
-        role_permission_mappings(params[:permission])
-        format.html { redirect_to roles_path, notice: 'Role sample was successfully updated.' }
-        format.json { render :roles_path, status: :ok, location: @role }
-      else
-        format.html { render :edit }
-        format.json { render json: @role.errors, status: :unprocessable_entity }
-      end
+    set_action_permission
+    if @role.update(role_params)
+      role_permission_mappings(params[:permission])
     end
+    respond_with(@role)
   end
 
   # DELETE /roles/1
@@ -92,6 +80,11 @@ class RolesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_role
       @role = Role.find(params[:id])
+    end
+
+    def set_action_permission
+      @all_actions = StaticData::ACTIONS
+      @permissions = Permission.all.group('subject_class')
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
