@@ -8,8 +8,8 @@
   <table class="tbl-1 alternate-color" cellpadding="0px" cellspacing="0px">
     <thead>
       <tr>
-        <th align="left"><%= check_box_tag "all_roles", 'all_roles' %></th>
-        <th align="left">Name</th>
+        <th align="left" width="20px;"><%= check_box_tag "all_roles", 'all_roles' %></th>
+        <th align="left" width="250px;">Name</th>
         <th align="left">Description</th>
       </tr>
     </thead>
@@ -126,7 +126,7 @@
       return false;
     }
     e.preventDefault();
-    if(confirm("Are you sure?, Corresponding users and permissions data will delete.")){
+    if(confirm("Are you sure?Corresponding users and permissions data will delete.")){
       $.ajax('/roles/destory_all', {
         type: 'POST',
         datatype: 'json',
