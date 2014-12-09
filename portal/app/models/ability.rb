@@ -11,6 +11,7 @@ class Ability
       elsif user.has_role? :organization_admin, user.organization
         can :manage, User, :organization_id => user.organization_id
         can :manage, Application, :organization_id => user.organization_id
+        can :manage, Role, :organization_id => user.organization_id
       else
         can :update, Application do |app|
           !user.find_roles(app.id).map{|r| r.permissions }.flatten.uniq.select { |p| p.subject_class == 'Application' && p.action == 'edit'}.blank?

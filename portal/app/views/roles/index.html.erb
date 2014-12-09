@@ -38,7 +38,7 @@
 
  $("#new_role").on("click", function (e) {
     e.preventDefault();
-    var tag = $("<div id=\"role-form\"></div>"),
+    var tag = $("<div id=\"role_form\"></div>"),
       url = 'roles/new';
     $.ajax({
       url: url,
@@ -73,7 +73,7 @@
 
  $(".edit_role").on("click", function (e){
       e.preventDefault();
-      var tag = $("<div></div>"),
+      var tag = $("<div id=\"role_form\"></div>"),
         url = $(this).attr('href');
       $.ajax({
         url: url,
