@@ -30,14 +30,14 @@
               <td><%= link_to_if(action_active(application,'view'),application.name,{ controller: "applications", action: "show", id: application} , {class: 'view-link' }) %></td>
               <td><%= application.url %></td>
               <td><%= application.creator.full_name || application.creator.email %></td>
-              <td align="center" width="60px">
-                <%= link_to image_tag("edit.png", :border => 0), { controller: "applications", action: "edit", id: application}, {class: 'edit-link' } if action_active(application,'edit')%>
+              <td align="center" width="40px">
+                <%= link_to image_tag("edit.png", :border => 0), { controller: "applications", action: "edit", id: application}, {class: 'edit-link',title: "Edit",rel: 'tooltip',relative: true } if action_active(application,'edit')%>
               </td>
-              <td align="center" width="60px">
+              <td align="center" width="40px">
                 <%= link_to image_tag("assign.png", :border => 0), { controller: "roles_users", action: "index", id: application}, {class: 'assign_role_user',title: "Assign",rel: 'tooltip',relative: true } if action_active(application,'assign_role')%>
               </td>
-              <td align="center" width="60px">
-                <%= link_to image_tag("delete.png", :border => 0), application, :method => :delete, :data => { :confirm => 'Are you sure?' } if action_active(application) %>
+              <td align="center" width="40px">
+                <%= link_to image_tag("delete.png", :border => 0), application, {:method => :delete, title: "Delete",rel: "tooltip",relative: true, :data => { :confirm => 'Are you sure?'}} if action_active(application) %>
               </td>
             </tr>
           <%end%>
@@ -162,8 +162,10 @@
         url: url,
         success: function(data) {
           tag.html(data).dialog({modal: true,
-            height: 500,
-            width: 1012,
+            height: 'auto',
+            width: 'auto',
+            maxHeight: 500,
+            maxWidth: 1012,
             title: 'Assign User Roles',
             open: function (event, ui) {
               $('.ui-widget-overlay').addClass('override');
