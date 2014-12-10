@@ -18,4 +18,17 @@
 //= require jquery-ui/mouse
 //= require jquery-ui/position
 //= require jquery-fileupload/basic
+//= require jquery-ui/tooltip
 //= require_tree .
+
+$(function() {
+  $( document ).tooltip({
+    track: true
+  });
+  $('[rel~="tooltip"]').tooltip({
+    position: {
+      my: "center top",
+      at: "top-50"
+		}
+  });
+});

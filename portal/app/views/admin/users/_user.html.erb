@@ -4,9 +4,11 @@
   <td align="left"><%= user.email %></td>
   <td align="left"><%= user.mobile_number %></td>
   <td align="center">
-    <%= link_to image_tag("edit.png", :border => 0), edit_admin_user_path(user), class: "edit_user_link" if (action_active(user,'delete') || current_user== user)%></td>
-    <% unless current_user == user%>
-    <td align="center"><%= link_to image_tag("delete.png", :border => 0), admin_user_path(user), :method => :delete, :data => { :confirm => 'Are you sure?' } if action_active(user,'delete') %>
-    <%end%>
+    <%= link_to image_tag("edit.png", :border => 0), edit_admin_user_path(user), {class: "edit_user_link",title: "Edit",rel: 'tooltip',relative: true } if (action_active(user,'delete') || current_user== user)%>
   </td>
+  <% unless current_user == user%>
+    <td align="center">
+      <%= link_to image_tag("delete.png", :border => 0), admin_user_path(user), {:method => :delete, title: "Delete",rel: "tooltip",relative: true, :data => { :confirm => 'Are you sure?'}} if action_active(user,'delete') %>
+    </td>
+  <%end%>
 </tr>
