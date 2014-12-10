@@ -49,12 +49,12 @@
   <%end%>
 </div>
   <script type="text/javascript">
-    function submitForm() {
+    function submitApplication() {
       elem.fileupload('send', {files: filesList, paramName: paramNames});
       if( filesList.length == 0 )
         elem.submit();
       $(this).dialog("close");
-    }
+    };
 
     $("#new-application").on("click", function (e) {
       e.preventDefault();
@@ -75,7 +75,7 @@
               {
                 text: "Save Application",
                 "class": 'btn-style',
-                click: submitForm
+                click: submitApplication
               },
               {
                 text: "Cancel",
