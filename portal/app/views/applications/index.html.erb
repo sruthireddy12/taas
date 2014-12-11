@@ -65,8 +65,8 @@
         success: function(data) {
           tag.html(data).dialog({
             modal: true,
-            height: 800,
-            width: 1200,
+            height: $(window).height()-50,
+            width: $(window).width()-600,
             open: function (event, ui) {
               $('.ui-widget-overlay').addClass('override');
             },
@@ -99,8 +99,8 @@
           url: url,
           success: function(data) {
             tag.html(data).dialog({modal: true,
-              height: 800,
-              width: 1200,
+              height: $(window).height()-50,
+              width: $(window).width()-600,
               open: function (event, ui) {
                 $('.ui-widget-overlay').addClass('override');
               },
@@ -128,8 +128,8 @@
           url: url,
           success: function(data) {
             tag.html(data).dialog({modal: true,
-              height: 800,
-              width: 1200,
+              height:$(window).height()-50,
+              width: $(window).width()-600,
               open: function (event, ui) {
                 $('.ui-widget-overlay').addClass('override');
               },
@@ -138,7 +138,7 @@
                 {
                   text: "Save Application",
                   "class": 'btn-style',
-                  click: submitForm
+                  click: submitApplication
                 },
                 {
                   text: "Cancel",
