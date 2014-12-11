@@ -305,6 +305,32 @@ img, a img {
 	font-size:13px;
 	color:#626262;
 }
+
+
+.tbl-4 {
+	width:100%;
+	height:auto;
+	border:none;
+}
+.tbl-4 th {
+	border-bottom:#CCC 1px solid;
+	font-size:14px;
+	color:#161616;
+	height:25px;
+	text-transform:uppercase;
+	text-align:left;
+	padding-top:10px;
+}
+.tbl-4 td {
+	padding: 5px;
+	font-size:13px;
+	color:#626262;
+}
+.tbl-4 td b {
+	padding: 5px;
+	font-size:14px;
+	color:#1670BD;
+}
 .form-style1 {
 	width:200px;
 	height:30px;
@@ -794,3 +820,4 @@ span.required {
 	float:left;
 	margin:2px 6px 6px 6px;
 }
+
