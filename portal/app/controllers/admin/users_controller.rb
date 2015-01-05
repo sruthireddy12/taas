@@ -9,8 +9,8 @@ class Admin::UsersController < Admin::AdminController
     @user.build_profile if @user.profile.blank?
     if current_user.is_super_admin?
       @users = User.all
-    elsif current_user.is_organization_admin?
-      @users = current_user.organization.users
+    # elsif current_user.is_organization_admin?
+    #   @users = current_user.organization.users
     else
       @users = User.where("created_by = #{current_user.id} or id = #{current_user.id}")
     end
