@@ -40,6 +40,17 @@
                 </tr>
               </table>
               <div class="uplod-list-box">
+               <% unless @application.attachments.blank?%>
+                 <table>
+                   <tr>
+                     <% @application.attachments.each do |attachment|%>
+                       <td>
+                         <a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%><span class="remove-file-permanently" id="<%= attachment.id%>" applicationId="<%= @application.id%>"><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span></a>
+                       </td>
+                     <%end%>
+                   </tr>
+                 </table>
+               <%end%>
               </div>
             </div>
           </td>
@@ -114,6 +125,18 @@
                           </tbody>
                         </table>
                         <div class="uplod-list-box">
+                          <% unless c.object.attachments.blank?%>
+                               <table>
+                                 <tr>
+                                   <% c.object.attachments.each do |attachment|%>
+                                     <td>
+                                       <a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a>
+                                       <span class="remove-file-permanently" id="<%= attachment.id%>" applicationId="<%= @application.id%>"><img src="/assets/close-icon.png" width="14" height="14" alt="delete" /></span>
+                                     </td>
+                                   <%end%>
+                                 </tr>
+                               </table>
+                             <%end%>
                         </div>
                       </div>
                     </div>
@@ -248,4 +271,19 @@
          });
       }
       bindUpload();
+      $(document).on("click",'.remove-file-permanently',function(e) {
+        var valueSelector = this.id;
+        var applicationId = $(this).attr('applicationId')
+        e.preventDefault();
+        if(confirm("Are you sure?Selected file will be deleted permanently.")){
+          this.parentElement.remove()
+          $.ajax('/applications/delete_attachment', {
+             type: 'POST',
+             datatype: 'json',
+             data: {attachment_id: valueSelector, application_id: applicationId},
+             success: function(data, textStatus, jqHXR) {
+              }
+          });
+         }
+      });
 </script>

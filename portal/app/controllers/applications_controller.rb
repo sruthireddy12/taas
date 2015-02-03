@@ -45,12 +45,21 @@ class ApplicationsController < ApplicationController
 
   def update
     @application.update(application_params)
+     params[:application_file_paths].each do |file|
+      @application.attachments.create(file_path: file)
+    end if params[:application_file_paths] && !params[:application_file_paths].empty?
     respond_with(@application)
   end
 
   def destroy
     @application.destroy
     respond_with(@application)
+  end
+
+  def delete_attachment
+   attachment = Attachment.find_by_id(params[:attachment_id])
+   @application = Application.find_by_id(params[:application_id])
+   attachment.destroy unless attachment.blank?
   end
 
   private
