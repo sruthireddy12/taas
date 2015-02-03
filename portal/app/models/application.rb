@@ -3,6 +3,8 @@ class Application < ActiveRecord::Base
   has_many :credentials, dependent: :destroy
   has_many :attachments, as: :attachable, dependent: :destroy
   belongs_to :creator, :class_name => 'User', :foreign_key => 'creator'
+  has_one :application_requirement
+  accepts_nested_attributes_for :application_requirement
 
   validates_presence_of  :name, :organization_id
 

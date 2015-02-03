@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141208123233) do
+ActiveRecord::Schema.define(version: 20150203064458) do
+
+  create_table "application_requirements", force: true do |t|
+    t.string   "ram"
+    t.string   "hard_disk"
+    t.string   "graphic_card"
+    t.string   "browsers"
+    t.string   "framework"
+    t.string   "language"
+    t.string   "database"
+    t.integer  "application_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "applications", force: true do |t|
     t.string   "name"

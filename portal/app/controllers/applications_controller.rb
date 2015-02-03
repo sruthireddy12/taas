@@ -40,6 +40,7 @@ class ApplicationsController < ApplicationController
     params[:application_file_paths].each do |file|
       @application.attachments.create(file_path: file)
     end if params[:application_file_paths] && !params[:application_file_paths].empty?
+
     respond_with(@application)
   end
 
@@ -68,6 +69,7 @@ class ApplicationsController < ApplicationController
     end
 
     def application_params
-      params.require(:application).permit(:name, :description, :url, :creator, :point_of_contact,:email,:prefered_contact_time,credentials_attributes: [:id,:role,:username,:password,file_paths: []])
+      params.require(:application).permit(:name, :description, :url, :creator, :point_of_contact,:email,:prefered_contact_time,credentials_attributes: [:id,:role,:username,:password,file_paths: []], 
+                    application_requirement_attributes: [:id,:ram, :hard_disk, :graphic_card, :browsers, :framework, :language, :database] )
     end
 end
