@@ -4,6 +4,7 @@
     <%if current_user.is_super_admin? || current_user.is_organization_admin?%>
       <label id="new-application"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>Add Application</label>
     <%end%>
+    <label id="application"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>Auto Rabit</label>
   </div>
   <% @organizations.each do |organization|%>
     <% if current_user.is_super_admin? %>
@@ -215,5 +216,15 @@
       $(this).find('#image_icon').attr('src','/assets/apl-head-icon2.png')
     }
    });
+
+
+$("#application").on("click", function (e) {
+  var username = 'nagamohan.m@techrains.com'; //encodeURIComponent('nagamohan.m@techrains.com');
+  var password = 'Tech@123' ;//encodeURIComponent('Tech@123');
+  // window.open('http://localhost:8955/rabit/login.html?username='+ username + '&password=' + password,'mywindow','width=$(window).width(),height=$(window).height()')
+  debugger
+  window.open('http://localhost:8955/rabit/login.html?username='+ username + '&password=' + password,'mywindow','width=$(window).width(),height=$(window).height()')
+});
+
   </script>
 

@@ -19,6 +19,7 @@
 //= require jquery-ui/position
 //= require jquery-fileupload/basic
 //= require jquery-ui/tooltip
+//= require jCryption
 //= require_tree .
 
 $(function() {

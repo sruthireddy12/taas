@@ -31,5 +31,17 @@ module Portal
         html_tag
       end
     end
+
+    # config.action_dispatch.default_headers.merge!({
+    #   'Access-Control-Allow-Origin' => '*',
+    #   'Access-Control-Request-Method' => '*'
+    # })
+
+    config.action_dispatch.default_headers = {
+      'X-Frame-Options' => 'ALLOWALL',
+      'Access-Control-Allow-Origin' => '*',
+      'Access-Control-Request-Method' => '*'
+    }
+
   end
 end
