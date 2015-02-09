@@ -41,7 +41,6 @@ end
 
 gem 'carrierwave'
 gem 'jquery-fileupload-rails'
-gem 'soap4r'
 gem 'activeresource'
 gem 'nokogiri'
 # Use ActiveModel has_secure_password
