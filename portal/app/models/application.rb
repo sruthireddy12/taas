@@ -3,6 +3,11 @@ class Application < ActiveRecord::Base
   has_many :credentials, dependent: :destroy
   has_many :attachments, as: :attachable, dependent: :destroy
   belongs_to :creator, :class_name => 'User', :foreign_key => 'creator'
+  belongs_to :application_types
+  has_and_belongs_to_many :test_types
+  has_many :browsers ,through: :application_browsers
+  has_many :application_browsers
+  has_many :application_details
 
   validates_presence_of  :name, :organization_id
 
@@ -11,6 +16,9 @@ class Application < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :organization_id
 
   accepts_nested_attributes_for :credentials, reject_if: proc { |attributes| attributes['role'].blank? }
+  accepts_nested_attributes_for :application_details, reject_if: proc { |attributes| attributes['value'].blank? }
+  # accepts_nested_attributes_for :application_browsers
+  accepts_nested_attributes_for :application_browsers, reject_if: proc { |attributes| attributes['version'].blank? }
 
   # get all organization roles without organization admin and super admin
   def get_valid_roles

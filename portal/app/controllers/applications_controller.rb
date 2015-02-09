@@ -68,6 +68,6 @@ class ApplicationsController < ApplicationController
     end
 
     def application_params
-      params.require(:application).permit(:name, :description, :url, :creator, :point_of_contact,:email,:prefered_contact_time,credentials_attributes: [:id,:role,:username,:password,file_paths: []])
+      params.require(:application).permit(:name, :description,:creator, :point_of_contact,:email,:prefered_contact_time, :application_type_id, :database, :technology,credentials_attributes: [:id,:role,:username,:password,file_paths: []], application_details_attributes: [:id,:parameter, :value], application_browsers_attributes: [:id,:application_id,:browser_id,:version])
     end
 end

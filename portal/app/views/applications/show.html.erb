@@ -11,7 +11,7 @@
   </tr>
   <tr>
     <td align="right" class="head"><b> URL </b></td>
-    <td><%= @application.url %></td>
+    <td><%#= @application.url %></td>
     <td align="right" class="head"><b> Email </b></td>
     <td><%= @application.email %></td>
   </tr>
@@ -38,6 +38,40 @@
     </tr>
   <%end%>
   </table>
+  <table class="tbl-4 alternate-color" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <% unless @application.application_details.blank? %>
+      <tr>
+        <th colspan="4">Cordys Bpm Information</th>
+      </tr>
+      <%i = -1%>
+      <%@application.application_details.each do |ad|%>
+        <% i = i+1 %>
+          <% if i%2 == 0 %><tr><%end%>
+          <td align="right" class="head"><label><b><%= ad.parameter.capitalize%></b> </label></td>
+          <td><%= ad.value %></td>
+        <% if i%2 == 1 %></tr><%end%>
+      <%end%> <% if i%2 == 0 %></tr><%end%>
+    <%end%>
+  </table>
+
+  <table class="tbl-4" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <% unless @application.application_browsers.blank? %>
+      <tr>
+        <th colspan="4">Browser</th>
+      </tr>
+      <%j = -1%>
+      <%@application.application_browsers.each do |ab|%>
+        <% j = j+1 %>
+        <% if j%2 == 0 %><tr><%end%>
+        <% browser_id= ab.browser_id %>
+        <% browser = Browser.find(browser_id) %>
+        <td align="right"  class="head"><label><b><%= browser.name %></b> </label></td>
+        <td><%= ab.version%></td>
+        <% if j%2 == 1 %></tr><%end%>
+      <%end%> <% if j%2 == 0 %></tr><%end%>
+    <%end%>
+  </table>
+
   <table class="tbl-4" width="100%" border="0" cellspacing="0" cellpadding="0">
   <% unless @application.attachments.blank? %>
     <tr>
@@ -62,7 +96,6 @@
             </table>
           </td>
         </tr>
-          
       <%end%>
       
     <%end%>

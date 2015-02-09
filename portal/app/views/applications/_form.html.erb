@@ -13,18 +13,85 @@
           <td width="57%"><%= f.text_field :point_of_contact , class: "form-style1", placeholder: "Enter Here" %></td>
         </tr>
         <tr>
-          <td align="right">URL</td>
-          <td><%= f.text_field :url , class: "form-style1", id: "url_field", placeholder: "Enter Here"%></td>
           <td align="right">Email </td>
           <td><%= f.text_field :email , class: "form-style1", placeholder: "Enter Here" %></td>
+          <td align="right">Preferred Time </td>
+          <td><%= f.time_select :prefered_contact_time ,ampm: true %></td>
+        </tr>
+         <tr>
+          <td align="right">Technologies Used</td>
+          <td><%= f.text_field :technology , class: "form-style1", id: "url_field", placeholder: "Enter Here"%></td>
+          <td align="right">Database </td>
+          <td><%= f.text_field :database , class: "form-style1", placeholder: "Enter Here" %></td>
         </tr>
         <tr>
           <td align="right">Description </td>
           <td rowspan="2" valign="top"><%= f.text_area :description, class: "form-style2", placeholder: "Enter Here" %></td>
-          <td align="right">Preferred Time </td>
-          <td><%= f.time_select :prefered_contact_time ,ampm: true %></td>
+          <td align="right">Application Type<span class='required'>*</span></td>
+          <td><%= f.collection_select(:application_type_id, ApplicationType.all, :id, :name)%></td>
         </tr>
         <tr></tr>
+        <tr class= "cordys"style="display:none;">
+          <th colspan="4">Cordys Bpm Information</th>
+        </tr>
+        <tr>
+          <td class="cordys_info" colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;display:none;">
+            <div class="cordys_info" style="display:none;">
+              <%list_of_cordys_labels = ['Url','Username','Password','Cordys home','Cordys organization name','Work space name','Cordys project name']%>
+              <%i = -1%>
+              <table width="90%" border="0" align="left" cellpadding="0" cellspacing="0">
+                <% list_of_cordys_labels.each do |label| %>
+                  <% i = i+1 %>
+                   <% if i%2 == 0 %> <tr  ><%end%>
+                      <td align="right"><%= label%><span class='required'>*</span> </td>
+                      <td>
+                        <%= hidden_field "application[application_details_attributes][#{i}]" , :parameter ,value: label.downcase %>
+                        <% unless label == 'Password'%>
+                          <%= text_field "application[application_details_attributes][#{i}]" , :value ,class: "form-style1"%>
+                        <%else%>
+                          <%= password_field "application[application_details_attributes][#{i}]" , :value ,class: "form-style1"%>
+                        <%end%>
+                      </td>
+                    <% if i%2 == 1 %></tr><%end%>
+                  <% end %>
+                  <% if i%2 == 0 %></tr><%end%>
+                </table>
+              </div>
+            </td>
+          </tr>
+        <tr class= "pega"style="display:none;">
+          <th colspan="4">Pega Bpm Information</th>
+        </tr>
+        <tr class= "oracle"style="display:none;">
+          <th colspan="4">Oracle Bpm Information</th>
+        </tr>
+        <tr>
+          <th colspan="4">Browser compatibility</th>
+        </tr>
+
+        <%j = -1%>
+        <%Browser.all.each do|r|%>
+          <% j = j+1 %>
+         <% if j%2 == 0 %> <tr><%end%>
+              <td align="right"><%= check_box  "browser[#{j}]", r.id,class:"browser_check" ,id: "#{j}"%> <%= r.name %></td>
+              <td>
+                <%= text_field "application[application_browsers_attributes][#{j}]",:version , class: "form-style1", id: "version_#{j}", placeholder: "Enter version",  disabled:true %>
+                <%= hidden_field "application[application_browsers_attributes][#{j}]",:browser_id , value: r.id%>
+              </td>
+           <% if i%2 == 1 %></tr><%end%>
+        <% end %>
+        <% if i%2 == 0 %></tr><%end%>
+
+        <tr>
+          <th colspan="4">Test Types</th>
+        </tr>
+        <%k = -1%>
+        <%TestType.all.each do|t|%>
+          <% k = k+1 %>
+          <tr>
+              <td align="right"><%= check_box "test[#{k}]", t.id ,class:"test_type_check",id: "#{k}"%> <%= t.name %></td>
+          </tr>
+        <% end %>
         <tr>
           <th colspan="4">Application Attachments</th>
         </tr>
@@ -286,4 +353,84 @@
           });
          }
       });
+
+// $('select').change(function() {
+//     var optionSelected = $(this).find("option:selected");
+//     var valueSelected  = optionSelected.val();
+//      if(valueSelected == 1)
+//      {
+//       $(".cordys").show();
+//       $(".cordys_info").show();
+//       $(".pega").hide();
+//       $(".oracle").hide();
+//      }
+//      else if(valueSelected == 2){
+//        $(".pega").show();
+//        $(".oracle").hide();
+//        $(".cordys").hide();
+//        $(".cordys_info").hide();
+//      }
+//      else if(valueSelected == 3){
+//        $(".oracle").show();
+//        $(".pega").hide();
+//        $(".cordys").hide();
+//        $(".cordys_info").hide();
+//      }
+//      else{
+//       $(".oracle").hide();
+//        $(".pega").hide();
+//        $(".cordys").hide();
+//        $(".cordys_info").hide();
+//      }
+//  });
+
+  $(".browser_check").click(function() {
+    ver = $("#version_"+this.id)
+    if (this.checked == true)
+    {
+      ver.prop('disabled', false)
+    }
+    else
+    {
+      ver.prop('disabled', true)
+    }
+  });
+
+  function app_type() {
+    $(":input#application_application_type_id").change(function(){
+      var optionSelected = $(this).find("option:selected");
+      var valueSelected  = optionSelected.val();
+       if(valueSelected == 1)
+       {
+        $(".cordys").show();
+        $(".cordys_info").show();
+        $(".pega").hide();
+        $(".oracle").hide();
+       }
+       else if(valueSelected == 2){
+         $(".pega").show();
+         $(".oracle").hide();
+         $(".cordys").hide();
+         $(".cordys_info").hide();
+       }
+       else if(valueSelected == 3){
+         $(".oracle").show();
+         $(".pega").hide();
+         $(".cordys").hide();
+         $(".cordys_info").hide();
+       }
+       else{
+        $(".oracle").hide();
+         $(".pega").hide();
+         $(".cordys").hide();
+         $(".cordys_info").hide();
+        }
+
+    })
+  }
+  app_type();
+
+$("#application_application_type_id").val(1).change();
+
+
 </script>
