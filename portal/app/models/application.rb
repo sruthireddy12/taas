@@ -4,7 +4,7 @@ class Application < ActiveRecord::Base
   has_many :attachments, as: :attachable, dependent: :destroy
   belongs_to :creator, :class_name => 'User', :foreign_key => 'creator'
   belongs_to :application_types
-  has_and_belongs_to_many :test_types
+  has_and_belongs_to_many :test_types, join_table: :applications_test_types
   has_many :browsers ,through: :application_browsers
   has_many :application_browsers
   has_many :application_details
@@ -19,6 +19,7 @@ class Application < ActiveRecord::Base
   accepts_nested_attributes_for :application_details, reject_if: proc { |attributes| attributes['value'].blank? }
   # accepts_nested_attributes_for :application_browsers
   accepts_nested_attributes_for :application_browsers, reject_if: proc { |attributes| attributes['version'].blank? }
+  accepts_nested_attributes_for :test_types, reject_if: proc { |attributes| attributes['name'].blank? }
 
   # get all organization roles without organization admin and super admin
   def get_valid_roles

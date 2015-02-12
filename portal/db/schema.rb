@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150204101802) do
+
+ActiveRecord::Schema.define(version: 20150210063606) do
 
   create_table "application_browsers", force: true do |t|
     t.integer  "application_id"
@@ -19,6 +20,7 @@ ActiveRecord::Schema.define(version: 20150204101802) do
     t.string   "version"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "test_type_id"
   end
 
   create_table "application_details", force: true do |t|

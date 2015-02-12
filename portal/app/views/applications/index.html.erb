@@ -22,14 +22,12 @@
         <table class="tbl-1 alternate-color" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0" style="float:left;">
           <tr>
             <th align="left" valign="middle">Name</th>
-            <th align="left" valign="middle">URL</th>
             <th align="left" valign="middle">Created By</th>
             <th align="middle" valign="middle" colspan="3">Actions</th>
           </tr>
           <% organization.applications.each do |application| %>
             <tr>
               <td><%= link_to_if(action_active(application,'view'),application.name,{ controller: "applications", action: "show", id: application} , {class: 'view-link' }) %></td>
-              <td><%#= application.url %></td>
               <td><%= application.creator.full_name || application.creator.email %></td>
               <td align="center" width="40px">
                 <%= link_to image_tag("edit.png", :border => 0), { controller: "applications", action: "edit", id: application}, {class: 'edit-link',title: "Edit",rel: 'tooltip',relative: true } if action_active(application,'edit')%>

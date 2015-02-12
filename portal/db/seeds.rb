@@ -30,7 +30,8 @@ end
 end
 
 
-['Mozilla Firefox', 'Google Chrome', 'Internet Explorer','Safari', 'Opera'].each do |name|
+
+['firefox', 'chrome', 'ie','safari', 'opera'].each do |name|
   Browser.create(name: name)
 end
 

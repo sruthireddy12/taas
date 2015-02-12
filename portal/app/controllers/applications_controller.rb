@@ -36,6 +36,7 @@ class ApplicationsController < ApplicationController
     @application.creator = current_user
     @application.organization = current_user.organization
     @application.save
+    application_test_types_mapping()
     ## Add file attacments for a application
     params[:application_file_paths].each do |file|
       @application.attachments.create(file_path: file)
@@ -44,8 +45,10 @@ class ApplicationsController < ApplicationController
   end
 
   def update
+    @application.application_details.destroy_all
+    @application.application_browsers.destroy_all
     @application.update(application_params)
-     params[:application_file_paths].each do |file|
+    params[:application_file_paths].each do |file|
       @application.attachments.create(file_path: file)
     end if params[:application_file_paths] && !params[:application_file_paths].empty?
     respond_with(@application)
@@ -62,12 +65,21 @@ class ApplicationsController < ApplicationController
    attachment.destroy unless attachment.blank?
   end
 
+  def application_test_types_mapping()
+  end
+
   private
     def set_application
       @application = Application.find(params[:id])
     end
 
     def application_params
-      params.require(:application).permit(:name, :description,:creator, :point_of_contact,:email,:prefered_contact_time, :application_type_id, :database, :technology,credentials_attributes: [:id,:role,:username,:password,file_paths: []], application_details_attributes: [:id,:parameter, :value], application_browsers_attributes: [:id,:application_id,:browser_id,:version])
+      params.require(:application)
+      .permit(:name, :description,:creator, :point_of_contact,:email,:prefered_contact_time, :application_type_id, :database, :technology, 
+        credentials_attributes: [:id,:role,:username,:password,file_paths: []], 
+        application_details_attributes: [:id,:parameter, :value], 
+        application_browsers_attributes: [:id,:application_id,:browser_id,:version,:test_type_id],
+         test_type_ids:[]
+        )
     end
 end

@@ -35,30 +35,8 @@
           <th colspan="4">Cordys Bpm Information</th>
         </tr>
         <tr>
-          <td class="cordys_info" colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;display:none;">
-            <div class="cordys_info" style="display:none;">
-              <%list_of_cordys_labels = ['Url','Username','Password','Cordys home','Cordys organization name','Work space name','Cordys project name']%>
-              <%i = -1%>
-              <table width="90%" border="0" align="left" cellpadding="0" cellspacing="0">
-                <% list_of_cordys_labels.each do |label| %>
-                  <% i = i+1 %>
-                   <% if i%2 == 0 %> <tr  ><%end%>
-                      <td align="right"><%= label%><span class='required'>*</span> </td>
-                      <td>
-                        <%= hidden_field "application[application_details_attributes][#{i}]" , :parameter ,value: label.downcase %>
-                        <% unless label == 'Password'%>
-                          <%= text_field "application[application_details_attributes][#{i}]" , :value ,class: "form-style1"%>
-                        <%else%>
-                          <%= password_field "application[application_details_attributes][#{i}]" , :value ,class: "form-style1"%>
-                        <%end%>
-                      </td>
-                    <% if i%2 == 1 %></tr><%end%>
-                  <% end %>
-                  <% if i%2 == 0 %></tr><%end%>
-                </table>
-              </div>
-            </td>
-          </tr>
+          <%= render :partial => 'application_types', :locals => {application: @application} %>
+        </tr>
         <tr class= "pega"style="display:none;">
           <th colspan="4">Pega Bpm Information</th>
         </tr>
@@ -66,32 +44,11 @@
           <th colspan="4">Oracle Bpm Information</th>
         </tr>
         <tr>
-          <th colspan="4">Browser compatibility</th>
-        </tr>
-
-        <%j = -1%>
-        <%Browser.all.each do|r|%>
-          <% j = j+1 %>
-         <% if j%2 == 0 %> <tr><%end%>
-              <td align="right"><%= check_box  "browser[#{j}]", r.id,class:"browser_check" ,id: "#{j}"%> <%= r.name %></td>
-              <td>
-                <%= text_field "application[application_browsers_attributes][#{j}]",:version , class: "form-style1", id: "version_#{j}", placeholder: "Enter version",  disabled:true %>
-                <%= hidden_field "application[application_browsers_attributes][#{j}]",:browser_id , value: r.id%>
-              </td>
-           <% if i%2 == 1 %></tr><%end%>
-        <% end %>
-        <% if i%2 == 0 %></tr><%end%>
-
-        <tr>
           <th colspan="4">Test Types</th>
         </tr>
-        <%k = -1%>
-        <%TestType.all.each do|t|%>
-          <% k = k+1 %>
-          <tr>
-              <td align="right"><%= check_box "test[#{k}]", t.id ,class:"test_type_check",id: "#{k}"%> <%= t.name %></td>
-          </tr>
-        <% end %>
+        <tr>
+          <%= render :partial => 'testing_types', :locals => {application: @application} %>
+        </tr>
         <tr>
           <th colspan="4">Application Attachments</th>
         </tr>
