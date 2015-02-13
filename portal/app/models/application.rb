@@ -9,7 +9,7 @@ class Application < ActiveRecord::Base
   has_many :application_browsers
   has_many :application_details
 
-  validates_presence_of  :name, :organization_id
+  validates_presence_of  :name, :organization_id,:email,:application_type_id
 
   validates_format_of :name, :with => /[\w \.\-@]+/,:message => "can only contain letters and numbers."
   validates_length_of :name, :within => 3..50, :too_long => "name is too long", :too_short => "name is too short"

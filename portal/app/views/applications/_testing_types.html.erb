@@ -16,7 +16,7 @@
                 <tr>
                   <%Browser.all.each do|r|%>
                     <% j = j+1 %>
-                    <td><%= check_box  "browser[#{j}]", r.id, class: "browser_check #{k}",id: "#{j}",  disabled:true %> <td>
+                    <td><%= check_box  "browser[#{j}]", r.id, class: "browser_check #{k}",id: "#{j}",  disabled:true %></td>
                     <td><%= image_tag (r.name.to_s+".png") %></td>
                     <td><label>
                     <%= text_field "application[application_browsers_attributes][#{j}]",:version , class: "form-style4", id: "version_#{j}", placeholder: "version",  disabled:true %>
@@ -62,7 +62,7 @@
                       <% app_browser = ApplicationBrowser.get_app_browser_details(application,r)
                           app_version = app_browser.blank? ? '' : app_browser.first.version 
                           ver_checked =  app_browser.blank? ? checked=false : checked=true %>
-                      <td><%= check_box  "browser[#{j}]", r.id, class: "browser_check #{k}",id: "#{j}", checked: ver_checked %> <td>
+                      <td><%= check_box  "browser[#{j}]", r.id, class: "browser_check #{k}",id: "#{j}", checked: ver_checked %></td>
                       <td><%= image_tag (r.name.to_s+".png") %> </td>
                       <td><label><%= text_field "application[application_browsers_attributes][#{j}]",:version , class: "form-style4 ", id: "version_#{j}", placeholder: "version", value: app_version ,disabled: !ver_checked %>
                         <%= hidden_field "application[application_browsers_attributes][#{j}]",:browser_id , value: r.id%>

@@ -1,6 +1,13 @@
 <div class="content-wrapper" style="margin-top:0%;">
   <div class="reg-main">
-    <%= form_for @application, remote: true, html: {multipart: true, class: 'application-form' } do |f| %>
+    <%= form_for @application, html: {multipart: true, class: 'application-form' }, remote: true do |f| %>
+      <%- unless f.object.errors.empty? %>
+        <div class='ui-state-highlight'>
+        <%-f.object.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+        </div>
+      <% end %>
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
       <table class="tbl-2" width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -13,7 +20,7 @@
           <td width="57%"><%= f.text_field :point_of_contact , class: "form-style1", placeholder: "Enter Here" %></td>
         </tr>
         <tr>
-          <td align="right">Email </td>
+          <td align="right">Email<span class='required'>*</span> </td>
           <td><%= f.text_field :email , class: "form-style1", placeholder: "Enter Here" %></td>
           <td align="right">Preferred Time </td>
           <td><%= f.time_select :prefered_contact_time ,ampm: true %></td>
@@ -32,16 +39,16 @@
         </tr>
         <tr></tr>
         <tr class= "cordys"style="display:none;">
-          <th colspan="4">Cordys Bpm Information</th>
+          <th colspan="4">Cordys Bpm Details</th>
         </tr>
         <tr>
           <%= render :partial => 'application_types', :locals => {application: @application} %>
         </tr>
         <tr class= "pega"style="display:none;">
-          <th colspan="4">Pega Bpm Information</th>
+          <th colspan="4">Pega Bpm Details</th>
         </tr>
         <tr class= "oracle"style="display:none;">
-          <th colspan="4">Oracle Bpm Information</th>
+          <th colspan="4">Oracle Bpm Details</th>
         </tr>
         <tr>
           <th colspan="4">Test Types</th>
@@ -50,7 +57,7 @@
           <%= render :partial => 'testing_types', :locals => {application: @application} %>
         </tr>
         <tr>
-          <th colspan="4">Application Attachments</th>
+          <th colspan="4">Application Documents/Attachments</th>
         </tr>
         <tr>
           <td colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;">
@@ -80,7 +87,7 @@
           </td>
         </tr>
         <tr>
-          <th colspan="4">Login Information</th>
+          <th colspan="4">Application Roles and Functional Documents</th>
         </tr>
         <tr>
           <td colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;">
@@ -310,84 +317,5 @@
           });
          }
       });
-
-// $('select').change(function() {
-//     var optionSelected = $(this).find("option:selected");
-//     var valueSelected  = optionSelected.val();
-//      if(valueSelected == 1)
-//      {
-//       $(".cordys").show();
-//       $(".cordys_info").show();
-//       $(".pega").hide();
-//       $(".oracle").hide();
-//      }
-//      else if(valueSelected == 2){
-//        $(".pega").show();
-//        $(".oracle").hide();
-//        $(".cordys").hide();
-//        $(".cordys_info").hide();
-//      }
-//      else if(valueSelected == 3){
-//        $(".oracle").show();
-//        $(".pega").hide();
-//        $(".cordys").hide();
-//        $(".cordys_info").hide();
-//      }
-//      else{
-//       $(".oracle").hide();
-//        $(".pega").hide();
-//        $(".cordys").hide();
-//        $(".cordys_info").hide();
-//      }
-//  });
-
-  $(".browser_check").click(function() {
-    ver = $("#version_"+this.id)
-    if (this.checked == true)
-    {
-      ver.prop('disabled', false)
-    }
-    else
-    {
-      ver.prop('disabled', true)
-    }
-  });
-
-  function app_type() {
-    $(":input#application_application_type_id").change(function(){
-      var optionSelected = $(this).find("option:selected");
-      var valueSelected  = optionSelected.val();
-       if(valueSelected == 1)
-       {
-        $(".cordys").show();
-        $(".cordys_info").show();
-        $(".pega").hide();
-        $(".oracle").hide();
-       }
-       else if(valueSelected == 2){
-         $(".pega").show();
-         $(".oracle").hide();
-         $(".cordys").hide();
-         $(".cordys_info").hide();
-       }
-       else if(valueSelected == 3){
-         $(".oracle").show();
-         $(".pega").hide();
-         $(".cordys").hide();
-         $(".cordys_info").hide();
-       }
-       else{
-        $(".oracle").hide();
-         $(".pega").hide();
-         $(".cordys").hide();
-         $(".cordys_info").hide();
-        }
-
-    })
-  }
-  app_type();
-
-$("#application_application_type_id").val(1).change();
-
 
 </script>

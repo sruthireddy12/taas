@@ -51,8 +51,10 @@
     function submitApplication() {
       elem.fileupload('send', {files: filesList, paramName: paramNames});
       if( filesList.length == 0 )
+        cordys_bpm_validations()
         elem.submit();
-      $(this).dialog("close");
+      // $(this).dialog("close");
+
     };
 
     $("#new-application").on("click", function (e) {
@@ -224,14 +226,36 @@
     }
    });
 
+  $("#application").on("click", function (e) {
+    var username = 'nagamohan.m@techrains.com'; //encodeURIComponent('nagamohan.m@techrains.com');
+    var password = 'Tech@123' ;//encodeURIComponent('Tech@123');
+    // window.open('http://localhost:8955/rabit/login.html?username='+ username + '&password=' + password,'mywindow','width=$(window).width(),height=$(window).height()')
+    window.open('http://localhost:8955/rabit/login.html?username='+ username + '&password=' + password,'mywindow','width=$(window).width(),height=$(window).height()')
+  });
 
-$("#application").on("click", function (e) {
-  var username = 'nagamohan.m@techrains.com'; //encodeURIComponent('nagamohan.m@techrains.com');
-  var password = 'Tech@123' ;//encodeURIComponent('Tech@123');
-  // window.open('http://localhost:8955/rabit/login.html?username='+ username + '&password=' + password,'mywindow','width=$(window).width(),height=$(window).height()')
-  debugger
-  window.open('http://localhost:8955/rabit/login.html?username='+ username + '&password=' + password,'mywindow','width=$(window).width(),height=$(window).height()')
-});
-
-  </script>
+  function cordys_bpm_validations(){
+    if($("#application_application_details_attributes_0_value").val() == ''){
+      alert("please enter url of Cordys Bpm");
+      return false;
+    }else if($("#application_application_details_attributes_1_value").val() == ''){
+      alert("please enter username of Cordys Bpm");
+      return false;
+    }else if($("#application_application_details_attributes_2_value").val() == ''){
+       alert("please enter password of Cordys Bpm");
+       return false;
+    }else if($("#application_application_details_attributes_3_value").val() == ''){
+       alert("please enter corys home");
+       return false;
+    }else if($("#application_application_details_attributes_4_value").val() == ''){
+       alert("please enter cordys organization name");
+       return false;
+    }else if($("#application_application_details_attributes_5_value").val() == ''){
+       alert("please enter work space name");
+       return false;
+    }else if($("#application_application_details_attributes_6_value").val() == ''){
+       alert("please enter cordys project name");
+       return false;
+    }
+  }
+</script>
 
