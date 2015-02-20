@@ -21,14 +21,12 @@
         <table class="tbl-1 alternate-color" id="alternatecolor" width="100%" border="0" cellspacing="0" cellpadding="0" style="float:left;">
           <tr>
             <th align="left" valign="middle">Name</th>
-            <th align="left" valign="middle">URL</th>
             <th align="left" valign="middle">Created By</th>
             <th align="middle" valign="middle" colspan="3">Actions</th>
           </tr>
           <% organization.applications.each do |application| %>
             <tr>
               <td><%= link_to_if(action_active(application,'view'),application.name,{ controller: "applications", action: "show", id: application} , {class: 'view-link' }) %></td>
-              <td><%= application.url %></td>
               <td><%= application.creator.full_name || application.creator.email %></td>
               <td align="center" width="40px">
                 <%= link_to image_tag("edit.png", :border => 0), { controller: "applications", action: "edit", id: application}, {class: 'edit-link',title: "Edit",rel: 'tooltip',relative: true } if action_active(application,'edit')%>
@@ -51,9 +49,11 @@
   <script type="text/javascript">
     function submitApplication() {
       elem.fileupload('send', {files: filesList, paramName: paramNames});
+      cordys_bpm_validations();
       if( filesList.length == 0 )
         elem.submit();
-      $(this).dialog("close");
+      // $(this).dialog("close");
+
     };
 
     $("#new-application").on("click", function (e) {
@@ -71,6 +71,9 @@
               $('.ui-widget-overlay').addClass('override');
             },
             title: 'Create new Application',
+            beforeClose: function(event, ui) {
+              window.location.reload();
+            },
             buttons: [
               {
                 text: "Save Application",
@@ -134,6 +137,12 @@
                 $('.ui-widget-overlay').addClass('override');
               },
               title: 'Edit Application',
+              open: function (event, ui) {
+               $('.ui-widget-overlay').addClass('override');
+              },
+              beforeClose: function(event, ui) {
+               window.location.reload();
+              },
               buttons: [
                 {
                   text: "Save Application",
@@ -215,5 +224,52 @@
       $(this).find('#image_icon').attr('src','/assets/apl-head-icon2.png')
     }
    });
+
+    function cordys_bpm_validations(){
+      $("#application-creation").validate({
+        rules: {
+          "application[application_details_attributes][0][value]":{
+               url: true
+          }
+         },
+         messages: {
+           "application[name]":{
+              required: "Enter Name",
+              minlength: "Min Length is 3 characters"
+           },
+           "application[email]":{
+              required: "Enter Email",
+           },
+           "application[application_type_id]":{
+              required: "Please select anyone application type",
+           },
+           "application[application_details_attributes][0][value]":{
+              required: "Enter Url"
+           },
+           "application[application_details_attributes][1][value]":{
+              required: "Enter username of Cordys Bpm"
+           },
+           "application[application_details_attributes][2][value]":{
+              required: "Enter password of Cordys Bpm"
+           },
+           "application[application_details_attributes][3][value]":{
+              required: "Enter cordys home"
+           },
+           "application[application_details_attributes][4][value]":{
+              required: "Enter cordys organization name"
+           },
+           "application[application_details_attributes][5][value]":{
+              required: "Enter work space name"
+           },
+           "application[application_details_attributes][6][value]":{
+              required: "Enter cordys project name"
+           }
+         },
+         errorPlacement: function(error,element){
+           error.insertAfter(element);
+           error.css('color','red');
+         }
+     });
+    };
   </script>
 

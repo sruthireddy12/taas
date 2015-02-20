@@ -1,5 +1,6 @@
 class Credential < ActiveRecord::Base
 	attr_writer :file_paths
+	attr_accessor :delete_credential
 	belongs_to :application
 	has_many :attachments, as: :attachable, dependent: :destroy
 

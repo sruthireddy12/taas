@@ -1,0 +1,118 @@
+ <%if application.new_record?%>
+   <td colspan="4" style="padding:0px;">
+     <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin:0px;">
+      <%k = -1%>
+        <%j = -1%>
+        <%TestType.all.each do|t|%>
+          <% k = k+1 %>
+          <tr>
+            <td width="10px" align="center" valign="middle"><label>
+              <%=check_box_tag "application[test_type_ids][]", t.id, application.test_types.include?(t),class:"test_type_check",id: "#{k}" %>
+            </label></td>
+            <td><%= t.name %></td>
+            <% if t.name=="Functional Testing"%>
+            <td>
+              <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <%Browser.all.each do|r|%>
+                    <% j = j+1 %>
+                    <td><%= check_box  "browser[#{j}]", r.id, class: "browser_check #{k}",id: "#{j}",  disabled:true %></td>
+                    <td><%= image_tag (r.name.to_s+".png") %></td>
+                    <td><label>
+                    <%= text_field "application[application_browsers_attributes][#{j}]",:version , class: "form-style4", id: "version_#{j}", placeholder: "version",  disabled:true %>
+                    <%= hidden_field "application[application_browsers_attributes][#{j}]",:browser_id , value: r.id%>
+                    <%= hidden_field "application[application_browsers_attributes][#{j}]",:test_type_id , value: t.id%>
+                    </label></td>
+                  <% end%>
+              </tr>
+            </table></td><% end%>
+            <% if t.name=="Web Service"%>
+            <td>
+             <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                 <td width="34%" align="right" style="padding-top:0px;">Wsdl Files</td>
+                  <td width="66%" style="padding-top:0px;">
+                  <input name="web_services" type="file" class="form-style3" id="web_services"/>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <% end%>
+          </tr>
+        <% end%>
+      </table></td>
+<%else%>
+  <td colspan="4" style="padding:0px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <%k = -1%>
+        <%j = -1%>
+        <%TestType.all.each do|t|%>
+          <% k = k+1 %>
+          <% app_test = application.test_types.include?(t)
+             app_checked =  (app_test == true) ? checked=true : checked=false %>
+          <tr>
+            <td width="10px" align="center" valign="middle"><label><%= check_box_tag "application[test_type_ids][]", t.id, application.test_types.include?(t),class: "test_type_check",id: "#{k}",  checked: app_checked %></label></td>
+            <td width="200px"><%= t.name %></td>
+            <% if t.name=="Functional Testing"%>
+              <td>
+                <table border="0" cellspacing="0" cellpadding="0">
+                 <tr>
+                    <%Browser.all.each do|r|%>
+                      <% j = j+1 %>
+                      <% app_browser = ApplicationBrowser.get_app_browser_details(application,r)
+                          app_version = app_browser.blank? ? '' : app_browser.first.version 
+                          ver_checked =  app_browser.blank? ? checked=false : checked=true %>
+                      <td><%= check_box  "browser[#{j}]", r.id, class: "browser_check #{k}",id: "#{j}", checked: ver_checked %></td>
+                      <td><%= image_tag (r.name.to_s+".png") %> </td>
+                      <td><label><%= text_field "application[application_browsers_attributes][#{j}]",:version , class: "form-style4 ", id: "version_#{j}", placeholder: "version", value: app_version ,disabled: !ver_checked %>
+                        <%= hidden_field "application[application_browsers_attributes][#{j}]",:browser_id , value: r.id%>
+                        <%= hidden_field "application[application_browsers_attributes][#{j}]",:test_type_id , value: t.id%>
+                      </label></td>
+                    <% end%>
+                 </tr>
+                </table>
+              </td>
+            <% end%>
+            <td>
+            <% if t.name=="Web Service"%>
+             <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                 <td width="34%" align="right" style="padding-top:0px;">Wsdl Files</td>
+                  <td width="66%" style="padding-top:0px;">
+                   <input name="web_services" type="file" class="form-style3" id="web_services"/>
+                  </td>
+                </tr>
+              </table>
+            <% end%>
+            </td>
+        </tr>
+      <% end%>
+  </table></td>
+<% end%>
+<script>
+ $(".test_type_check").click(function() {
+    var all= '.'+$(this).attr('id')
+    if (this.checked) {
+      $(all).each(function() {
+          this.disabled = false;
+      });
+    } else {
+      $(all).each(function() {
+        this.checked = false;
+        this.disabled = true;
+        $(".form-style4").prop('disabled', true);
+      });
+    }
+  });
+ $(".browser_check").click(function() {
+  var version= $("#version_"+this.id)
+  if (this.checked == true)
+    {
+      version.prop('disabled', false)
+    }
+   else
+    {
+     version.prop('disabled', true)
+    }
+ });
+ </script>

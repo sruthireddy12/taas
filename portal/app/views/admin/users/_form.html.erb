@@ -11,13 +11,20 @@
       <td><%= f.label :email %></td>
       <td><%= f.text_field :email, class:'inpt-1' %></td>
     </tr>
+    <%if current_user.is_super_admin? %>
+        <tr>
+         <td><%= f.label :organization %>
+            <% selected = f.object.organization.blank? ? nil : f.object.organization.id%>
+         </td>
+         <td><%= f.collection_select :organization_id,Organization.all,:id ,:name,{selected: selected ,prompt: 'Please Select Organization'}%></td>
+        </tr>
+      <% end %>
     <%- f.object.profile || f.object.build_profile %>
     <%= f.fields_for :profile do |profile|%>
       <tr>
         <td><%= profile.label :first_name %></td>
         <td><%= profile.text_field :first_name, class:'inpt-1' %></td>
       </tr>
-
       <tr>
         <td><%= profile.label :last_name %></td>
         <td><%= profile.text_field :last_name, class:'inpt-1' %></td>

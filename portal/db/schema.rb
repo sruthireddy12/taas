@@ -11,12 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141208123233) do
+ActiveRecord::Schema.define(version: 20150210063606) do
+
+  create_table "application_browsers", force: true do |t|
+    t.integer  "application_id"
+    t.integer  "browser_id"
+    t.string   "version"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "test_type_id"
+  end
+
+  create_table "application_details", force: true do |t|
+    t.string   "parameter"
+    t.string   "value"
+    t.integer  "application_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "application_types", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "applications", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.string   "url"
     t.integer  "creator"
     t.integer  "organization_id"
     t.datetime "created_at"
@@ -24,15 +46,31 @@ ActiveRecord::Schema.define(version: 20141208123233) do
     t.string   "point_of_contact"
     t.string   "email"
     t.time     "prefered_contact_time"
+    t.integer  "application_type_id"
+    t.string   "technology"
+    t.string   "database"
   end
 
   add_index "applications", ["organization_id"], name: "index_applications_on_organization_id", using: :btree
+
+  create_table "applications_test_types", force: true do |t|
+    t.integer "application_id"
+    t.integer "test_type_id"
+  end
+
+  add_index "applications_test_types", ["application_id", "test_type_id"], name: "index_applications_test_types_on_application_id_and_test_type_id", using: :btree
 
   create_table "attachments", force: true do |t|
     t.string   "file_path"
     t.string   "file_type"
     t.integer  "attachable_id"
     t.string   "attachable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "browsers", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -102,6 +140,12 @@ ActiveRecord::Schema.define(version: 20141208123233) do
   end
 
   add_index "simple_captcha_data", ["key"], name: "idx_key", using: :btree
+
+  create_table "test_types", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

@@ -29,7 +29,7 @@ class Admin::UsersController < Admin::AdminController
 
   def create
     @user = User.new(user_params)
-    @user.organization_id = current_user.organization_id
+    @user.organization_id = current_user.organization_id if @user.organization_id.blank?
     generated_password = Devise.friendly_token.first(8)+"#"+"2"
     @user.password =  generated_password
     @user.created_by = current_user.id
@@ -57,9 +57,10 @@ class Admin::UsersController < Admin::AdminController
         params[:user].delete(:password)
         params[:user].delete(:password_confirmation)
     end
- 
+    old_org = @user.organization_id
     respond_to do |format|
       if @user.update(user_params)
+        delete_roles unless old_org == @user.organization_id
         create_or_delete_role_mapping(params[:user][:is_organization_admin])
         UserMailer.update(@user, params[:user][:password]).deliver
         format.html { redirect_to admin_users_path, :notice => 'User was successfully updated.' }
@@ -89,6 +90,10 @@ class Admin::UsersController < Admin::AdminController
       @user.roles << admin_role
     end
   end
+  #delete user related roles, when user changes to other organizations
+  def delete_roles
+   @user.roles.destroy_all
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -97,6 +102,6 @@ class Admin::UsersController < Admin::AdminController
     end
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :is_organization_admin, profile_attributes: [:first_name, :last_name,:mobile_number] )
+      params.require(:user).permit(:email, :password, :password_confirmation, :organization_id,:is_organization_admin, profile_attributes: [:first_name, :last_name,:mobile_number] )
     end
 end

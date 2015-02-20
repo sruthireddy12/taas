@@ -353,6 +353,15 @@ img, a img {
 	border:#bbbbbb 1px solid;
 	float:left;
 }
+
+.form-style4 {
+	width:75px;
+	height:25px;
+	border:#bdbdbd 1px solid;
+	color:#333;
+	font-size:12px;
+	padding:0px 7px;
+}
 .btn-style {
 	width:auto;
 	height:30px;
