@@ -34,7 +34,7 @@
       <div class="header-bottom">
         <div class="logo-main"> <img src="/assets/taaspro.png" width="176" height="51" alt="taaspro" /> </div>
         <div class="header-bottom-nav">
-          <ul>
+          <ul class="nav-tabs ">
             <li>
               <label><a href="#" style="height:15px;"><img src="/assets/home-icon.png" width="21" height="20" alt="home" /></a></label>
             </li>
@@ -42,19 +42,7 @@
               <label class="active"><a href="<%= applications_path %>" class="active">My Apps</a></label>
             </li>
             <li>
-              <label><a href="#">Link Here</a></label>
-            </li>
-            <li>
-              <label><a href="#">Other Link</a></label>
-            </li>
-            <li>
-              <label><a href="#">Large Text Goes Here</a></label>
-            </li>
-            <li>
-              <label><a href="#">Account Settings</a></label>
-            </li>
-            <li>
-              <label><a href="#">Links</a></label>
+              <label id="test_automation"><a href="#">Test Automation</a></label>
             </li>
           </ul>
         </div>
@@ -98,6 +86,17 @@
         dialog('open');
       }
     });
+  });
+
+  $("#test_automation").on("click", function (e) {
+   var username = 'niranjan.g@techsophy.com'
+   var password = 'Rabit@123' ;
+   window.open('http://172.16.0.31:8955/rabit/login.html?username='+ username + '&password=' + password,'mywindow','width=$(window).width(),height=$(window).height()')
+  });
+
+  $('.header-bottom-nav').click(function (e) {
+    $('ul.nav-tabs li.active').removeClass('active')
+    $("#test_automation").addClass("active");
   });
 </script>
 </body>

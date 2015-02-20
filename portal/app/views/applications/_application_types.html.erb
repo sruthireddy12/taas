@@ -1,0 +1,80 @@
+<td class="cordys_info" colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding:0px 0px 10px 0px;   display:none;">
+  <div class="cordys_info" style="display:none;">
+    <%list_of_cordys_labels = ['Url','Username','Password','Cordys home','Cordys organization name','Work space name','Cordys project name']%>
+    <%i = -1%>
+    <%if application.new_record?%>
+      <table width="90%" border="0" align="left" cellpadding="0" cellspacing="0">
+        <% list_of_cordys_labels.each do |label| %>
+          <% i = i+1 %>
+           <% if i%2 == 0 %> <tr  ><%end%>
+              <td align="right"><%= label%><span class='required'>*</span> </td>
+              <td>
+                <%= hidden_field "application[application_details_attributes][#{i}]" , :parameter ,value: label.downcase %>
+                <% unless label == 'Password'%>
+                  <%= text_field "application[application_details_attributes][#{i}]" , :value ,class: "form-style1", required: true%>
+                <%else%>
+                  <%= password_field "application[application_details_attributes][#{i}]" , :value ,class: "form-style1", required: true%>
+                <%end%>
+              </td>
+            <% if i%2 == 1 %></tr><%end%>
+          <% end %>
+          <% if i%2 == 0 %></tr><%end%>
+        </table>
+        <%else%>
+        <table width="90%" border="0" align="left" cellpadding="0" cellspacing="0">
+        <% list_of_cordys_labels.each do |label| %>
+          <% i = i+1 %>
+           <% if i%2 == 0 %> <tr  ><%end%>
+              <td align="right"><%= label%><span class='required'>*</span> </td>
+              <% app_details = ApplicationDetail.get_app_details(application,label)
+                app = app_details.blank? ? '' : app_details.first.value %>
+              <td>
+                <%= hidden_field "application[application_details_attributes][#{i}]" , :parameter ,value: label.downcase %>
+                <% unless label == 'Password'%>
+                  <%= text_field "application[application_details_attributes][#{i}]" , :value ,class: "form-style1", value: app%>
+                <%else%>
+                  <%= password_field "application[application_details_attributes][#{i}]" , :value , value: app, class: "form-style1" %>
+                <%end%>
+              </td>
+            <% if i%2 == 1 %></tr><%end%>
+          <% end %>
+        <% if i%2 == 0 %></tr><%end%>
+      </table>
+    <%end%>
+  </div>
+</td>
+<script>
+ function app_type() {
+    $(":input#application_application_type_id").change(function(){
+      var optionSelected = $(this).find("option:selected");
+      var valueSelected  = optionSelected.val();
+       if(valueSelected == 1)
+       {
+        $(".cordys").show();
+        $(".cordys_info").show();
+        $(".pega").hide();
+        $(".oracle").hide();
+       }
+       else if(valueSelected == 2){
+         $(".pega").show();
+         $(".oracle").hide();
+         $(".cordys").hide();
+         $(".cordys_info").hide();
+       }
+       else if(valueSelected == 3){
+         $(".oracle").show();
+         $(".pega").hide();
+         $(".cordys").hide();
+         $(".cordys_info").hide();
+       }
+       else{
+        $(".oracle").hide();
+         $(".pega").hide();
+         $(".cordys").hide();
+         $(".cordys_info").hide();
+        }
+    })
+  }
+  app_type();
+  $("#application_application_type_id").val(1).change();
+</script>

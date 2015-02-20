@@ -21,6 +21,20 @@ Permission.where(subject_class: 'Document',action: 'upload').first_or_create
 Permission.where(subject_class: 'Document',action: 'download').first_or_create
 Permission.where(subject_class: 'Build',action: 'trigger').first_or_create
 
+['Cordys Bpm', 'Pega Bpm', 'Oracle Bpm'].each do |name|
+  ApplicationType.create(name: name)
+end
+
+['Functional Testing', 'Web Service', 'Performance Testing','Security'].each do |name|
+  TestType.create(name: name)
+end
+
+
+['firefox', 'chrome', 'ie','safari', 'opera'].each do |name|
+  Browser.create(name: name)
+end
+
+
 # organization_techrain = Organization.create(name: 'Techrains',domain: 'techrains.com')
 # techrain_user = User.create(email: "admin@techrains.com", password: "tech@123", organization_id: organization_techrain.id)
 # techrain_admin = techrain_user.add_role :admin , organization_techrain.id

@@ -1,6 +1,13 @@
 <div class="content-wrapper" style="margin-top:0%;">
   <div class="reg-main">
-    <%= form_for @application, remote: true, html: {multipart: true, class: 'application-form' } do |f| %>
+    <%= form_for @application, html: {multipart: true, class: 'application-form' ,id: 'application-creation'}, remote: true do |f| %>
+      <%- unless f.object.errors.empty? %>
+        <div class='ui-state-highlight'>
+        <%-f.object.errors.full_messages.each do |msg| %>
+          <p><%= msg %></p>
+        <% end %>
+        </div>
+      <% end %>
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
       <table class="tbl-2" width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -8,25 +15,49 @@
         </tr>
         <tr>
           <td width="12%" align="right">Application Name<span class='required'>*</span></td>
-          <td width="18%"><%= f.text_field :name , class: "form-style1", placeholder: "Enter Here" %></td>
+          <td width="18%"><%= f.text_field :name , class: "form-style1", placeholder: "Enter Here" , required: true,minlength: 3%></td>
           <td width="16%" align="right">Point of Contact</td>
           <td width="57%"><%= f.text_field :point_of_contact , class: "form-style1", placeholder: "Enter Here" %></td>
         </tr>
         <tr>
-          <td align="right">URL</td>
-          <td><%= f.text_field :url , class: "form-style1", id: "url_field", placeholder: "Enter Here"%></td>
-          <td align="right">Email </td>
-          <td><%= f.text_field :email , class: "form-style1", placeholder: "Enter Here" %></td>
+          <td align="right">Email<span class='required'>*</span> </td>
+          <td><%= f.text_field :email , class: "form-style1", placeholder: "Enter Here", required: true, email: true %></td>
+          <td align="right">Preferred Time </td>
+          <td><%= f.time_select :prefered_contact_time ,ampm: true %></td>
+        </tr>
+         <tr>
+          <td align="right">Technologies Used</td>
+          <td><%= f.text_field :technology , class: "form-style1", id: "url_field", placeholder: "Enter Here"%></td>
+          <td align="right">Database </td>
+          <td><%= f.text_field :database , class: "form-style1", placeholder: "Enter Here" %></td>
         </tr>
         <tr>
           <td align="right">Description </td>
           <td rowspan="2" valign="top"><%= f.text_area :description, class: "form-style2", placeholder: "Enter Here" %></td>
-          <td align="right">Preferred Time </td>
-          <td><%= f.time_select :prefered_contact_time ,ampm: true %></td>
+          <td align="right">Application Type<span class='required'>*</span></td>
+          <td><%= f.collection_select(:application_type_id, ApplicationType.all, :id, :name,required: true)%></td>
         </tr>
         <tr></tr>
+        <tr class= "cordys"style="display:none;">
+          <th colspan="4">Cordys Bpm Details</th>
+        </tr>
         <tr>
-          <th colspan="4">Application Attachments</th>
+          <%= render :partial => 'application_types', :locals => {application: @application} %>
+        </tr>
+        <tr class= "pega"style="display:none;">
+          <th colspan="4">Pega Bpm Details</th>
+        </tr>
+        <tr class= "oracle"style="display:none;">
+          <th colspan="4">Oracle Bpm Details</th>
+        </tr>
+        <tr>
+          <th colspan="4">Test Types</th>
+        </tr>
+        <tr>
+          <%= render :partial => 'testing_types', :locals => {application: @application} %>
+        </tr>
+        <tr>
+          <th colspan="4">Application Documents/Attachments</th>
         </tr>
         <tr>
           <td colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;">
@@ -56,7 +87,7 @@
           </td>
         </tr>
         <tr>
-          <th colspan="4">Login Information</th>
+          <th colspan="4">Application Roles and Functional Documents</th>
         </tr>
         <tr>
           <td colspan="4" align="left" style="border:#dbdbdb solid 1px; border-top:0px; padding-left:0px; padding-right:0px;">
@@ -141,6 +172,7 @@
                       </div>
                     </div>
                   </div>
+                  <%= c.text_field :delete_credential , value: false , type: 'hidden'%>
                 <% end %>
               <% end %>
             </div>
@@ -192,7 +224,7 @@
     });
 
     //Removing the input for file upload as it is not editable
-    $(newNestedForm).find('.uplod-box').find('table').remove()
+    $(newNestedForm).find('.uplod-box').find('table').hide()
     $(uploadedBox).append(newNestedForm);
     $(uploadedBox).appendTo(parentTd);
 
@@ -216,8 +248,16 @@
        $(this).parent('div').parent().find('.added-role-section').toggle();
    });
 
+   $(document).on("click", '.remove-file', function(e) {
+       $(this).parent().remove();
+   });
+
+
    $(document).on("click", '.remove-role', function(e) {
        parentDiv = $(this).closest('div').parent()
+       // to delete credential in controller
+      deleteCredentialId = parentDiv.find('div.added-role-section').find('input[type=text]')[0].id.replace(new RegExp(/role/), "" + ("delete_credential"));
+      deleteCredential = $('#'+deleteCredentialId).val("true")
        input_file_name = parentDiv.find('div.added-role-section').find('input[type=file]')[0].name
        i = 0;
        noOfElements = paramNames.length

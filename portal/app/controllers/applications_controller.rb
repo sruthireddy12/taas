@@ -44,8 +44,14 @@ class ApplicationsController < ApplicationController
   end
 
   def update
+    @application.application_details.destroy_all
+    @application.application_browsers.destroy_all
     @application.update(application_params)
-     params[:application_file_paths].each do |file|
+    #delete credentails which are all removed
+    unless application_params["credentials_attributes"].except('0').blank?
+     delete_removed_credential(application_params["credentials_attributes"])
+   end
+    params[:application_file_paths].each do |file|
       @application.attachments.create(file_path: file)
     end if params[:application_file_paths] && !params[:application_file_paths].empty?
     respond_with(@application)
@@ -62,12 +68,27 @@ class ApplicationsController < ApplicationController
    attachment.destroy unless attachment.blank?
   end
 
+  def delete_removed_credential(credential_attributes)
+   credential_attributes.except('0').each do |credential|
+     if credential.last['delete_credential'] == 'true'
+       credential = Credential.where(id: credential.last['id']).first
+       credential.destroy unless credential.blank?
+     end
+   end
+ end
+
   private
     def set_application
       @application = Application.find(params[:id])
     end
 
     def application_params
-      params.require(:application).permit(:name, :description, :url, :creator, :point_of_contact,:email,:prefered_contact_time,credentials_attributes: [:id,:role,:username,:password,file_paths: []])
+      params.require(:application)
+      .permit(:name, :description,:creator, :point_of_contact,:email,:prefered_contact_time, :application_type_id, :database, :technology, 
+        credentials_attributes: [:id,:role,:username,:password,:delete_credential,file_paths: []],
+        application_details_attributes: [:id,:parameter, :value], 
+        application_browsers_attributes: [:id,:application_id,:browser_id,:version,:test_type_id],
+         test_type_ids:[]
+        )
     end
 end
