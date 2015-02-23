@@ -331,6 +331,30 @@ img, a img {
 	font-size:14px;
 	color:#1670BD;
 }
+.tbl-5 {
+	width:100%;
+	height:auto;
+	border:none;
+}
+
+.tbl-5 td {
+	padding: 5px;
+	font-size:13px;
+	color:#626262;
+}
+
+.tbl-5 td label{
+ display:block;
+ float:left;
+ text-align: right;
+ padding: 0px 7px 0px 10px;
+ color:#1670BD;
+}
+.tbl-5 td span{
+ display:block;
+ float:left;
+ padding: 0px 30px 0px 0px;
+}
 .form-style1 {
 	width:200px;
 	height:30px;

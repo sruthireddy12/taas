@@ -69,15 +69,20 @@
       <tr>
         <th colspan="4">Login Information</th>
       </tr>
-      <tr>
-        <%@application.credentials.each do |credential|%>
+      <%@application.credentials.each do |credential|%>
+        <tr>
+         <td colspan="4" style="padding:0px;">
+         <table class="tbl-5" width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr style="background:#f5f5f5">
-            <td><label><b>Role : </b> </label><%= credential.role %></td>
-            <td ><label><b>UserName : </b> </label><%= credential.username %></td>
-            <td colspan="2"><label><b>Password : </b> </label><%= credential.password %></td>
-          </tr>
+            <td height="20px"><label>Role : </label>
+            <span><%= credential.role %></span>
+           <label>UserName :  </label>
+            <span><%= credential.username %></span>
+            <label>Password :  </label>
+            <span><%= credential.password %></span></td>
+          </tr></table></td></tr>
             <tr>
-              <td colspan="2">
+              <td colspan="4">
                <table class="tbl-4" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <%unless credential.attachments.empty?%>
                  
@@ -90,17 +95,6 @@
                 </table>
               </td>
             </tr> 
-        <%end%>
-      </tr>
+      <%end%>
     <%end%>
-
-
-
-
-
-
-
-
-
-
 </table>
