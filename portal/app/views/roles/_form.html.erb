@@ -1,12 +1,10 @@
 <div class="rc-main">
- <%= form_for(@role) do |f| %>
+ <%= form_for @role, remote: true do |f| %>
   <div class="rc-head">
     <% if @role.errors.any? %>
       <div id="error_explanation">
-        <h2><%= pluralize(@role_sample.errors.count, "error") %> prohibited this role_sample from being saved:</h2>
-
         <ul>
-          <% @role_sample.errors.full_messages.each do |message| %>
+          <% @role.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
         </ul>
@@ -24,25 +22,25 @@
     </table>      
   </div>
 
-  <table class="tbl-1 tbl-1-border alternate-color" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <table class="tbl-1 tbl-1-border alternate-color" width="100%" border="0" cellspacing="0" cellpadding="0" style="float:left;">
     <tr>
       <th align="left" valign="middle"></th>
       <%i = 1%>
-      <% @all_actions.each do |const|%>
+      <% all_actions.each do |const|%>
         <th align="center" valign="middle"><input name="" type="checkbox" value="" id= "all" class="all_actions" 
         const="<%=const%>"/><%=const%></th>
         <%i+=1%>
        <% end %>
     </tr>
-    <% @permissions.each do |permission|%>
+    <% permissions.each do |permission|%>
       <% subject_permission = permission.get_all_permissions%>
       <tr>
         <td width="200px" class="head"><%= permission.subject_class %></td>
         <%j=0%>
-        <% @all_actions.count.times do %>
+        <% all_actions.count.times do %>
           <td align="center">
-            <% if subject_permission.map{|p| p.action}.include?@all_actions[j]%>
-              <%sub = permission.get_permission_with_action(@all_actions[j])%>
+            <% if subject_permission.map{|p| p.action}.include?all_actions[j]%>
+              <%sub = permission.get_permission_with_action(all_actions[j])%>
               <% if @role.permissions.find_by_id(sub.id).blank? %>
                 <input name="permission[]" type="checkbox" value="<%=sub.id%>" class="<%= sub.action%>"/>
               <%else%>

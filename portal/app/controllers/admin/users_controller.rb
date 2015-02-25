@@ -5,11 +5,14 @@ class Admin::UsersController < Admin::AdminController
   # GET /users.json
   def index
     @user = User.new
+    @organizations = current_user.is_super_admin? ? Organization.all : [current_user.organization]
     @user.build_profile if @user.profile.blank?
     if current_user.is_super_admin?
       @users = User.all
-    elsif current_user.is_organization_admin?
-      @users = current_user.organization.users
+    # elsif current_user.is_organization_admin?
+    #   @users = current_user.organization.users
+    else
+      @users = User.where("created_by = #{current_user.id} or id = #{current_user.id}")
     end
   end
 
@@ -26,12 +29,13 @@ class Admin::UsersController < Admin::AdminController
 
   def create
     @user = User.new(user_params)
-    @user.organization_id = current_user.organization_id
+    @user.organization_id = current_user.organization_id if @user.organization_id.blank?
     generated_password = Devise.friendly_token.first(8)+"#"+"2"
     @user.password =  generated_password
+    @user.created_by = current_user.id
     respond_to do |format|
       if @user.save
-        create_or_delete_roll_mapping(params[:user][:is_organization_admin])
+        create_or_delete_role_mapping(params[:user][:is_organization_admin])
         UserMailer.welcome_email(@user, generated_password).deliver
         #flash[:notice] = flash[:notice].to_a.concat @user.errors.full_messages
         format.html { redirect_to admin_users_path, :notice => 'User was successfully created.' }
@@ -53,10 +57,11 @@ class Admin::UsersController < Admin::AdminController
         params[:user].delete(:password)
         params[:user].delete(:password_confirmation)
     end
- 
+    old_org = @user.organization_id
     respond_to do |format|
       if @user.update(user_params)
-        create_or_delete_roll_mapping(params[:user][:is_organization_admin])
+        delete_roles unless old_org == @user.organization_id
+        create_or_delete_role_mapping(params[:user][:is_organization_admin])
         UserMailer.update(@user, params[:user][:password]).deliver
         format.html { redirect_to admin_users_path, :notice => 'User was successfully updated.' }
         format.json { head :ok }
@@ -77,13 +82,17 @@ class Admin::UsersController < Admin::AdminController
     end
   end
 
-  def create_or_delete_roll_mapping(organization_admin)
+  def create_or_delete_role_mapping(organization_admin)
     admin_role = Role.where(name: 'organization_admin', organization_id: @user.organization.id).first_or_create
     if organization_admin.to_i == 0
       @user.roles.delete(admin_role)
     else
       @user.roles << admin_role
     end
+  end
+  #delete user related roles, when user changes to other organizations
+  def delete_roles
+   @user.roles.destroy_all
   end
 
   private
@@ -93,6 +102,6 @@ class Admin::UsersController < Admin::AdminController
     end
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :is_organization_admin, profile_attributes: [:first_name, :last_name] )
+      params.require(:user).permit(:email, :password, :password_confirmation, :organization_id,:is_organization_admin, profile_attributes: [:first_name, :last_name,:mobile_number] )
     end
 end

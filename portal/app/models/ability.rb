@@ -11,6 +11,7 @@ class Ability
       elsif user.has_role? :organization_admin, user.organization
         can :manage, User, :organization_id => user.organization_id
         can :manage, Application, :organization_id => user.organization_id
+        can :manage, Role, :organization_id => user.organization_id
       else
         can :update, Application do |app|
           !user.find_roles(app.id).map{|r| r.permissions }.flatten.uniq.select { |p| p.subject_class == 'Application' && p.action == 'edit'}.blank?
@@ -18,6 +19,14 @@ class Ability
         can :read, Application do |app|
           !user.find_roles(app.id).map{|r| r.permissions }.flatten.uniq.select { |p| p.subject_class == 'Application' && p.action == 'view'}.blank?
         end
+        user_create = !user.roles.map{|r| r.permissions }.flatten.uniq.select { |p| p.subject_class == 'User' && p.action == 'create'}.blank?
+        user_delete = !user.roles.map{|r| r.permissions }.flatten.uniq.select { |p| p.subject_class == 'User' && p.action == 'delete'}.blank?
+        user_edit = !user.roles.map{|r| r.permissions }.flatten.uniq.select { |p| p.subject_class == 'User' && p.action == 'edit'}.blank?
+        can :read, User if user_create == true ||  user_delete == true || user_edit == true
+        can :create, User if user_create == true
+        can :destroy, User if user_delete == true
+        can :update, User if user_edit == true
+
       end
     end
     #

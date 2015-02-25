@@ -1,7 +1,5 @@
 <% if @user.errors.any? -%>
   $("#user_form").html("<%= escape_javascript(render :partial => 'form', :locals => {:user => @user})%>");
 <% else -%>
-  $("#user_form").html("<%= escape_javascript(render :partial => 'form', :locals => {:user => User.new})%>");
-  $('#users_list tr:last').after("<%= escape_javascript(render :partial => 'user', :locals => {:user => @user})%>");
-  $("#user_form").dialog( "close" );
+  $(window.location.reload("/admin/users"))
 <% end -%>

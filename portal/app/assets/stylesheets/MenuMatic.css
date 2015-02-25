@@ -81,10 +81,12 @@ margin-right:5px;
 #nav li li a { /* Just submenu links*/
 	position:relative;
 	float:none;
+	line-height: 18px;
+	padding-top: 4px;
 }
 #nav li ul { /* second-level lists */
 	position: absolute;
-	width: 10em;
+	width: 170px;
 	margin-left: -1000em; /* using left instead of display to hide menus because display: none isn't read by screen readers */
 	margin-top:2.2em;
 }

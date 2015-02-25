@@ -241,6 +241,7 @@ img, a img {
 	line-height:27px;
 	font-size:13px;
 	margin-top:11px;
+	margin-left: 7px;
 }
 .cnt-head label span {
 	display:block;
@@ -260,8 +261,17 @@ img, a img {
 	background:url(/assets/th-bg.png) repeat-x;
 	height:32px;
 	font-size:13px;
+	font-weight: bold;
 	color:#304f5f;
 	padding:0px 7px;
+}
+.tbl-1 a {
+	font-size:13px;
+	color:#0083ce;
+	text-decoration: underline;
+}
+.tbl-1 a:hover {
+	color:#000;
 }
 .tbl-1 td {
 	padding:7px;
@@ -295,6 +305,56 @@ img, a img {
 	font-size:13px;
 	color:#626262;
 }
+
+
+.tbl-4 {
+	width:100%;
+	height:auto;
+	border:none;
+}
+.tbl-4 th {
+	border-bottom:#CCC 1px solid;
+	font-size:14px;
+	color:#161616;
+	height:25px;
+	text-transform:uppercase;
+	text-align:left;
+	padding-top:10px;
+}
+.tbl-4 td {
+	padding: 5px;
+	font-size:13px;
+	color:#626262;
+}
+.tbl-4 td b {
+	padding: 5px;
+	font-size:14px;
+	color:#1670BD;
+}
+.tbl-5 {
+	width:100%;
+	height:auto;
+	border:none;
+}
+
+.tbl-5 td {
+	padding: 5px;
+	font-size:13px;
+	color:#626262;
+}
+
+.tbl-5 td label{
+ display:block;
+ float:left;
+ text-align: right;
+ padding: 0px 7px 0px 10px;
+ color:#1670BD;
+}
+.tbl-5 td span{
+ display:block;
+ float:left;
+ padding: 0px 30px 0px 0px;
+}
 .form-style1 {
 	width:200px;
 	height:30px;
@@ -316,6 +376,15 @@ img, a img {
 	height:31px;
 	border:#bbbbbb 1px solid;
 	float:left;
+}
+
+.form-style4 {
+	width:75px;
+	height:25px;
+	border:#bdbdbd 1px solid;
+	color:#333;
+	font-size:12px;
+	padding:0px 7px;
 }
 .btn-style {
 	width:auto;
@@ -568,14 +637,16 @@ span.required {
 
 .ura-left-cnt {
   width:708px;
-  height:400px;
+  /*height:400px;
+  width:100%;*/
+  height:auto;
   float:left;
   overflow:auto;
   overflow-x:hidden;
 }
 
 .ura-left-cnt-tbl {
-  width:auto;
+  width:708px;
   height:auto;
 }
 
@@ -641,8 +712,10 @@ span.required {
 }
 
 .ura-right-cnt {
-	width:254px;
-	height:400px;
+/*	width:254px;
+	height:400px;*/
+	width:auto;
+	height:auto;
 	float:left;
 	overflow:auto;
 	overflow-x:hidden;
@@ -657,12 +730,13 @@ span.required {
 	display:block;
 	font-size:14px;
 	cursor:pointer;
+	float: left;
 }
 
 .ura-right-cnt label span {
 	display:block;
 	float:left;
-	margin:11px 5px 0px 10px;
+	margin:3px 5px 0px 10px;
 }
 
 .ura-right-cnt label:hover {
@@ -725,6 +799,7 @@ span.required {
 	border:#CCC solid;
 	border-width:0px 1px 0px 0px;
 }
+
 .forgot-password-box {
 	width:710px;
 	height:auto;
@@ -738,4 +813,43 @@ span.required {
 	float:left;
 	border-top:1px solid #cecece;
 	background:#ececec;
+}
+.org-user-bar {
+	width:100%;
+	height:auto;
+	float:left;
+	border-top:1px solid #cecece;
+	background:#ececec;
+}
+.ui-widget-overlay.override {
+    background: repeat-x scroll 50% 50% #2F4F4F;
+    /*background-color: rgb(50, 50, 50) !important;*/
+    opacity:0.3;
+    filter:Alpha(Opacity=15);
+}
+.apl-main{width:100%;
+	height:auto;
+	float:left;
+}
+
+.apl-head{width:100%;
+	height:26px;
+	line-height:26px;
+	float:left;
+	background:url("/assets/apl-head-bg.png") repeat-x;
+	font-size:13px;
+	text-transform:uppercase;
+	color:#1e1e1e;
+	cursor:pointer;
+	margin-bottom:1px;
+}
+
+.apl-head:hover{
+	background:url("/assets/apl-head-bg-hover.png") repeat-x;
+}
+
+.apl-head label{width:auto;
+	height:auto;
+	float:left;
+	margin:2px 6px 6px 6px;
 }

@@ -11,7 +11,7 @@
         <div class="header-top-nav">
           <ul id="nav">
             <li><a href="#"><span><img src="/assets/user-icon.png" width="14" height="14" alt="user" /></span><%= current_user.email%></a></li>
-            <% if current_user.is_super_admin? || current_user.is_organization_admin?%>
+            <% if current_user.is_super_admin? || current_user.is_organization_admin? || action_active(current_user,"create")%>
               <li><a href="#"><span><img src="/assets/setting-icon.png" width="14" height="14" alt="settings" /></span>
               Administration</a>
                 <ul>
@@ -22,7 +22,7 @@
             <%end%>
             <li><a href="#"><span><img src="/assets/setting-icon.png" width="14" height="14" alt="settings" /></span>Account Settings</a>
               <ul>
-                <li><a href="<%= edit_user_registration_path(current_user)%>">Change Password</a></li>
+                <li><a  id="change_password" href="<%= edit_user_registration_path(current_user)%>">Change Password</a></li>
               </ul>
             </li>
             <%- if user_signed_in? %>
@@ -34,27 +34,15 @@
       <div class="header-bottom">
         <div class="logo-main"> <img src="/assets/taaspro.png" width="176" height="51" alt="taaspro" /> </div>
         <div class="header-bottom-nav">
-          <ul>
+          <ul class="nav-tabs ">
             <li>
-              <label><a href="#"><img src="/assets/home-icon.png" width="21" height="20" alt="home" /></a></label>
+              <label><a href="#" style="height:15px;"><img src="/assets/home-icon.png" width="21" height="20" alt="home" /></a></label>
             </li>
             <li>
               <label class="active"><a href="<%= applications_path %>" class="active">My Apps</a></label>
             </li>
             <li>
-              <label><a href="#">Link Here</a></label>
-            </li>
-            <li>
-              <label><a href="#">Other Link</a></label>
-            </li>
-            <li>
-              <label><a href="#">Large Text Goes Here</a></label>
-            </li>
-            <li>
-              <label><a href="#">Account Settings</a></label>
-            </li>
-            <li>
-              <label><a href="#">Links</a></label>
+              <label id="test_automation"><a href="#">Test Automation</a></label>
             </li>
           </ul>
         </div>
@@ -64,5 +52,52 @@
   </div>
 </div>
 <div class="footer"> Copyright 2014 · All rights reserved </div>
+<script>
+  function submitForm() {
+      $(this).find("form").submit();
+  }
+
+  $("#change_password").on("click", function (e){
+    e.preventDefault();
+    var tag = $("<div id='paasword_change'></div>"),
+      url = $(this).attr('href');
+    $.ajax({
+      url: url,
+      success: function(data) {
+        tag.html(data).dialog({modal: true,
+          height: 400,
+          width: 700,
+          title: 'Edit Password',
+          buttons: [
+            {
+              text: "Save Password",
+              "class": 'btn-style',
+              click: submitForm
+            },
+            {
+              text: "Cancel",
+              "class": 'btn-style-2',
+              click: function() {
+                $(this).dialog("close")
+              }
+            },
+          ]
+        }).
+        dialog('open');
+      }
+    });
+  });
+
+  $("#test_automation").on("click", function (e) {
+   var username = 'niranjan.g@techsophy.com'
+   var password = 'Rabit@123' ;
+   window.open('http://172.16.0.31:8955/rabit/login.html?username='+ username + '&password=' + password,'mywindow','width=$(window).width(),height=$(window).height()')
+  });
+
+  $('.header-bottom-nav').click(function (e) {
+    $('ul.nav-tabs li.active').removeClass('active')
+    $("#test_automation").addClass("active");
+  });
+</script>
 </body>
 </html>

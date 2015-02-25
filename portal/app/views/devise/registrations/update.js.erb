@@ -1,0 +1,5 @@
+<% if resource.errors.any? -%>
+  $("#paasword_change").html("<%= escape_javascript(render :partial => 'change_password', locals: { resource: resource })%>");
+<% else -%>
+  $(window.location.replace("/applications"))
+<% end -%>

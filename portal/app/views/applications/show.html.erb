@@ -1,61 +1,100 @@
-<p id="notice"><%= notice %></p>
-<table class="tbl-2" width="100%" border="0" cellspacing="0" cellpadding="0">
+<table class="tbl-4" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <th colspan="4">Application Information</th>
+    </tr>
+  <tr>
+    <td width="150px" align="right"><b>Application Name</b></td>
+    <td width="200px"><label>
+     <%= @application.name %>
+      </label></td>
+    <td width="150px" align="right"><b>Point of Contact</b></td>
+    <td><%= @application.point_of_contact %></td>
   </tr>
   <tr>
-    <td align="right"><b>Application Name</b></td>
-    <td ><%= @application.name %></td>
-    <td  align="right"><b> Point of Contact </b></td>
-    <td ><%= @application.point_of_contact %></td>
-  </tr>
-  <tr>
-    <td align="right"><b> URL </b></td>
-    <td><%= @application.url %></td>
-    <td align="right"><b> Email </b></td>
+    <td align="right"><b>Email</b></td>
     <td><%= @application.email %></td>
-  </tr>
-  <tr>
-    <td align="right"><b> Description </b></td>
-    <td rowspan="2" valign="top"><%= @application.description %></td>
-    <td align="right"><b> Preferred Time </b></td>
+    <td align="right"><b>Preferred Time</b></td>
     <td><%= @application.prefered_contact_time.strftime("%H:%M %p") %></td>
   </tr>
-  <tr></tr>
+  <tr>
+    <td align="right"><b>Description</b></td>
+    <td><%= @application.description %></td>
+    <td align="right"></td>
+    <td></td>
+  </tr>
   <% unless @application.attachments.blank? %>
     <tr>
       <th colspan="4">Application Attachments</th>
     </tr>
     <tr>
-      <%@application.attachments.each do |attachment|%>
-        <td><%#=link_to attachment.file_path.file.filename, attachment.file_path_url%>
-        <a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a></td>
-      <%end%>
-    </tr>
-  <%end%>
-  <% unless @application.attachments.blank? %>
-    <tr>
-      <th colspan="4">Login Information</th>
-    </tr>
-    <%@application.credentials.each do |credential|%>
-      <tr>
-        <td ><label><b>Role : </b> </label><%= credential.role %></td>
-        <td ><label><b>UserName : </b> </label><%= credential.username %></td>
-        <td ><label><b>Password : </b> </label><%= credential.password %></td>
-      </tr>
-      <%unless credential.attachments.empty?%>
-        <tr>
-          <%credential.attachments.each do |attachment|%>
-            <td ><%#= link_to attachment.file_path.file.filename, attachment.file_path_url, target: "_blank" %>
-            <a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a></td>
-          <%end%>
-        </tr>
-      <%end%>
-      <tr>
-        <th colspan="4"></th>
+        <td colspan="4">
+          <table class="tbl-4" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <%@application.attachments.each do |attachment|%>
+            <tr>
+            <td width="15px"><a href="<%= attachment.file_path_url%>" download><%= image_tag("download.png", :border => 0)%></td>
+              <td><a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a></td></tr>
+            <%end%></table></td>
       </tr>
     <%end%>
-  <%end%>
+    <% unless @application.application_details.blank? %>
+      <tr>
+        <th colspan="4">Cordys Bpm Information</th>
+      </tr>
+      <%i = -1%>
+      <%@application.application_details.each do |ad|%>
+        <% i = i+1 %>
+          <% if i%2 == 0 %><tr><%end%>
+          <td align="right" class="head"><label><b><%= ad.parameter.capitalize%></b> </label></td>
+          <td><%= ad.value %></td>
+        <% if i%2 == 1 %></tr><%end%>
+      <%end%> <% if i%2 == 0 %></tr><%end%>
+    <%end%>
+    <% unless @application.test_types.blank? %>
+      <tr>
+        <th colspan="4">Test Types</th>
+      </tr>
+      <tr>
+        <%@application.test_types.each do |test_type|%>
+          <td><%= test_type.name%> </td>
+          <td colspan="3">
+           <table border="0" cellspacing="0" cellpadding="0">
+             <tr>
+            <%test_type.get_app_browsers(@application).each do |app_browser|%>
+              <td><%= image_tag (app_browser.browser.name.to_s+".png") %></td>
+              <td colspan="2"><%= app_browser.version%></td> 
+            <%end%></tr></table></td>
+        <%end%></tr>
+    <%end%>
+    <% unless @application.attachments.blank? %>
+      <tr>
+        <th colspan="4">Login Information</th>
+      </tr>
+      <%@application.credentials.each do |credential|%>
+        <tr>
+         <td colspan="4" style="padding:0px;">
+         <table class="tbl-5" width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr style="background:#f5f5f5">
+            <td height="20px"><label>Role : </label>
+            <span><%= credential.role %></span>
+           <label>UserName :  </label>
+            <span><%= credential.username %></span>
+            <label>Password :  </label>
+            <span><%= credential.password %></span></td>
+          </tr></table></td></tr>
+            <tr>
+              <td colspan="4">
+               <table class="tbl-4" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <%unless credential.attachments.empty?%>
+                 
+                  <%credential.attachments.each do |attachment|%>
+                    <tr>
+                      <td width="15px"><a href="<%= attachment.file_path_url%>" download><%= image_tag("download.png", :border => 0)%></a></td>
+                      <td ><a href="<%= attachment.file_path_url%>" download><%= attachment.file_path.file.filename%></a></td>
+                      </tr><%end%>
+                    <%end%>
+                </table>
+              </td>
+            </tr> 
+      <%end%>
+    <%end%>
 </table>
-<%#= link_to 'Edit', edit_application_path(@application) %> |
-<%#= link_to 'Back', applications_path %>

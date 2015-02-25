@@ -1,15 +1,15 @@
-<div class="content-wrapper">
+<div class="content-wrapper" style="margin-top:0px;">
   <div class="cnt-head">
     <h1>Roles</h1>
-    <label id="new_role"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>New Role</label>
     <label id="delete_role"><span><img src="/assets/button_minus_red.png" width="16" height="16" alt="plus" /></span>Delete Role</label>
+    <label id="new_role"><span><img src="/assets/plus-icon.png" width="16" height="16" alt="plus" /></span>New Role</label>
   </div>
 
-  <table class="tbl-1 alternate-color">
+  <table class="tbl-1 alternate-color" cellpadding="0px" cellspacing="0px">
     <thead>
       <tr>
-        <th align="left"><%= check_box_tag "all_roles", 'all_roles' %></th>
-        <th align="left">Name</th>
+        <th align="left" width="20px;"><%= check_box_tag "all_roles", 'all_roles' %></th>
+        <th align="left" width="250px;">Name</th>
         <th align="left">Description</th>
       </tr>
     </thead>
@@ -38,7 +38,7 @@
 
  $("#new_role").on("click", function (e) {
     e.preventDefault();
-    var tag = $("<div id=\"role-form\"></div>"),
+    var tag = $("<div id=\"role_form\"></div>"),
       url = 'roles/new';
     $.ajax({
       url: url,
@@ -48,18 +48,21 @@
           height: 600,
           width: 950,
           title: 'Create Role',
+          open: function (event, ui) {
+            $('.ui-widget-overlay').addClass('override');
+          },
           buttons: [
+            {
+              text: "Save",
+              "class": 'btn-style',
+              click: submitForm
+            },
             {
               text: "Cancel",
               "class": 'btn-style-2',
               click: function() {
                 $(this).dialog("close")
               }
-            },
-            {
-              text: "Save",
-              "class": 'btn-style',
-              click: submitForm
             }
           ]
         }).
@@ -70,7 +73,7 @@
 
  $(".edit_role").on("click", function (e){
       e.preventDefault();
-      var tag = $("<div></div>"),
+      var tag = $("<div id=\"role_form\"></div>"),
         url = $(this).attr('href');
       $.ajax({
         url: url,
@@ -79,18 +82,21 @@
             height: 600,
             width: 950,
             title: 'Edit Role',
+            open: function (event, ui) {
+              $('.ui-widget-overlay').addClass('override');
+            },
             buttons: [
+              {
+                text: "Save Role",
+                "class": 'btn-style',
+                click: submitForm
+              },
               {
                 text: "Cancel",
                 "class": 'btn-style-2',
                 click: function() {
                   $(this).dialog("close")
                 }
-              },
-              {
-                text: "Save Role",
-                "class": 'btn-style',
-                click: submitForm
               }
             ]
           }).
@@ -120,7 +126,7 @@
       return false;
     }
     e.preventDefault();
-    if(confirm("Are you sure?")){
+    if(confirm("Are you sure?Corresponding users and permissions data will delete.")){
       $.ajax('/roles/destory_all', {
         type: 'POST',
         datatype: 'json',
