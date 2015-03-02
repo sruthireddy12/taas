@@ -1,4 +1,7 @@
+require "httparty"
 class ApplicationsController < ApplicationController
+   include HTTParty
+
   before_action :set_application, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
 
@@ -75,6 +78,19 @@ class ApplicationsController < ApplicationController
        credential.destroy unless credential.blank?
      end
    end
+  end
+
+  def download_test_scripts
+    @uri = HTTParty.get("http://172.168.4.112:3000/applications/1.json")
+    render :layout => !request.xhr?
+  end
+
+  def taff_download
+    images_path = []
+    images_path << File.join(Rails.root, "public", "uploads", "bus.pdf")
+    images_path << File.join(Rails.root, "public", "uploads", "arrow_right.gif")
+    download = Download.new(images_path)
+    send_file(File.open(download.download_with_zip))
  end
 
   private

@@ -22,12 +22,16 @@
           <tr>
             <th align="left" valign="middle">Name</th>
             <th align="left" valign="middle">Created By</th>
+            <th align="left" valign="middle">scripts</th>
             <th align="middle" valign="middle" colspan="3">Actions</th>
           </tr>
           <% organization.applications.each do |application| %>
             <tr>
               <td><%= link_to_if(action_active(application,'view'),application.name,{ controller: "applications", action: "show", id: application} , {class: 'view-link' }) %></td>
               <td><%= application.creator.full_name || application.creator.email %></td>
+               <td align="center" width="40px">
+                <%= link_to "download", { controller: "applications", action: "download_test_scripts", id: application}, {class: 'download-link' } if action_active(application,'edit')%>
+              </td>
               <td align="center" width="40px">
                 <%= link_to image_tag("edit.png", :border => 0), { controller: "applications", action: "edit", id: application}, {class: 'edit-link',title: "Edit",rel: 'tooltip',relative: true } if action_active(application,'edit')%>
               </td>
@@ -93,6 +97,41 @@
         }
       });
     });
+  function downloadAttachment(){
+   download_scripts()
+  };
+
+ $(".download-link").on("click", function (e){
+        e.preventDefault();
+        var tag = $("<div></div>"),
+          url = $(this).attr('href');
+        $.ajax({
+          url: url,
+          success: function(data) {
+            tag.html(data).dialog({modal: true,
+              
+              open: function (event, ui) {
+                $('.ui-widget-overlay').addClass('override');
+              },
+              title: 'Download Test Scripts',
+              open: function (event, ui) {
+               $('.ui-widget-overlay').addClass('override');
+              },
+              beforeClose: function(event, ui) {
+               window.location.reload();
+              },
+              buttons: [
+                {
+                  text: "download",
+                  "class": 'btn-style ',
+                   click: downloadAttachment
+                }
+              ]
+            }).
+            dialog('open');
+          }
+        });
+    })
 
     $(".view-link").on("click", function (e){
         e.preventDefault();
@@ -161,7 +200,7 @@
             dialog('open');
           }
         });
-    })
+    });
 
     $(document).on("click",".assign_role_user", function (e){
       e.preventDefault();
@@ -271,5 +310,7 @@
          }
      });
     };
+
+ 
   </script>
 

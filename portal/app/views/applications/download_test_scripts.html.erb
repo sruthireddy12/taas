@@ -1,0 +1,46 @@
+<table class="tbl-4" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <% unless @application.attachments.blank? %>
+    <tr>
+      <th colspan="4">Application Attachments</th>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <table class="tbl-4" width="100%" border="0" cellspacing="0" cellpadding="0">
+          <%@uri.each do |attachment|%>
+          <tr>
+          <td width="15px"><%#= check_box  "download_scripts", attachment["id"],class: "download_check", path: "#{attachment['file_path']['url']}" %>
+          <input name="role" type="checkbox" id="<%= attachment['id']%>" class="roles" value="<%= attachment['id']%>"/>
+          </td>
+            <!-- td><a href="<%="/home/sruthi/test/logo.jpg"%>" download><%= attachment["file_path"]["url"].split("/").last%></a></td-->
+            <td><%=link_to attachment["file_path"]["url"].split("/").last%></td>
+            </tr>
+          <%end%>
+        </table>
+      </td>
+    </tr>
+  <%end%>
+</table>
+<script type="text/javascript">
+
+ function  download_scripts(){
+  debugger;
+    var valueSelector = function() { return this.value; };
+    alert(valueSelector);
+    var attchmentIds = $("input:checkbox[class=roles]:checked").map(valueSelector).get();
+    if(attchmentIds == ''){
+      alert("Please select atleast one ");
+      return false;
+    }
+    
+    if(confirm("Are you sure?Corresponding users and permissions data will delete.")){
+      $.ajax('/applications/taff_download', {
+        type: 'POST',
+        datatype: 'json',
+        data: {role_id: roleIds},
+        success: function(data, textStatus, jqHXR) {
+           $(window.location.reload("/roles"))
+        }
+      });
+    }
+  };
+</script>
