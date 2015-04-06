@@ -22,12 +22,16 @@
           <tr>
             <th align="left" valign="middle">Name</th>
             <th align="left" valign="middle">Created By</th>
+            <th align="left" valign="middle">Test Script</th>
             <th align="middle" valign="middle" colspan="3">Actions</th>
           </tr>
           <% organization.applications.each do |application| %>
             <tr>
               <td><%= link_to_if(action_active(application,'view'),application.name,{ controller: "applications", action: "show", id: application} , {class: 'view-link' }) %></td>
               <td><%= application.creator.full_name || application.creator.email %></td>
+              <td align="center" width="40px">
+                <%= link_to 'download', { controller: "applications", action: "download_script", id: application}, {class: 'download_attachments',title: "Download",rel: 'tooltip',relative: true }%>
+              </td>
               <td align="center" width="40px">
                 <%= link_to image_tag("edit.png", :border => 0), { controller: "applications", action: "edit", id: application}, {class: 'edit-link',title: "Edit",rel: 'tooltip',relative: true } if action_active(application,'edit')%>
               </td>
@@ -206,7 +210,7 @@
 
     function submitRole(){
       assign_roles()
-    }
+    } 
 
    $(document).on("click", '.show-app', function(e) {
     var organizationId = $(this).attr('organization-id')
@@ -218,13 +222,73 @@
       $(this).find('#image_icon').removeAttr('src')
       $(this).find('#image_icon').attr('src','/assets/apl-head-icon1.png')
     }
-    else 
+    else
     {
       $(this).find('#image_icon').removeAttr('src')
       $(this).find('#image_icon').attr('src','/assets/apl-head-icon2.png')
     }
    });
 
+
+    $(document).on("click",".download_attachments", function (e){
+      e.preventDefault();
+      var tag = $("<div></div>"),
+        url = $(this).attr('href');
+      $.ajax({
+        url: url,
+        success: function(data) {
+          tag.html(data).dialog({modal: true,
+            height: 'auto',
+            width: 'auto',
+            maxHeight: 500,
+            maxWidth: 1012,
+            title: 'Download Scripts',
+            open: function (event, ui) {
+              $('.ui-widget-overlay').addClass('override');
+            },
+            beforeClose: function(event, ui) {
+             // $(this).remove();
+            },
+            buttons: [
+              {
+                text: "Download",
+                "class": 'btn-style',
+                "id": "submit1",
+                click: download
+              },
+              {
+                text: "Cancel",
+                "class": 'btn-style-2',
+                click: function() {
+                  $(this).dialog("close")
+                  $(this).remove();
+                },
+              }
+            ]
+          }).
+          dialog('open');
+        }
+      });
+    });
+
+    function download(){
+      var check_valid = checkoboxValidation()
+      if (check_valid == false)
+       {
+          return false
+       }
+      $(this).dialog("close")
+      download_scripts();
+      $(this).remove();
+    };
+    // $(document).on("click","#submit1", function (e){
+    //   if($('input[type=checkbox]:checked').length == 0)
+    //   {
+    //     alert('Please select atleast one checkbox');
+    //     e.preventDefault();
+    //     return false; 
+    //   }
+    // });
     function cordys_bpm_validations(){
       $("#application-creation").validate({
         rules: {

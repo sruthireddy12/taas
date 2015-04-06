@@ -1,6 +1,9 @@
+require 'httparty'
+require 'download'
 class ApplicationsController < ApplicationController
   before_action :set_application, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+  respond_to :json
 
   def index
     @application = Application.new
@@ -19,7 +22,11 @@ class ApplicationsController < ApplicationController
 
   def show
     # respond_with(@application)
-    render :layout => !request.xhr?
+    respond_to do |format|
+    	format.html
+      format.json { render json: @application.attachments }
+    end
+    # render :layout => !request.xhr?
   end
 
   def new
@@ -49,8 +56,8 @@ class ApplicationsController < ApplicationController
     @application.update(application_params)
     #delete credentails which are all removed
     unless application_params["credentials_attributes"].except('0').blank?
-     delete_removed_credential(application_params["credentials_attributes"])
-   end
+      delete_removed_credential(application_params["credentials_attributes"])
+    end
     params[:application_file_paths].each do |file|
       @application.attachments.create(file_path: file)
     end if params[:application_file_paths] && !params[:application_file_paths].empty?
@@ -63,32 +70,43 @@ class ApplicationsController < ApplicationController
   end
 
   def delete_attachment
-   attachment = Attachment.find_by_id(params[:attachment_id])
-   @application = Application.find_by_id(params[:application_id])
-   attachment.destroy unless attachment.blank?
+    attachment = Attachment.find_by_id(params[:attachment_id])
+    @application = Application.find_by_id(params[:application_id])
+    attachment.destroy unless attachment.blank?
   end
 
   def delete_removed_credential(credential_attributes)
-   credential_attributes.except('0').each do |credential|
-     if credential.last['delete_credential'] == 'true'
-       credential = Credential.where(id: credential.last['id']).first
-       credential.destroy unless credential.blank?
-     end
-   end
- end
+    credential_attributes.except('0').each do |credential|
+      if credential.last['delete_credential'] == 'true'
+        credential = Credential.where(id: credential.last['id']).first
+        credential.destroy unless credential.blank?
+      end
+    end
+  end
+
+  def download_script
+  	render :layout => !request.xhr?
+  end
+
+  def download_script_attachment
+  	cookies['fileDownload'] = 'true'
+  	images_path = params['paths'].split(",")
+  	download = Download.new(images_path)
+  	send_file(File.open(download.download_with_zip))
+  end
 
   private
-    def set_application
-      @application = Application.find(params[:id])
-    end
+  def set_application
+    @application = Application.find(params[:id])
+  end
 
-    def application_params
-      params.require(:application)
-      .permit(:name, :description,:creator, :point_of_contact,:email,:prefered_contact_time, :application_type_id, :database, :technology, 
-        credentials_attributes: [:id,:role,:username,:password,:delete_credential,file_paths: []],
-        application_details_attributes: [:id,:parameter, :value], 
-        application_browsers_attributes: [:id,:application_id,:browser_id,:version,:test_type_id],
-         test_type_ids:[]
-        )
-    end
+  def application_params
+    params.require(:application)
+    .permit(:name, :description,:creator, :point_of_contact,:email,:prefered_contact_time, :application_type_id, :database, :technology,
+            credentials_attributes: [:id,:role,:username,:password,:delete_credential,file_paths: []],
+            application_details_attributes: [:id,:parameter, :value],
+            application_browsers_attributes: [:id,:application_id,:browser_id,:version,:test_type_id],
+            test_type_ids:[]
+            )
+  end
 end

@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   post '/applications/:id/roles_users/create' => 'roles_users#create'
   delete '/applications/:id/roles_users/destroy' => 'roles_users#destroy' ,as: 'destroy_role_user'
   post '/applications/delete_attachment' => 'applications#delete_attachment', as: 'delete_attachment'
+  get '/applications/:id/download_script' => 'applications#download_script', as: 'download_script'
+  get '/applications/:id/download_script_attachment' => 'applications#download_script_attachment'
+  # get '/TAFF_ZIP/script' => 'TAFF_ZIP#script'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

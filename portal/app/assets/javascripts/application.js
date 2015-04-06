@@ -21,6 +21,7 @@
 //= require jquery-ui/tooltip
 //= require jquery.validate
 //= require jquery.validate.additional-methods
+//= require jquery.fileDownload
 //= require_tree .
 
 $(function() {

@@ -1,0 +1,81 @@
+<div class='script_download'>
+<%= hidden_field 'application' ,'id', value: @application.id%>
+<%= hidden_field 'base' ,'url', value: request.base_url%>
+
+<div><%= check_box_tag "all_test_scripts", 'all_test_scripts' %>
+All</div>
+<%@application.attachments.each do |attachment|%>
+  <table>
+    <tr>
+      <td>
+        <label>
+          <span>
+          <input name="test_script" type="checkbox" id="<%= attachment.id%>" class="attachments" value="<%= attachment.id%>"  path= "<%= attachment.file_path.file.file%>"/>
+          </span>
+          <%= attachment.file_path.file.filename%>
+        </label>
+      </td>
+    </tr>
+  </table>
+<%end%></div>
+<script>
+  $('.script_download').find($("input:checkbox[name=test_script]:checked")).remove();
+  function download_scripts(){
+    var applicationId = $("#application_id").val()
+    var baseUrl = $("#base_url").val()
+    var valueSelector = function() { return this.value; };
+    var attachmentPathSelector = function() { return this.attributes.path.value ; };
+    var checkedAttachments = $("input:checkbox[name=test_script]:checked").map(valueSelector).get();
+    var pathSelector = $("input:checkbox[name=test_script]:checked").map(attachmentPathSelector).get();
+    params = pathSelector.toString();
+    obj = {paths: params}
+    req_url = baseUrl + "/applications/"+ applicationId +"/download_script_attachment?"+$.param(obj)
+    $.fileDownload(req_url, {
+         // successCallback: function (url) { { window.location.reload() } }
+
+         // failCallback: function (url) { alert("Download Failed"); }
+       });
+  };
+  // function  checkoboxValidation(){
+  //   $('.attachments').validate({
+  //        rules: {
+  //               test_script:{
+  //                   required: {
+  //                       depends: function(element) {
+  //                           return $('input[name="test_script"]:checked').length == 0;
+  //                       }
+  //                   }
+  //               }               
+  //           },
+  //       messages: {
+  //         test_script: "You must check at least 1 box",
+  //       }
+  //   });
+  // };
+    function checkoboxValidation()
+    {
+    valid = true;
+
+    if($('input[type=checkbox]:checked').length == 0)
+    {
+      alert ( "Please select at least one checkbox" );
+      valid = false;
+    }
+
+    return valid;
+    };
+
+  $('#all_test_scripts').click(function() {
+    if (this.checked) {
+      $('.attachments').each(function() {
+        this.checked = true;
+      });
+    } else {
+      $('.attachments').each(function() {
+        this.checked = false;
+      });
+    }
+
+  });
+
+</script>

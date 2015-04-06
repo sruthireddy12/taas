@@ -42,7 +42,9 @@ end
 gem 'carrierwave'
 gem 'jquery-fileupload-rails'
 gem "jquery-validation-rails"
-
+gem "httparty"
+gem 'rubyzip'
+gem 'jquery_file_download-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

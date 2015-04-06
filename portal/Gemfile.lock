@@ -55,6 +55,9 @@ GEM
     erubis (2.7.0)
     execjs (2.2.2)
     hike (1.2.3)
+    httparty (0.13.3)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.6.11)
     jbuilder (2.2.4)
       activesupport (>= 3.0.0, < 5)
@@ -70,6 +73,8 @@ GEM
     jquery-validation-rails (1.13.1)
       railties (>= 3.2, < 5.0)
       thor (~> 0.14)
+    jquery_file_download-rails (0.0.2)
+      railties (>= 3.1.0)
     json (1.8.1)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -78,6 +83,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.4.2)
     multi_json (1.10.1)
+    multi_xml (0.5.5)
     mysql2 (0.3.16)
     orm_adapter (0.5.0)
     polyglot (0.3.5)
@@ -125,6 +131,7 @@ GEM
       rspec-mocks (~> 3.0.0)
       rspec-support (~> 3.0.0)
     rspec-support (3.0.4)
+    rubyzip (1.1.7)
     sass (3.2.19)
     sass-rails (4.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -169,16 +176,19 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 4.0.0)
   devise
+  httparty
   jbuilder (~> 2.0)
   jquery-fileupload-rails
   jquery-rails
   jquery-ui-rails
   jquery-validation-rails
+  jquery_file_download-rails
   mysql2
   pry
   rails (= 4.1.5)
   rolify
   rspec-rails (~> 3.0.0)
+  rubyzip
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   simple_captcha2
